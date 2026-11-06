@@ -251,19 +251,19 @@ function VoxelManip:get_light_data() end
 ---@param light_data core.Light[]
 function VoxelManip:set_light_data(light_data) end
 
---[[
-WIPDOC
-]]
+---@class VoxelManip
+
+---Gets the raw param2 data read into the VoxelManip object.
 ---@nodiscard
----@return core.Param2[] param2_data
+---@overload fun(self: VoxelManip, buffer: integer[]): integer[]
+---@return integer[] param2_data
 function VoxelManip:get_param2_data() end
 
---[[
-WIPDOC
-]]
----@param buffer core.Param2[]?
----@return nil
-function VoxelManip:get_param2_data(buffer) end
+---Gets the raw light data read into the VoxelManip object.
+---@nodiscard
+---@overload fun(self: VoxelManip, buffer: integer[]): integer[]
+---@return integer[] light_data
+function VoxelManip:get_light_data() end
 
 --[[
 WIPDOC
