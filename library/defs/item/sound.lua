@@ -28,7 +28,4 @@ WIPDOC
 -- ----------------------------- ItemDef fields ----------------------------- --
 
 ---@class core.ItemDef
---[[
-WIPDOC
-]]
----@field sound core.ItemDef.sound?
+---@field sound? core.ItemSoundSpec

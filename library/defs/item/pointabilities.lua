@@ -40,4 +40,4 @@ If multiple fields fit, the following priority order is applied:
 5. `liquids_pointable` if it is a liquid node
 6. `pointable` property of the node or object
 ]]
----@field pointabilities core.ItemDef.pointabilities?
+---@field pointabilities? { nodes?: table<string, string|boolean>, objects?: table<string, boolean> }
