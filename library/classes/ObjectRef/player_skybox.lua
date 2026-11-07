@@ -374,7 +374,10 @@ function PlayerRef:set_sky(base_color, type, textures, clouds) end
 ]]
 ---@deprecated
 ---@nodiscard
----@return core.ColorSpec base_color, "regular"|"skybox"|"plain" type, core.Texture[] textures, boolean? clouds
+---@return core.ColorSpec base_color
+---@return "regular"|"skybox"|"plain" type
+---@return core.Texture[] textures
+---@return boolean? clouds
 function PlayerRef:get_sky(as_table) end
 
 --[[

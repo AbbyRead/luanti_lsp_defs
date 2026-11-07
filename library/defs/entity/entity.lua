@@ -35,7 +35,7 @@ WIPDOC
 --[[
 WIPDOC
 ]]
----@alias core.EntityDef.on_punch fun(self:core.Entity, puncher:core.EntityRef?, ime_from_last_punch:number?, tool_capabilities:core.ToolCapabilities?, dir:vector, damage:int):boolean
+---@alias core.EntityDef.on_punch fun(self:core.Entity, puncher:core.EntityRef?, ime_from_last_punch:number?, tool_capabilities:core.ToolCapabilities?, dir:vector, damage:int):boolean?
 
 --[[
 WIPDOC
@@ -74,7 +74,7 @@ WIPDOC
 --[[
 WIPDOC
 ]]
----@field initial_properties core.ObjectProperties.set
+---@field initial_properties core.ObjectProperties.set? Engine defaults apply when omitted
 --[[
 WIPDOC
 ]]
@@ -129,7 +129,7 @@ Functions receive a "luaentity" table as `self`:
 --[[
 WIPDOC
 ]]
----@field initial_properties core.ObjectProperties.set
+---@field initial_properties core.ObjectProperties.set? Engine defaults apply when omitted
 --[[
 WIPDOC
 ]]

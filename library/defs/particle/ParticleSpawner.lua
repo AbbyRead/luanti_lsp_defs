@@ -165,7 +165,7 @@ WIPDOC
 --[[
 WIPDOC
 ]]
----@field texpool core.ParticleTexture?
+---@field texpool core.ParticleTexture[]? Picks one at random per spawned particle
 
 -- ------------------------- ParticleSpawnerDef.node ------------------------ --
 

@@ -24,6 +24,15 @@ WIPDOC
 ---@field b int?
 
 --[[
+Result of `core.colorspec_to_table`: all channels are always present.
+]]
+---@class core.ColorSpec.tablefmt.full: core.ColorSpec.tablefmt
+---@field r int
+---@field g int
+---@field b int
+---@field a int
+
+--[[
 WIPDOC
 ]]
 ---@alias core.ColorString.CSSColors

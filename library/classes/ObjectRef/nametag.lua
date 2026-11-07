@@ -32,11 +32,11 @@ WIPDOC
 --[[
 WIPDOC
 ]]
----@field text string
+---@field text string? Unset fields keep their current value
 --[[
 WIPDOC
 ]]
----@field color core.ColorSpec
+---@field color core.ColorSpec?
 --[[
 WIPDOC
 ]]

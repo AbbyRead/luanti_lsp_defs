@@ -139,7 +139,7 @@ function core.get_artificial_light(param1) end
     * `placer`: The ObjectRef that places the node (optional)
 ]]
 ---@param pos ivector
----@param node core.Node.get
+---@param node core.Node.set
 ---@param placer core.PlayerRef?
 ---@return boolean
 function core.place_node(pos, node, placer) end
@@ -413,7 +413,9 @@ function core.set_gen_notify(flags, deco_ids, custom_ids) end
       user-defined IDs.
 ]]
 ---@nodiscard
----@return core.GenNotify.flags.stringfmt flags, core.DecorationID[] deco_ids, string[] custom_ids
+---@return core.GenNotify.flags.stringfmt flags
+---@return core.DecorationID[] deco_ids
+---@return string[] custom_ids
 function core.get_gen_notify() end
 
 --[[

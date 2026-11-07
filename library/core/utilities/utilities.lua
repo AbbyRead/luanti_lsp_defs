@@ -154,7 +154,7 @@ WIPDOC
 ]]
 ---@nodiscard
 ---@param colorspec core.ColorSpec
----@return core.ColorSpec.tablefmt
+---@return core.ColorSpec.tablefmt.full? rgba nil if the ColorSpec is invalid
 function core.colorspec_to_table(colorspec) end
 
 -- ---------------------------------- misc ---------------------------------- --

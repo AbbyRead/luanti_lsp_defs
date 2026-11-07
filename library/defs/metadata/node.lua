@@ -88,4 +88,4 @@ WIPDOC
 --[[
 WIPDOC
 ]]
----@field inventory core.InventoryTable.stringfmt?
+---@field inventory core.InventoryTable.ItemStack?

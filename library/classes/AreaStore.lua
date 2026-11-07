@@ -133,41 +133,41 @@ function AreaStore:get_area(id, include_corners, include_data) end
 WIPDOC
 ]]
 ---@nodiscard
----@param id core.AreaStoreID
+---@param pos vector
 ---@param include_corners false?
 ---@param include_data false?
 ---@return table<core.AreaStoreID, true?>
-function AreaStore:get_areas_for_pos(id, include_corners, include_data) end
+function AreaStore:get_areas_for_pos(pos, include_corners, include_data) end
 
 --[[
 WIPDOC
 ]]
 ---@nodiscard
----@param id core.AreaStoreID
+---@param pos vector
 ---@param include_corners true
 ---@param include_data false?
 ---@return table<core.AreaStoreID, core.AreaStore.area.include_corners?>
-function AreaStore:get_areas_for_pos(id, include_corners, include_data) end
+function AreaStore:get_areas_for_pos(pos, include_corners, include_data) end
 
 --[[
 WIPDOC
 ]]
 ---@nodiscard
----@param id core.AreaStoreID
+---@param pos vector
 ---@param include_corners false?
 ---@param include_data true
 ---@return table<core.AreaStoreID, core.AreaStore.area.include_data?>
-function AreaStore:get_areas_for_pos(id, include_corners, include_data) end
+function AreaStore:get_areas_for_pos(pos, include_corners, include_data) end
 
 --[[
 WIPDOC
 ]]
 ---@nodiscard
----@param id core.AreaStoreID
+---@param pos vector
 ---@param include_corners true
 ---@param include_data true
 ---@return table<core.AreaStoreID, core.AreaStore.area.include_all?>
-function AreaStore:get_areas_for_pos(id, include_corners, include_data) end
+function AreaStore:get_areas_for_pos(pos, include_corners, include_data) end
 
 --[[
 WIPDOC

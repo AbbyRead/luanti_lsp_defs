@@ -16,11 +16,11 @@ WIPDOC
 --[[
 WIPDOC
 ]]
----@field aspect_w int
+---@field aspect_w int? Frame width in pixels, range 1-65535 (docs example: 16; omitted by existing mods)
 --[[
 WIPDOC
 ]]
----@field aspect_h int
+---@field aspect_h int? Frame height in pixels, range 1-65535 (docs example: 16; omitted by existing mods)
 --[[
 WIPDOC
 ]]

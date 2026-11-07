@@ -43,9 +43,9 @@ function Raycast(pos1, pos2, objects, liquids, pointabilities) end
 ---@param pos1 vector
 ---@param pos2 vector
 ---@param objects true?
----@param liquids false?
+---@param liquids boolean?
 ---@param pointabilities core.ItemDef.pointabilities?
----@return core.Raycast.objects
+---@return core.Raycast.all
 function Raycast(pos1, pos2, objects, liquids, pointabilities) end
 
 --[[
@@ -106,9 +106,9 @@ function core.raycast(pos1, pos2, objects, liquids, pointabilities) end
 ---@param pos1 vector
 ---@param pos2 vector
 ---@param objects true?
----@param liquids false?
+---@param liquids boolean?
 ---@param pointabilities core.ItemDef.pointabilities?
----@return core.Raycast.objects
+---@return core.Raycast.all
 function core.raycast(pos1, pos2, objects, liquids, pointabilities) end
 
 --[[

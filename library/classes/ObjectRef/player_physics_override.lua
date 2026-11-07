@@ -67,15 +67,15 @@ WIPDOC
 --[[
 WIPDOC
 ]]
----@field sneak number?
+---@field sneak boolean?
 --[[
 WIPDOC
 ]]
----@field sneak_glitch number?
+---@field sneak_glitch boolean?
 --[[
 WIPDOC
 ]]
----@field new_move number?
+---@field new_move boolean?
 
 --[[
 WIPDOC
@@ -136,15 +136,15 @@ WIPDOC
 --[[
 WIPDOC
 ]]
----@field sneak number
+---@field sneak boolean
 --[[
 WIPDOC
 ]]
----@field sneak_glitch number
+---@field sneak_glitch boolean
 --[[
 WIPDOC
 ]]
----@field new_move number
+---@field new_move boolean
 
 
 -- ---------------------------- PlayerRef methods --------------------------- --

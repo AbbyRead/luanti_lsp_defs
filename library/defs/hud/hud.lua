@@ -46,7 +46,7 @@ WIPDOC
 --[[
 WIPDOC
 ]]
----@field  z_index int
+---@field  z_index int? Default 0
 
 -- ----------------------------- HUDDef partials ---------------------------- --
 

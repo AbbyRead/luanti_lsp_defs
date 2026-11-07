@@ -126,7 +126,7 @@ distribution of the biomes.
 Heat and humidity have average values of 50, vary mostly between
 0 and 100 but can exceed these values.
 ]]
----@field heat_point int
+---@field heat_point number? Default 0
 --[[
 Characteristic temperature and humidity for the biome.
 These values create 'biome points' on a voronoi diagram with heat and
@@ -135,7 +135,7 @@ distribution of the biomes.
 Heat and humidity have average values of 50, vary mostly between
 0 and 100 but can exceed these values.
 ]]
----@field humidity_point int
+---@field humidity_point number? Default 0
 --[[
 Relative weight of the biome in the Voronoi diagram.
 A value of 0 (or less) is ignored and equivalent to 1.0.

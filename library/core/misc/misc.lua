@@ -67,8 +67,8 @@ function core.hud_replace_builtin(name, hud_definition) end
 ]]
 ---@nodiscard
 ---@param arg string
----@param relative_to vector
----@return vec?
+---@param relative_to number
+---@return number?
 function core.parse_relative_number(arg, relative_to) end
 
 --[[

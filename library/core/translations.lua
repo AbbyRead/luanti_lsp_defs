@@ -5,12 +5,12 @@
 --[[
 WIPDOC
 ]]
----@alias core.fn.translate_singular fun(str:string, ...:string):string
+---@alias core.fn.translate_singular fun(str:string, ...:string|number):string
 
 --[[
 WIPDOC
 ]]
----@alias core.fn.translate_plural fun(str:string, str_plural:string, n:int, ...:string):string
+---@alias core.fn.translate_plural fun(str:string, str_plural:string, n:int, ...:string|number):string
 
 --[[
 `core.get_translator(textdomain)` is a simple wrapper around
@@ -30,7 +30,8 @@ As an extra commodity, if `textdomain` is nil, it is assumed to be "" instead.
 ]]
 ---@nodiscard
 ---@param textdomain string?
----@return core.fn.translate_singular S, core.fn.translate_plural PS
+---@return core.fn.translate_singular S
+---@return core.fn.translate_plural PS
 function core.get_translator(textdomain) end
 
 --[[

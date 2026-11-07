@@ -219,6 +219,7 @@ function ItemStack:get_wear_bar_params() end
     * Put some item or stack onto this stack
 ]]
 ---@param item core.Item
+---@return core.ItemStack leftover
 function ItemStack:add_item(item) end
 
 --[[
