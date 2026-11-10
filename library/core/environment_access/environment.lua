@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Environment access
 
 -- ---------------------------------- node ---------------------------------- --
@@ -23,7 +23,12 @@ Unofficial note: I think you should be strict and only use `core.set_node`
 core.add_node = core.set_node
 
 --[[
-WIPDOC
+* `core.bulk_set_node({pos1, pos2, pos3, ...}, node)`
+    * Set the same node at all positions in the first argument.
+    * e.g. `core.bulk_set_node({{x=0, y=1, z=1}, {x=1, y=2, z=2}}, {name="default:stone"})`
+    * For node specification or position syntax see `core.set_node` call
+    * Faster than set_node due to single call, but still considerably slower
+      than Lua Voxel Manipulators (LVM) for large amounts of nodes.
 ]]
 ---@param posarr ivector[]
 ---@param node core.Node.set
@@ -139,7 +144,7 @@ function core.get_artificial_light(param1) end
     * `placer`: The ObjectRef that places the node (optional)
 ]]
 ---@param pos ivector
----@param node core.Node.get
+---@param node core.Node.set
 ---@param placer core.PlayerRef?
 ---@return boolean
 function core.place_node(pos, node, placer) end
@@ -186,7 +191,8 @@ function core.spawn_falling_node(pos) end
 function core.find_nodes_with_meta(pos1, pos2) end
 
 --[[
-WIPDOC
+* `core.get_meta(pos)`
+    * Get a `NodeMetaRef` at that position
 ]]
 ---@nodiscard
 ---@param pos ivector
@@ -194,7 +200,8 @@ WIPDOC
 function core.get_meta(pos) end
 
 --[[
-WIPDOC
+* `core.get_node_timer(pos)`
+    * Get `NodeTimerRef`
 ]]
 ---@nodiscard
 ---@param pos ivector
@@ -288,7 +295,8 @@ function core.objects_in_area(minp, maxp) end
 -- ---------------------------------- time ---------------------------------- --
 
 --[[
-WIPDOC
+* `core.set_timeofday(val)`: set time of day
+    * `val` is a number between `0` and `1`; `0` for midnight, `0.5` for midday
 ]]
 ---@param val number
 function core.set_timeofday(val) end
@@ -361,7 +369,16 @@ function core.find_node_near(pos, radius, nodenames, search_center) end
 function core.find_nodes_in_area(pos1, pos2, nodenames, grouped) end
 
 --[[
-WIPDOC
+* `core.find_nodes_in_area(pos1, pos2, nodenames, [grouped])`
+    * `pos1` and `pos2` are the min and max positions of the area to search.
+    * `nodenames`: e.g. `{"ignore", "group:tree"}` or `"default:dirt"`
+    * If `grouped` is true the return value is a table indexed by node name
+      which contains lists of positions.
+    * If `grouped` is false or absent the return values are as follows:
+      first value: Table with all node positions
+      second value: Table with the count of each node with the node name
+      as index
+    * Area volume is limited to 150,000,000 nodes
 ]]
 ---@nodiscard
 ---@param pos1 ivector
@@ -413,11 +430,15 @@ function core.set_gen_notify(flags, deco_ids, custom_ids) end
       user-defined IDs.
 ]]
 ---@nodiscard
----@return core.GenNotify.flags.stringfmt flags, core.DecorationID[] deco_ids, string[] custom_ids
+---@return core.GenNotify.flags.stringfmt flags
+---@return core.DecorationID[] deco_ids
+---@return string[] custom_ids
 function core.get_gen_notify() end
 
 --[[
-WIPDOC
+* `core.get_decoration_id(decoration_name)`
+    * Returns the ID (an integer) for the provided decoration name string,
+      or `nil` on failure.
 ]]
 ---@nodiscard
 ---@param decoration_name string
@@ -425,7 +446,12 @@ WIPDOC
 function core.get_decoration_id(decoration_name) end
 
 --[[
-WIPDOC
+* `core.get_mapgen_object("voxelmanip")`
+    * Returns three values: the `VoxelManip` object to be used, minimum and
+      maximum emerged position, in that order. All mapgens support this object.
+    * The emerged region is NOT THE SAME as the `minp`, `maxp` parameters of
+      `on_generated()`.
+    * Returns nil if unavailable, or if called outside of an `on_generated` callback.
 ]]
 ---@nodiscard
 ---@param objectname "voxelmanip"
@@ -433,7 +459,10 @@ WIPDOC
 function core.get_mapgen_object(objectname) end
 
 --[[
-WIPDOC
+* `core.get_mapgen_object("heightmap")`
+    * Returns an array containing the y coordinates of the ground levels of
+      nodes in the most recently generated chunk by the current mapgen.
+    * Returns nil if unavailable, or if called outside of an `on_generated` callback.
 ]]
 ---@nodiscard
 ---@param objectname "heightmap"
@@ -441,7 +470,10 @@ WIPDOC
 function core.get_mapgen_object(objectname) end
 
 --[[
-WIPDOC
+* `core.get_mapgen_object("biomemap")`
+    * Returns an array containing the biome IDs of nodes in the most recently
+      generated chunk by the current mapgen.
+    * Returns nil if unavailable, or if called outside of an `on_generated` callback.
 ]]
 ---@nodiscard
 ---@param objectname "biomemap"
@@ -449,7 +481,10 @@ WIPDOC
 function core.get_mapgen_object(objectname) end
 
 --[[
-WIPDOC
+* `core.get_mapgen_object("heatmap")`
+    * Returns an array containing the temperature values of nodes in the most
+      recently generated chunk by the current mapgen.
+    * Returns nil if unavailable, or if called outside of an `on_generated` callback.
 ]]
 ---@nodiscard
 ---@param objectname "heatmap"
@@ -457,7 +492,10 @@ WIPDOC
 function core.get_mapgen_object(objectname) end
 
 --[[
-WIPDOC
+* `core.get_mapgen_object("humiditymap")`
+    * Returns an array containing the humidity values of nodes in the most
+      recently generated chunk by the current mapgen.
+    * Returns nil if unavailable, or if called outside of an `on_generated` callback.
 ]]
 ---@nodiscard
 ---@param objectname "humiditymap"
@@ -465,7 +503,13 @@ WIPDOC
 function core.get_mapgen_object(objectname) end
 
 --[[
-WIPDOC
+* `core.get_mapgen_object("gennotify")`
+    * Returns a table. You need to announce your interest in a specific
+      field by calling `core.set_gen_notify()` *before* map generation happens.
+    * key = string: generation notification type
+    * value = list of positions (usually), with exceptions for `custom`
+      (user-defined ID => arbitrary Lua value) and `decoration#id` entries.
+    * Returns nil if unavailable, or if called outside of an `on_generated` callback.
 ]]
 ---@nodiscard
 ---@param objectname "gennotify"
@@ -615,11 +659,13 @@ function core.generate_ores(vm, pos1, pos2) end
 function core.generate_decorations(vm, pos1, pos2, use_mapgen_biomes) end
 
 --[[
-WIPDOC
+Options table for `core.clear_objects`.
 ]]
 ---@class core.ClearObjectsOptions
 --[[
-WIPDOC
+* `"full"`: Load and go through every mapblock, clearing objects (default).
+* `"quick"`: Clear objects immediately in loaded mapblocks, clear objects in
+  unloaded mapblocks only when the mapblocks are next activated.
 ]]
 ---@field mode "full"|"quick"
 
@@ -711,14 +757,17 @@ function core.find_path(pos1, pos2, searchdistance, max_jump, max_drop, algo) en
 -- ------------------------------ L-system tree ----------------------------- --
 
 --[[
-WIPDOC
+* `core.spawn_tree(pos, treedef)`
+    * spawns L-system tree at given `pos` with definition in `treedef` table
 ]]
 ---@param pos ivector
 ---@param lsystem core.LSystemTreeDef
 function core.spawn_tree(pos, lsystem) end
 
 --[[
-WIPDOC
+* `core.spawn_tree_on_vmanip(vmanip, pos, treedef)`
+    * analogous to `core.spawn_tree`, but spawns a L-system tree onto the specified
+      VoxelManip object `vmanip` instead of the map.
 ]]
 ---@param vmanip core.VoxelManip
 ---@param pos ivector

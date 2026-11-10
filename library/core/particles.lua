@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Particles
 
 --[[
@@ -29,7 +29,17 @@ Instead, invest time into particlespawners, invest time into creating an issue o
 function core.add_particle(particle_def) end
 
 --[[
-WIPDOC
+* `core.add_particlespawner(amount, time,
+  minpos, maxpos,
+  minvel, maxvel,
+  minacc, maxacc,
+  minexptime, maxexptime,
+  minsize, maxsize,
+  collisiondetection, texture, playername)`
+    * Deprecated: use `core.add_particlespawner(particlespawner_def)` instead.
+    * Add a `ParticleSpawner`, an object that spawns an amount of particles
+      over `time` seconds.
+    * Returns an `id`, and -1 if adding didn't succeed
 ]]
 ---@deprecated
 ---@param amount int

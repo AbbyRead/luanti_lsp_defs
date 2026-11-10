@@ -1,15 +1,17 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Schematics
 
 --[[
-WIPDOC
+Entry of the `probability_list` passed to `core.create_schematic`.
+Several entries with the same `pos`: the last one is used. Entries with `pos`
+outside the box formed by `p1` and `p2` are ignored.
 ]]
 ---@class core.Schematic.probability_list
 --[[
-WIPDOC
+Absolute coordinates of the node being modified.
 ]]
----@field  pos int
+---@field pos ivector
 --[[
 * A probability value of `0` or `1` means that node will never appear
   (0% chance).
@@ -18,21 +20,40 @@ WIPDOC
 * If the probability value `p` is greater than `1`, then there is a
   `(p / 256 * 100)` percent chance that node will appear when the schematic is
   placed on the map.
+* Integer `0` to `255` encoding probability and per-node force-place.
+  Probability has levels 0-127, then 128 may be added to encode force-place.
+  For a probability stated as 0-255, divide by 2 and round down to get
+  0-127, then add 128 to apply per-node force-place.
 ]]
----@field  prob int
+---@field prob int
 
 --[[
-WIPDOC
+* `core.create_schematic(p1, p2, probability_list, filename, slice_prob_list)`
+    * Create a schematic from the volume of map specified by the box formed by
+      p1 and p2.
+    * Apply the specified probability and per-node force-place to the specified
+      nodes according to the `probability_list`.
+        * Array of tables with fields `pos` and `prob`.
+        * If `probability_list` equals `nil`, no probabilities are applied.
+    * Apply the specified probability to the specified horizontal slices
+      according to the `slice_prob_list`.
+        * Array of tables with fields `ypos` and `prob`.
+        * `ypos` is the y position of the slice, the lowest slice being
+          `ypos = 0`.
+        * Probability is specified in the same way as in `probability_list`.
+        * If `slice_prob_list` equals `nil`, no slice probabilities are applied.
+    * Saves schematic in the Luanti Schematic format to filename.
 ]]
 ---@param p1 ivector
 ---@param p2 ivector
----@param probability_list core.Schematic.probability_list?
+---@param probability_list core.Schematic.probability_list[]?
 ---@param filename core.Path
 ---@param slice_prob_list core.SchematicDef.yslice_prob?
 function core.create_schematic(p1, p2, probability_list, filename, slice_prob_list) end
 
 --[[
-WIPDOC
+Rotation of a placed schematic, as a string. If omitted, the schematic is not
+rotated.
 ]]
 ---@alias core.Schematic.rotation
 --- | "0"
@@ -42,7 +63,7 @@ WIPDOC
 --- | "random"
 
 --[[
-WIPDOC
+`{["old_name"] = "convert_to", ...}`
 ]]
 ---@alias core.Schematic.replacements table<core.Node.name, core.Node.name>
 
@@ -92,6 +113,7 @@ function core.place_schematic(pos, schematic, rotation, replacements, force_plac
         * place_center_z
 ]]
 ---@param vmanip core.VoxelManip
+---@param pos ivector
 ---@param schematic core.Schematic
 ---@param rotation core.Schematic.rotation?
 ---@param replacements core.Schematic.replacements?
@@ -101,15 +123,17 @@ function core.place_schematic(pos, schematic, rotation, replacements, force_plac
 function core.place_schematic_on_vmanip(vmanip, pos, schematic, rotation, replacements, force_placement, flags) end
 
 --[[
-WIPDOC
+Options table for `core.serialize_schematic`.
 ]]
 ---@class core.SerializeSchematicOptions
 --[[
-WIPDOC
+If true and `format` is "lua", the generated Lua code has (X, Z) position
+comments for every X row of the schematic data.
 ]]
 ---@field lua_use_comments boolean?
 --[[
-WIPDOC
+If a nonzero number and `format` is "lua", the generated Lua code uses that
+many spaces as indentation instead of a tab character.
 ]]
 ---@field lua_num_indent_spaces int?
 
@@ -138,11 +162,15 @@ WIPDOC
 function core.serialize_schematic(schematic, format, options) end
 
 --[[
-WIPDOC
+Options table for `core.read_schematic`.
 ]]
 ---@class core.ReadSchematicOptions
 --[[
-WIPDOC
+* `none`: no `write_yslice_prob` table is inserted.
+* `low`: only probabilities that are not 254 or 255 are written in the
+  `write_yslice_prob` table.
+* `all`: write all probabilities to the `write_yslice_prob` table.
+* The default is `all`; any invalid value is interpreted as `all`.
 ]]
 ---@field write_yslice_prob "none"|"low"|"all"?
 
@@ -161,6 +189,6 @@ WIPDOC
 ]]
 ---@nodiscard
 ---@param schematic core.Schematic
----@param options core.ReadSchematicOptions
+---@param options core.ReadSchematicOptions?
 ---@return core.SchematicDef?
 function core.read_schematic(schematic, options) end

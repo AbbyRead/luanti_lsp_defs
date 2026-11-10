@@ -1,18 +1,21 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Utilities
 
 -- ------------------------- engine and client info ------------------------- --
 
 --[[
-Returns currently loading mod's name WHEN LOADING A MOD
+Returns the currently loading mod's name, when loading a mod.
 ]]
 ---@nodiscard
 ---@return string
 function core.get_current_modname() end
 
 --[[
-WIPDOC
+Returns the directory path for a mod, e.g. `"/home/user/.minetest/usermods/modname"`.
+Returns nil if the mod is not enabled or does not exist. Works regardless of whether the
+mod has been loaded yet. Useful for loading extra `.lua` files or static data, or for
+checking whether a mod is enabled.
 ]]
 ---@nodiscard
 ---@param modname string
@@ -20,7 +23,10 @@ WIPDOC
 function core.get_modpath(modname) end
 
 --[[
-WIPDOC
+Returns a list of the mods' names that are loaded or yet to be loaded during startup.
+
+* `load_order`: true sorts by load order, false sorts alphabetically. Default: `false`
+  (since 5.16.0, feature `get_modnames_load_order`)
 ]]
 ---@return string[]
 ---@nodiscard
@@ -29,14 +35,15 @@ function core.get_modnames() end
 --[[ core.get_game_info() split off into ./game_info.lua ]]--
 
 --[[
-WIPDOC
+Returns the world directory, e.g. `"/home/user/.minetest/world"`.
+Useful for storing custom data.
 ]]
 ---@nodiscard
 ---@return core.Path
 function core.get_worldpath() end
 
 --[[
-WIPDOC
+Returns true when running in singleplayer mode.
 ]]
 ---@nodiscard
 ---@return boolean
@@ -53,14 +60,16 @@ function core.is_singleplayer() end
 -- ------------------------------- filesystem ------------------------------- --
 
 --[[
-WIPDOC
+Creates the directory `path`, creating parent directories if they do not exist.
+Returns true on success.
 ]]
 ---@param path core.Path
 ---@return boolean success
 function core.mkdir(path) end
 
 --[[
-WIPDOC
+Removes the directory `path`. If `recursive` is true, removes it recursively;
+otherwise only removes it if empty. Returns true on success.
 ]]
 ---@param path core.Path
 ---@param recursive boolean?
@@ -68,7 +77,8 @@ WIPDOC
 function core.rmdir(path, recursive) end
 
 --[[
-WIPDOC
+Copies the directory `source` to `destination`. Existing files in
+`destination` are overwritten. Returns true on success.
 ]]
 ---@param source core.Path
 ---@param destination core.Path
@@ -76,7 +86,8 @@ WIPDOC
 function core.cpdir(source, destination) end
 
 --[[
-WIPDOC
+Moves the directory `source` to `destination`. Fails if `destination` is a
+non-empty directory. Returns true on success.
 ]]
 ---@param source core.Path
 ---@param destination core.Path
@@ -114,7 +125,7 @@ function core.safe_file_write(path, content) end
 -- --------------------------------- hashing -------------------------------- --
 
 --[[
-WIPDOC
+Returns the sha1 hash of `data`.
 ]]
 ---@nodiscard
 ---@param data string
@@ -123,7 +134,7 @@ WIPDOC
 function core.sha1(data, raw) end
 
 --[[
-WIPDOC
+Returns the sha256 hash of `data`.
 ]]
 ---@nodiscard
 ---@param data string
@@ -134,33 +145,37 @@ function core.sha256(data, raw) end
 -- --------------------------------- colors --------------------------------- --
 
 --[[
-Colorspec to hex basically
+Converts a ColorSpec to a ColorString (basically hex). Returns nil if the ColorSpec is
+invalid.
 ]]
 ---@nodiscard
 ---@param colorspec core.ColorSpec
----@return core.ColorString
+---@return core.ColorString?
 function core.colorspec_to_colorstring(colorspec) end
 
 --[[
-Layout: RGBA
-]]
----@nodiscard
----@return core.ColorSpec
----@param colorspec core.ColorSpec.numberfmt
-function core.colorspec_to_bytes(colorspec) end
-
---[[
-WIPDOC
+Converts a ColorSpec to a raw string of four bytes in RGBA layout.
 ]]
 ---@nodiscard
 ---@param colorspec core.ColorSpec
----@return core.ColorSpec.tablefmt
+---@return string? bytes Four bytes (RGBA); nil if the colorspec is invalid.
+function core.colorspec_to_bytes(colorspec) end
+
+--[[
+Converts a ColorSpec into RGBA table form. Returns nil if invalid. Can be used to parse
+ColorStrings.
+]]
+---@nodiscard
+---@param colorspec core.ColorSpec
+---@return core.ColorSpec.tablefmt.full? rgba nil if the ColorSpec is invalid
 function core.colorspec_to_table(colorspec) end
 
 -- ---------------------------------- misc ---------------------------------- --
 
 --[[
-WIPDOC
+Returns a day-night ratio value (as accepted by
+`ObjectRef:override_day_night_ratio`) equivalent to the given time of day
+(as returned by `core.get_timeofday`).
 ]]
 ---@param time_of_day string
 ---@return number

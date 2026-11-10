@@ -1,33 +1,36 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Utilities
 
 -- -------------------------------- GameInfo -------------------------------- --
 
 --[[
-WIPDOC
+Information about the current game. Other meta information (e.g. version or
+release number) can be read manually from `game.conf` in the game's root
+directory.
 ]]
 ---@class core.GameInfo
 --[[
-WIPDOC
+Game id.
 ]]
 ---@field id string
 --[[
-WIPDOC
+Game title.
 ]]
 ---@field title string
 --[[
-WIPDOC
+Game author.
 ]]
 ---@field author string
 --[[
-WIPDOC
+Root directory of the game.
 ]]
 ---@field path core.Path
 
 -- ---------------------------- core.* functions ---------------------------- --
 
 --[[
+Returns a table containing information about the current game.
 Unofficial: Path is the root directory of the game, useful if you are looking for it
 ]]
 ---@nodiscard

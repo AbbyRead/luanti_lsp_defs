@@ -1,67 +1,73 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `ObjectRef`
 
 -- ------------------------------ PlayerControl ----------------------------- --
 
 --[[
-WIPDOC
+Player input, as returned by `PlayerRef:get_player_control`.
+Boolean fields represent the pressed keys. The table is empty (`{}`) if the
+object is not a player.
 ]]
 ---@class core.PlayerControl
 --[[
-WIPDOC
+Forward key pressed.
 ]]
 ---@field  up boolean
 --[[
-WIPDOC
+Backward key pressed.
 ]]
 ---@field  down boolean
 --[[
-WIPDOC
+Left key pressed.
 ]]
 ---@field  left boolean
 --[[
-WIPDOC
+Right key pressed.
 ]]
 ---@field  right boolean
 --[[
-WIPDOC
+Jump key pressed.
 ]]
 ---@field  jump boolean
 --[[
-WIPDOC
+Aux1 key pressed.
 ]]
 ---@field  aux1 boolean
 --[[
-WIPDOC
+Sneak key pressed.
 ]]
 ---@field  sneak boolean
 --[[
-WIPDOC
+Dig key pressed.
 ]]
 ---@field  dig boolean
 --[[
-WIPDOC
+Place key pressed.
 ]]
 ---@field  place boolean
 --[[
-WIPDOC
+Equal to `dig`; exists only for backwards compatibility.
 ]]
 ---@field  LMB boolean
 --[[
-WIPDOC
+Equal to `place`; exists only for backwards compatibility.
 ]]
 ---@field  RMB boolean
 --[[
-WIPDOC
+Zoom key pressed.
 ]]
 ---@field  zoom boolean
 --[[
-WIPDOC
+Movement along the X axis (sideways), in the range [-1.0, +1.0].
+Takes both keyboard and joystick input into account. Prefer this over
+`left`/`right` to support different input methods correctly.
 ]]
 ---@field  movement_x number
 --[[
-WIPDOC
+Movement along the Y axis (forward/backward), in the range [-1.0, +1.0].
+Takes both keyboard and joystick input into account. Prefer this over
+`up`/`down` to support different input methods correctly.
 ]]
 ---@field  movement_y number
 

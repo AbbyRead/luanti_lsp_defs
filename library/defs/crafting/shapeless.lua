@@ -1,10 +1,11 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Groups > Groups in crafting recipes
 -- luanti/doc/lua_api.md: Definition tables > Crafting recipes
 
 --[[
-WIPDOC
+Input part of a shapeless recipe: a list of at least 1 input item. Items can
+be item names or groups (see "Groups in crafting recipes").
 ]]
 ---@class core.CraftingRecipeDef.shapeless.input
 --[[

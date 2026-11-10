@@ -1,9 +1,10 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Definition tables > Chat command definition
 
 --[[
-WIPDOC
+Name of a chat command. Lists the builtin commands; any other string is
+allowed for commands registered by mods (see `core.registered_chatcommands`).
 ]]
 ---@alias core.ChatCommandDef.keys
 --- | "pulverize"
@@ -47,15 +48,30 @@ WIPDOC
 --- | string
 
 --[[
-WIPDOC
+Called when the command is run.
+
+* `name` is the name of the player who issued the command.
+* `param` is a string with the full arguments to the command.
+
+Returns a boolean for success and a string value. The string is shown to the
+issuing player upon exit of `func` or, if `func` returns `false` and no string,
+the help message is shown.
 ]]
 ---@alias core.ChatCommandDef.func fun(name:string, param:string): boolean?, string?
 
 --[[
-WIPDOC
+Chat command definition
+
+Used by `core.register_chatcommand`.
+
+Specifies the function to be called and the privileges required when a player
+issues the command. A help message that is the concatenation of the params and
+description fields is shown when the "/help" chatcommand is issued.
 ]]
 ---@class core.ChatCommandDef
 --[[
+Short parameter description.
+
 Note that in params, the conventional use of symbols is as follows:
 
 * `<>` signifies a placeholder to be replaced when the command is used. For
@@ -70,23 +86,26 @@ Note that in params, the conventional use of symbols is as follows:
 ]]
 ---@field params string?
 --[[
-WIPDOC
+General description of the command's purpose.
 ]]
 ---@field description string?
 --[[
-WIPDOC
+Required privileges to run. See `core.check_player_privs()` for the format
+and see Privileges for an overview of privileges.
 ]]
 ---@field privs core.PrivilegeSet?
 --[[
-WIPDOC
+Called when the command is run.
 ]]
 ---@field func core.ChatCommandDef.func
 
 --[[
-WIPDOC
+Redefinition table for `core.override_chatcommand`. Overrides fields of a
+chatcommand registered with `core.register_chatcommand`; fields left out are
+kept.
 ]]
 ---@class core.ChatCommandDef.override
 --[[
-WIPDOC
+Replacement function.
 ]]
 ---@field func core.ChatCommandDef.func?

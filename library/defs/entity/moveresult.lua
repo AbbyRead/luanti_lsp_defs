@@ -1,26 +1,28 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Registered entities
 
 -- ---------------------------- Entity.moveresult --------------------------- --
 
 --[[
-WIPDOC
+Collision info passed to `on_step` (`moveresult` argument). Only available if
+`physical = true`.
 ]]
 ---@class core.Entity.moveresult
 --[[
-WIPDOC
+Only true if the entity was moving and collided with ground.
 ]]
 ---@field  touching_ground boolean
 --[[
-WIPDOC
+Whether the entity collided with anything.
 ]]
 ---@field  collides boolean
 --[[
-WIPDOC
+Whether the entity is standing on an object.
 ]]
 ---@field  standing_on_object boolean
 --[[
-WIPDOC
+Collisions that happened during the step. Does not contain data of unloaded
+mapblock collisions or when the velocity changes are negligibly small.
 ]]
 ---@field  collisions core.Entity.collision[]

@@ -1,11 +1,12 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `PseudoRandom`
 
 -- ------------------------------- constructor ------------------------------ --
 
 --[[
-WIPDOC
+* `PseudoRandom(seed)`: constructor
+    * `seed`: integer [s32]
 ]]
 ---@nodiscard
 ---@param seed int
@@ -33,14 +34,14 @@ Otherwise, use `PcgRandom`.
 local PseudoRandom = {}
 
 --[[
-* `next()`: return next integer random number [`0`...`32767`]
+* `next()`: return next random integer [0, 32767]
 ]]
 ---@nodiscard
 ---@return int
 function PseudoRandom:next() end
 
 --[[
-* `next(min, max)`: return next integer random number [`min`...`max`]
+* `next(min, max)`: return next random integer [`min`, `max`]
     * Either `max - min == 32767` or `max - min <= 6553` must be true
       due to the simple implementation making a bad distribution otherwise.
 ]]
@@ -52,7 +53,7 @@ function PseudoRandom:next(min, max) end
 
 --[[
 * `get_state()`: return state of pseudorandom generator as number
-    * use returned number as seed in PseudoRandom constructor to restore
+    * use returned integer as seed in PseudoRandom constructor to restore
 ]]
 ---@nodiscard
 ---@return int

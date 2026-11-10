@@ -1,11 +1,16 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Global callback registration functions
 
 -- -------------------------- PlayerHPChangeReason -------------------------- --
 
 --[[
-WIPDOC
+Value of `reason.type`. Any type may carry additional fields from mods.
+
+* `set_hp`: a mod or the engine called `set_hp` without giving a type; use this for
+  custom damage types
+* `fall`, `drown`, `respawn`: engine-defined causes
+* `punch` and `node_damage` have their own classes
 ]]
 ---@alias core.PlayerHPChangeReason.regular.type
 --- | "set_hp"
@@ -15,50 +20,50 @@ WIPDOC
 --- | string
 
 --[[
-WIPDOC
+A PlayerHPChangeReason table. Any type may have additional fields from mods.
 ]]
 ---@class core.PlayerHPChangeReason.regular : {[string]:any}
 --[[
-WIPDOC
+Kind of HP change.
 ]]
 ---@field type core.PlayerHPChangeReason.regular.type
 --[[
-WIPDOC
+Whether the change came from a mod or the engine.
 ]]
 ---@field from  "mod"|"engine"
 
 --[[
-WIPDOC
+Reason for damage caused by a punch.
 ]]
 ---@class core.PlayerHPChangeReason.punch : core.PlayerHPChangeReason.regular
 --[[
-WIPDOC
+Kind of HP change.
 ]]
 ---@field type "punch"
 --[[
-WIPDOC
+The puncher, or nil if none.
 ]]
 ---@field object core.ObjectRef?
 
 --[[
-WIPDOC
+Reason for damage from `damage_per_second` of a neighboring node.
 ]]
 ---@class core.PlayerHPChangeReason.node_damage : core.PlayerHPChangeReason.regular
 --[[
-WIPDOC
+Kind of HP change.
 ]]
 ---@field type "node_damage"
 --[[
-WIPDOC
+Name of the node, or nil.
 ]]
 ---@field node core.Node.name?
 --[[
-WIPDOC
+Position of the node.
 ]]
 ---@field node_pos ivec?
 
 --[[
-WIPDOC
+Why a player's HP changed; see the variant classes.
 ]]
 ---@alias core.PlayerHPChangeReason
 --- | core.PlayerHPChangeReason.regular
@@ -68,88 +73,64 @@ WIPDOC
 -- ---------------------------- core.* functions ---------------------------- --
 
 --[[
-WIPDOC
+Non-modifier callback; receives the final HP change calculated by the modifiers.
+`hp_change` is negative for damage.
 ]]
 ---@alias core.fn.on_player_hpchange.logger fun(player:core.PlayerRef, hp_change:int, reason:core.PlayerHPChangeReason)
 
 --[[
-* `core.register_on_player_hpchange(function(player, hp_change, reason), modifier)`
-    * Called when the player gets damaged or healed
-    * When `hp == 0`, damage doesn't trigger this callback.
-    * When `hp == hp_max`, healing does still trigger this callback.
-    * `player`: ObjectRef of the player
-    * `hp_change`: the amount of change. Negative when it is damage.
-      * Historically, the new HP value was clamped to [0, 65535] before
-        calculating the HP change. This clamping has been removed as of
-        version 5.10.0
-    * `reason`: a PlayerHPChangeReason table.
-        * The `type` field will have one of the following values:
-            * `set_hp`: A mod or the engine called `set_hp` without
-                        giving a type - use this for custom damage types.
-            * `punch`: Was punched. `reason.object` will hold the puncher, or nil if none.
-            * `fall`
-            * `node_damage`: `damage_per_second` from a neighboring node.
-                             `reason.node` will hold the node name or nil.
-                             `reason.node_pos` will hold the position of the node
-            * `drown`
-            * `respawn`
-        * Any of the above types may have additional fields from mods.
-        * `reason.from` will be `mod` or `engine`.
-    * `modifier`: when true, the function should return the actual `hp_change`.
-       Note: modifiers only get a temporary `hp_change` that can be modified by later modifiers.
-       Modifiers can return true as a second argument to stop the execution of further functions.
-       Non-modifiers receive the final HP change calculated by the modifiers.
+Called when the player gets damaged or healed.
+
+* When `hp == 0`, damage doesn't trigger this callback.
+* When `hp == hp_max`, healing does still trigger this callback.
+* `hp_change`: the amount of change; negative when it is damage. The new HP value
+  was historically clamped to [0, 65535] before calculating the change; this
+  clamping was removed in 5.10.0.
+* `reason`: a `core.PlayerHPChangeReason`. `reason.from` is `mod` or `engine`.
+* `modifier`: when true, the function is a modifier and should return the actual
+  `hp_change`. Modifiers only get a temporary `hp_change` that can be modified by
+  later modifiers, and can return true as a second value to stop the execution of
+  further functions. Non-modifiers receive the final HP change calculated by the
+  modifiers.
 ]]
 ---@param f core.fn.on_player_hpchange.logger
 function core.register_on_player_hpchange(f) end
 
 --[[
-WIPDOC
+Modifier callback; receives a temporary `hp_change` that later modifiers may alter.
+Returns the actual `hp_change`, and optionally true as a second value to stop the
+execution of further functions.
 ]]
 ---@alias core.fn.on_player_hpchange.modifier fun(player:core.PlayerRef, hp_change:int, reason:core.PlayerHPChangeReason):int, boolean?
 
 --[[
-* `core.register_on_player_hpchange(function(player, hp_change, reason), modifier)`
-    * Called when the player gets damaged or healed
-    * When `hp == 0`, damage doesn't trigger this callback.
-    * When `hp == hp_max`, healing does still trigger this callback.
-    * `player`: ObjectRef of the player
-    * `hp_change`: the amount of change. Negative when it is damage.
-      * Historically, the new HP value was clamped to [0, 65535] before
-        calculating the HP change. This clamping has been removed as of
-        version 5.10.0
-    * `reason`: a PlayerHPChangeReason table.
-        * The `type` field will have one of the following values:
-            * `set_hp`: A mod or the engine called `set_hp` without
-                        giving a type - use this for custom damage types.
-            * `punch`: Was punched. `reason.object` will hold the puncher, or nil if none.
-            * `fall`
-            * `node_damage`: `damage_per_second` from a neighboring node.
-                             `reason.node` will hold the node name or nil.
-                             `reason.node_pos` will hold the position of the node
-            * `drown`
-            * `respawn`
-        * Any of the above types may have additional fields from mods.
-        * `reason.from` will be `mod` or `engine`.
-    * `modifier`: when true, the function should return the actual `hp_change`.
-       Note: modifiers only get a temporary `hp_change` that can be modified by later modifiers.
-       Modifiers can return true as a second argument to stop the execution of further functions.
-       Non-modifiers receive the final HP change calculated by the modifiers.
+Called when the player gets damaged or healed.
+
+* When `hp == 0`, damage doesn't trigger this callback.
+* When `hp == hp_max`, healing does still trigger this callback.
+* `hp_change`: the amount of change; negative when it is damage. The new HP value
+  was historically clamped to [0, 65535] before calculating the change; this
+  clamping was removed in 5.10.0.
+* `reason`: a `core.PlayerHPChangeReason`. `reason.from` is `mod` or `engine`.
+* `modifier`: when true, the function is a modifier and should return the actual
+  `hp_change`. Modifiers only get a temporary `hp_change` that can be modified by
+  later modifiers, and can return true as a second value to stop the execution of
+  further functions. Non-modifiers receive the final HP change calculated by the
+  modifiers.
 ]]
 ---@param f core.fn.on_player_hpchange.modifier
 ---@param modifier true
 function core.register_on_player_hpchange(f, modifier) end
 
 --[[
-WIPDOC
+Callback for `core.register_on_dieplayer`; `reason` is as in `register_on_player_hpchange`.
 ]]
 ---@alias core.fn.on_dieplayer fun(ObjectRef:core.PlayerRef, reason: core.PlayerHPChangeReason)
 
 --[[
-* `core.register_on_dieplayer(function(ObjectRef, reason))`
-    * Called when a player dies
-    * `reason`: a PlayerHPChangeReason table, see register_on_player_hpchange
-    * For customizing the death screen, see `core.show_death_screen`.
+Called when a player dies. `reason` is a `core.PlayerHPChangeReason`, see
+`core.register_on_player_hpchange`. For customizing the death screen, see
+`core.show_death_screen`.
 ]]
 ---@param f core.fn.on_dieplayer
 function core.register_on_dieplayer(f) end

@@ -1,11 +1,13 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `PcgRandom`
 
 -- ------------------------------- constructor ------------------------------ --
 
 --[[
-WIPDOC
+* `PcgRandom(seed, [seq])`: constructor
+    * `seed`: integer seed in the [ulua] range
+    * `seq`: optional integer sequence, each integer in the [ulua] range
 ]]
 ---@nodiscard
 ---@param seed int
@@ -16,13 +18,18 @@ function PcgRandom(seed, seq) end
 -- -------------------------------- PcgRandom ------------------------------- --
 
 --[[
-WIPDOC
+`PcgRandom`
+-----------
+
+A 32-bit pseudorandom number generator.
+Uses PCG32, an algorithm of the permuted congruential generator family,
+offering very strong randomness.
 ]]
 ---@class core.PcgRandom
 PcgRandom = {}
 
 --[[
-* `next()`: return next integer random number [`-2147483648`...`2147483647`]
+* `next()`: return next random integer number [s32]
 ]]
 ---@nodiscard
 ---@return int

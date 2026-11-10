@@ -1,85 +1,89 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Mapgen objects
 
 -- ----------------------------- GenNotify.flags ---------------------------- --
 
 --[[
-WIPDOC
+Table form of the gennotify flags passed to `core.set_gen_notify`: flag names
+mapped to booleans. A field prefixed with `"no"` mapped to any boolean unsets
+the flag.
 ]]
 ---@class core.GenNotify.flags.tablefmt : {[string]:boolean?}
 --[[
-WIPDOC
+Request `dungeon` notifications: bottom center position of dungeon rooms.
 ]]
 ---@field dungeon boolean?
 --[[
-WIPDOC
+Explicitly clears `dungeon`.
 ]]
 ---@field nodungeon boolean?
 --[[
-WIPDOC
+Request `temple` notifications: as `dungeon` but for desert temples (mgv6 only).
 ]]
 ---@field temple boolean?
 --[[
-WIPDOC
+Explicitly clears `temple`.
 ]]
 ---@field notemple boolean?
 --[[
-WIPDOC
+Request `cave_begin` notifications.
 ]]
 ---@field cave_begin boolean?
 --[[
-WIPDOC
+Explicitly clears `cave_begin`.
 ]]
 ---@field nocave_begin boolean?
 --[[
-WIPDOC
+Request `cave_end` notifications.
 ]]
 ---@field cave_end boolean?
 --[[
-WIPDOC
+Explicitly clears `cave_end`.
 ]]
 ---@field nocave_end boolean?
 --[[
-WIPDOC
+Request `large_cave_begin` notifications.
 ]]
 ---@field large_cave_begin boolean?
 --[[
-WIPDOC
+Explicitly clears `large_cave_begin`.
 ]]
 ---@field nolarge_cave_begin boolean?
 --[[
-WIPDOC
+Request `large_cave_end` notifications.
 ]]
 ---@field large_cave_end boolean?
 --[[
-WIPDOC
+Explicitly clears `large_cave_end`.
 ]]
 ---@field nolarge_cave_end boolean?
 --[[
-WIPDOC
+Request `custom` notifications: data originating from the Mapgen environment (Lua API).
 ]]
 ---@field custom boolean?
 --[[
-WIPDOC
+Explicitly clears `custom`.
 ]]
 ---@field nocustom boolean?
 --[[
-WIPDOC
+Request notifications for decorations (the decoration IDs to notify about are passed as `deco_ids` to `core.set_gen_notify`).
 ]]
 ---@field decoration boolean?
 --[[
-WIPDOC
+Explicitly clears `decoration`.
 ]]
 ---@field nodecoration boolean?
 
 --[[
-WIPDOC
+String form of the gennotify flags: a comma-delimited set of flag names
+(whitespace and unrecognized flags are ignored), e.g.
+`"dungeon, decoration"`. A flag prefixed with `"no"` explicitly clears it.
 ]]
 ---@alias core.GenNotify.flags.stringfmt string
 
 --[[
-WIPDOC
+Gennotify flags in table or string form, as accepted by `core.set_gen_notify`.
 ]]
 ---@alias core.GenNotify.flags
 --- | core.GenNotify.flags.tablefmt
@@ -88,7 +92,9 @@ WIPDOC
 -- -------------------------------- GenNotify ------------------------------- --
 
 --[[
-WIPDOC
+Key of a decoration notification: `"decoration#id"`, where `id` is the
+numeric unique decoration ID as returned by `core.get_decoration_id()`,
+e.g. `"decoration#123"`.
 ]]
 ---@alias core.GenNotify.key.decoration string
 
@@ -125,34 +131,37 @@ node above the returned position and possibly displaced by 'place_offset_y'.
 ]]
 ---@class core.GenNotify
 --[[
-WIPDOC
+Positions of dungeon rooms (bottom center) when `dungeon` notifications
+were requested.
 ]]
----@field dungeon ivec?
+---@field dungeon ivec[]?
 --[[
-WIPDOC
+Desert temple positions (mgv6 only).
 ]]
----@field temple ivec?
+---@field temple ivec[]?
 --[[
-WIPDOC
+Positions of cave beginnings.
 ]]
----@field cave_begin ivec?
+---@field cave_begin ivec[]?
 --[[
-WIPDOC
+Positions of cave ends.
 ]]
----@field cave_end ivec?
+---@field cave_end ivec[]?
 --[[
-WIPDOC
+Positions of large cave beginnings.
 ]]
----@field large_cave_begin ivec?
+---@field large_cave_begin ivec[]?
 --[[
-WIPDOC
+Positions of large cave ends.
 ]]
----@field large_cave_end ivec?
+---@field large_cave_end ivec[]?
 --[[
-WIPDOC
+Data originating from the Mapgen environment (Lua API). Key = user-defined
+ID (string), value = arbitrary Lua value.
 ]]
 ---@field custom table<string, any>
 --[[
-WIPDOC
+Positions of the ground surface 'place_on' nodes for the decoration with the
+given ID (not the decorations themselves).
 ]]
----@field [core.GenNotify.key.decoration] ivec?
+---@field [core.GenNotify.key.decoration] ivec[]?

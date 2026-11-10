@@ -1,9 +1,16 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `ObjectRef`
 
 --[[
-WIPDOC
+A reference to a player (`ObjectRef` of a player). Includes all common
+`ObjectRef` methods, with player-specific overrides and the player-only methods
+below.
+
+Getters may be called for invalid objects and will return nothing then. All
+other methods should not be called on invalid objects (see `is_valid()`).
+Do not store references longer than needed: let go of them as soon as control
+is returned from Lua back to the engine.
 ]]
 ---@class core.PlayerRef : _.ObjectRef.__base
 local PlayerRef = {}
@@ -151,8 +158,8 @@ function PlayerRef:get_look_horizontal() end
 function PlayerRef:set_look_vertical(radians) end
 
 --[[
-* `get_look_horizontal()`: yaw in radians
-    * Angle is counter-clockwise from the +z direction.
+* `set_look_horizontal(radians)`: sets look yaw
+    * radians: Angle from the +z direction, where positive is counter-clockwise.
 ]]
 ---@param radians number
 function PlayerRef:set_look_horizontal(radians) end
@@ -415,7 +422,7 @@ function PlayerRef:hud_get_hotbar_selected_image() end
 --[[ PlayerRef:set_sky() .. PlayerRef:get_sky_color() split off into ./player_skybox.lua ]]--
 --[[ PlayerRef:set_sun() .. PlayerRef:get_sun() split off into ./player_sun.lua ]]--
 --[[ PlayerRef:set_moon() .. PlayerRef:get_moon() split off into ./player_moon.lua ]]--
---[[ PlayerRef:set_stars() .. PlayerRef:get_stars() split off into ./player_stars.lua ]]--
+--[[ PlayerRef:set_stars() .. PlayerRef:get_stars() split off into ./player_star.lua ]]--
 --[[ PlayerRef:set_clouds() .. PlayerRef:get_clouds() split off into ./player_clouds.lua ]]--
 
 --[[
@@ -484,7 +491,11 @@ function PlayerRef:set_eye_offset(firstperson, thirdperson_back, thirdperson_fro
 function PlayerRef:get_eye_offset() end
 
 --[[
-WIPDOC
+Camera mode:
+* `any`: free choice between all modes (default)
+* `first`: first-person camera
+* `third`: third-person camera
+* `third_front`: third-person camera, looking opposite of movement direction
 ]]
 ---@alias core.PlayerCameraParams.mode
 --- | "any"
@@ -493,24 +504,27 @@ WIPDOC
 --- | "third_front"
 
 --[[
-WIPDOC
+Camera parameters, as accepted by `PlayerRef:set_camera`.
+Supported by clients since 5.12.0.
 ]]
 ---@class core.PlayerCameraParams
 --[[
-WIPDOC
+Defines the camera mode used.
 ]]
 ---@field mode core.PlayerCameraParams.mode
 
 --[[
 * `set_camera(params)`: Sets camera parameters.
+    * `params` must be a table to update the parameters or `nil` (requires >= 5.16.0)
+      to reset all parameters to defaults.
     * `mode`: Defines the camera mode used
       - `any`: free choice between all modes (default)
       - `first`: first-person camera
       - `third`: third-person camera
       - `third_front`: third-person camera, looking opposite of movement direction
-    * Supported by client since 5.12.0.
+    * Supported by clients since 5.12.0.
 ]]
----@param params core.PlayerCameraParams
+---@param params core.PlayerCameraParams?
 function PlayerRef:set_camera(params) end
 
 --[[

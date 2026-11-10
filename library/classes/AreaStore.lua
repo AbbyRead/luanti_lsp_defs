@@ -1,65 +1,67 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `AreaStore`
 
 --[[
-WIPDOC
+Unique ID of an area within an `AreaStore`. Unsigned integer in the range
+[0, 2^32-2].
 ]]
 ---@alias core.AreaStoreID int
 
 -- ----------------------------- AreaStore.area ----------------------------- --
 
 --[[
-WIPDOC
+Area information returned when `include_corners` is `true`.
 ]]
 ---@class core.AreaStore.area.include_corners
 --[[
-WIPDOC
+Minimum corner of the area (inclusive).
 ]]
 ---@field min ivec
 --[[
-WIPDOC
+Maximum corner of the area (inclusive).
 ]]
 ---@field max ivec
 
 
 --[[
-WIPDOC
+Area information returned when `include_data` is `true`.
 ]]
 ---@class core.AreaStore.area.include_data
 --[[
-WIPDOC
+String stored with the area (see `AreaStore:insert_area`).
 ]]
 ---@field data string
 
 --[[
-WIPDOC
+Area information returned when both `include_corners` and `include_data` are
+`true`.
 ]]
 ---@class core.AreaStore.area.include_all : core.AreaStore.area.include_corners, core.AreaStore.area.include_data
 
 -- ------------------------- AreaStore.cache_params ------------------------- --
 
 --[[
-WIPDOC
+Parameters for `AreaStore:set_cache_params`.
 ]]
 ---@class core.AreaStore.cache_params
 --[[
-WIPDOC
+Whether to enable the prefiltering cache. Default: `true`.
 ]]
 ---@field enabled boolean?
 --[[
-WIPDOC
+Radius (in nodes) of the areas the cache generates prefiltered lists for.
+Minimum 16, default 64.
 ]]
 ---@field block_radius int?
 --[[
-WIPDOC
+Cache size. Minimum 20, default 1000.
 ]]
 ---@field limit int?
 
 -- ------------------------------- constructor ------------------------------ --
 
 --[[
-Unofficial note: I am aware that "Luanti" isn't a valid AreaStore type, but that makes it default to Luanti functions so, is it not accurate?
 * `AreaStore(type_name)`
     * Returns a new AreaStore instance
     * `type_name`: optional, forces the internally used API.
@@ -90,7 +92,11 @@ use the provided load and write functions for this.
 AreaStore = {}
 
 --[[
-WIPDOC
+* `get_area(id, include_corners, include_data)`
+    * Returns the area information about the specified ID.
+    * Returns `nil` if the area is not found, `true` without `include_corners`
+      and `include_data`, otherwise a table with `min` and `max` (if
+      `include_corners`) and `data` (if `include_data`).
 ]]
 ---@nodiscard
 ---@param id core.AreaStoreID
@@ -100,7 +106,7 @@ WIPDOC
 function AreaStore:get_area(id, include_corners, include_data) end
 
 --[[
-WIPDOC
+Variant of `get_area` that includes the area corners.
 ]]
 ---@nodiscard
 ---@param id core.AreaStoreID
@@ -110,7 +116,7 @@ WIPDOC
 function AreaStore:get_area(id, include_corners, include_data) end
 
 --[[
-WIPDOC
+Variant of `get_area` that includes the area data.
 ]]
 ---@nodiscard
 ---@param id core.AreaStoreID
@@ -120,7 +126,7 @@ WIPDOC
 function AreaStore:get_area(id, include_corners, include_data) end
 
 --[[
-WIPDOC
+Variant of `get_area` that includes the area corners and data.
 ]]
 ---@nodiscard
 ---@param id core.AreaStoreID
@@ -130,47 +136,54 @@ WIPDOC
 function AreaStore:get_area(id, include_corners, include_data) end
 
 --[[
-WIPDOC
+* `get_areas_for_pos(pos, include_corners, include_data)`
+    * Returns all areas that contain `pos` as a table, indexed by the area ID.
+    * Table values: see `get_area`.
 ]]
 ---@nodiscard
----@param id core.AreaStoreID
+---@param pos vector
 ---@param include_corners false?
 ---@param include_data false?
 ---@return table<core.AreaStoreID, true?>
-function AreaStore:get_areas_for_pos(id, include_corners, include_data) end
+function AreaStore:get_areas_for_pos(pos, include_corners, include_data) end
 
 --[[
-WIPDOC
+Variant of `get_areas_for_pos` that includes the area corners.
 ]]
 ---@nodiscard
----@param id core.AreaStoreID
+---@param pos vector
 ---@param include_corners true
 ---@param include_data false?
 ---@return table<core.AreaStoreID, core.AreaStore.area.include_corners?>
-function AreaStore:get_areas_for_pos(id, include_corners, include_data) end
+function AreaStore:get_areas_for_pos(pos, include_corners, include_data) end
 
 --[[
-WIPDOC
+Variant of `get_areas_for_pos` that includes the area data.
 ]]
 ---@nodiscard
----@param id core.AreaStoreID
+---@param pos vector
 ---@param include_corners false?
 ---@param include_data true
 ---@return table<core.AreaStoreID, core.AreaStore.area.include_data?>
-function AreaStore:get_areas_for_pos(id, include_corners, include_data) end
+function AreaStore:get_areas_for_pos(pos, include_corners, include_data) end
 
 --[[
-WIPDOC
+Variant of `get_areas_for_pos` that includes the area corners and data.
 ]]
 ---@nodiscard
----@param id core.AreaStoreID
+---@param pos vector
 ---@param include_corners true
 ---@param include_data true
 ---@return table<core.AreaStoreID, core.AreaStore.area.include_all?>
-function AreaStore:get_areas_for_pos(id, include_corners, include_data) end
+function AreaStore:get_areas_for_pos(pos, include_corners, include_data) end
 
 --[[
-WIPDOC
+* `get_areas_in_area(corner1, corner2, accept_overlap, include_corners, include_data)`
+    * Returns all areas that contain all nodes inside the area specified by
+      `corner1` and `corner2` (inclusive).
+    * `accept_overlap`: if `true`, areas are returned that have nodes in
+      common (intersect) with the specified area.
+    * Returns the same values as `get_areas_for_pos`.
 ]]
 ---@nodiscard
 ---@param pos1 ivector
@@ -182,7 +195,7 @@ WIPDOC
 function AreaStore:get_areas_in_area(pos1, pos2, accept_overlap, include_corners, include_data) end
 
 --[[
-WIPDOC
+Variant of `get_areas_in_area` that includes the area corners.
 ]]
 ---@nodiscard
 ---@param pos1 ivector
@@ -194,7 +207,7 @@ WIPDOC
 function AreaStore:get_areas_in_area(pos1, pos2, accept_overlap, include_corners, include_data) end
 
 --[[
-WIPDOC
+Variant of `get_areas_in_area` that includes the area data.
 ]]
 ---@nodiscard
 ---@param pos1 ivector
@@ -206,7 +219,7 @@ WIPDOC
 function AreaStore:get_areas_in_area(pos1, pos2, accept_overlap, include_corners, include_data) end
 
 --[[
-WIPDOC
+Variant of `get_areas_in_area` that includes the area corners and data.
 ]]
 ---@nodiscard
 ---@param pos1 ivector
@@ -223,13 +236,13 @@ function AreaStore:get_areas_in_area(pos1, pos2, accept_overlap, include_corners
     * The (inclusive) positions `corner1` and `corner2` describe the area.
     * `data` is a string stored with the area.
     * `id` (optional): will be used as the internal area ID if it is a unique
-      number between 0 and 2^32-2.
+      integer in the range [0, 2^32-2].
 ]]
 ---@nodiscard
 ---@param corner1 ivector
 ---@param corner2 ivector
 ---@param data string
----@param id core.AreaStoreID
+---@param id core.AreaStoreID?
 ---@return core.AreaStoreID?
 function AreaStore:insert_area(corner1, corner2, data, id) end
 
@@ -255,16 +268,6 @@ function AreaStore:remove_area(id) end
 * `set_cache_params(params)`: sets params for the included prefiltering cache.
   Calling invalidates the cache, so that its elements have to be newly
   generated.
-    * `params` is a table with the following fields:
-      ```lua
-      {
-          enabled = boolean,   -- Whether to enable, default true
-          block_radius = int,  -- The radius (in nodes) of the areas the cache
-                               -- generates prefiltered lists for, minimum 16,
-                               -- default 64
-          limit = int,         -- The cache size, minimum 20, default 1000
-      }
-      ```
 ]]
 ---@param params core.AreaStore.cache_params
 function AreaStore:set_cache_params(params) end
@@ -290,11 +293,16 @@ function AreaStore:to_file(filename) end
   Returns success and, optionally, an error message.
 ]]
 ---@param str string
+---@return boolean success
+---@return string? error_message
 function AreaStore:from_string(str) end
 
 --[[
 * `from_file(filename)`: Experimental. Like `from_string()`, but reads the data
   from a file.
+  Returns success and, optionally, an error message.
 ]]
 ---@param filename core.Path
+---@return boolean success
+---@return string? error_message
 function AreaStore:from_file(filename) end

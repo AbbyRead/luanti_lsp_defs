@@ -1,9 +1,13 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Misc.
 
 --[[
-WIPDOC
+Environment containing insecure (unsandboxed) functions, returned by
+`core.request_insecure_environment`. Only available to mods listed in the
+`secure.trusted_mods` setting, or when mod security is disabled.
+
+NEVER allow other mods to access it; store it in a local variable.
 ]]
 ---@class corelib.insecure
 local insecure = {}

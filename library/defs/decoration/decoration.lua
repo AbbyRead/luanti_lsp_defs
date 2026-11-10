@@ -1,12 +1,13 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Flag Specifier Format
 -- luanti/doc/lua_api.md: Decoration types
 -- luanti/doc/lua_api.md: Mapgen objects
 -- luanti/doc/lua_api.md: Definition tables > Decoration definition
 
 --[[
-WIPDOC
+Numeric unique decoration ID, as returned by `core.get_decoration_id()`.
+Used in gennotify keys of the form `"decoration#id"` (e.g. `decoration#123`).
 ]]
 ---@alias core.DecorationID int
 
@@ -35,7 +36,8 @@ decoration placement uses a different and much faster method.
 -- -------------------------- DecorationDef.__base -------------------------- --
 
 --[[
-WIPDOC
+Offset that `spawn_by` also checks: -1 (below), 0 (no additional checks) or
+1 (above).
 ]]
 ---@alias core.DecorationDef.check_offset
 --- | -1
@@ -43,7 +45,7 @@ WIPDOC
 --- | 1
 
 --[[
-WIPDOC
+Biome name, ID or definition.
 ]]
 ---@alias core.DecorationDef.biome
 --- | string
@@ -60,6 +62,7 @@ Size of the square (X / Z) divisions of the mapchunk being generated.
 Determines the resolution of noise variation if used.
 If the chunk size is not evenly divisible by sidelen, sidelen is made
 equal to the chunk size.
+Integer in range: [1, 32767]
 ]]
 ---@field sidelen int?
 --[[
@@ -73,14 +76,14 @@ Can be a list of (or a single) biome names, IDs, or definitions.
 *@default* `-31000`
 
 Lower limit for decoration (inclusive).
-Refer to the Y coordinate of the 'place_on' node.
+Refers to the Y coordinate of the 'place_on' node. Integer [s16]
 ]]
 ---@field y_min int?
 --[[
 *@default* `31000`
 
 Upper limit for decoration (inclusive).
-Refer to the Y coordinate of the 'place_on' node.
+Refers to the Y coordinate of the 'place_on' node. Integer [s16]
 ]]
 ---@field y_max int?
 --[[
@@ -90,9 +93,9 @@ and also the ones at the height plus the check_offset, excluding both center nod
 ]]
 ---@field spawn_by OneOrMany<core.Node.name>?
 --[[
-*@default* `0`
+*@default* `-1`
 
-Specifies the offset that spawn_by should also check
+Specifies the offset that spawn_by should also check.
 The default value of -1 is useful to e.g check for water next to the base node.
 0 disables additional checks, valid values: {-1, 0, 1}
 ]]
@@ -128,7 +131,10 @@ Flags for all decoration types.
 ---@class _.DecorationDef.simple.noise_params : _.DecorationDef.simple.__partial, _.DecorationDef.noise_params.__partial, _.DecorationDef.__base
 
 --[[
-WIPDOC
+`simple` decoration: creates a 1 x `H` x 1 column of a specified node (or a
+random node from a list). Can specify a node it must spawn next to, such as
+water or lava, and a random height between a lower and upper bound. Intended
+for grass, flowers, cacti, papyri, waterlilies and so on.
 ]]
 ---@alias core.DecorationDef.simple
 --- | _.DecorationDef.simple.fill_ratio
@@ -136,7 +142,7 @@ WIPDOC
 
 ---@class _.DecorationDef.simple.__partial
 --[[
-Type. "simple", "schematic" or "lsystem" supported
+Type. "simple", "schematic" or "lsystem" supported; this is a `simple` decoration.
 ]]
 ---@field deco_type "simple"
 --[[
@@ -151,11 +157,13 @@ is placed as the decoration.
 Decoration height in nodes.
 If height_max is not 0, this is the lower limit of a randomly
 selected height.
+Integer in range: [1, 32767]
 ]]
 ---@field height int?
 --[[
 Upper limit of the randomly selected height.
 If absent, the parameter 'height' is used as a constant.
+Integer in range: [1, 32767]
 ]]
 ---@field height_max int?
 --[[
@@ -189,7 +197,10 @@ to the 'place_on' node.
 ---@class _.DecorationDef.schematic.noise_params : _.DecorationDef.schematic.__partial, _.DecorationDef.noise_params.__partial, _.DecorationDef.__base
 
 --[[
-WIPDOC
+`schematic` decoration: copies a box of `MapNodes` from a schematic file (or
+raw description). Can specify a probability of a node randomly appearing when
+placed. Intended for multi-node discrete structures such as trees, cave
+spikes and rocks.
 ]]
 ---@alias core.DecorationDef.schematic
 --- | _.DecorationDef.schematic.fill_ratio
@@ -197,13 +208,15 @@ WIPDOC
 
 ---@class _.DecorationDef.schematic.__partial
 --[[
-Type. "simple", "schematic" or "lsystem" supported
+Type. "simple", "schematic" or "lsystem" supported; this is a `schematic` decoration.
 ]]
 ---@field deco_type "schematic"
 --[[
 If schematic is a string, it is the filepath relative to the current
 working directory of the specified Luanti schematic file.
-Could also be the ID of a previously registered schematic.
+Could also be the ID of a previously registered schematic, or a table
+specifying the schematic (`size` and `data` are mandatory, `yslice_prob` is
+optional; see Schematic specifier).
 ]]
 ---@field schematic core.Schematic
 --[[
@@ -215,8 +228,9 @@ Rotation can be "0", "90", "180", "270", or "random"
 ]]
 ---@field rotation core.Schematic.rotation?
 --[[
-Y offset of the decoration base node relative to the standard base
-node position.
+If the flag 'place_center_y' is set this parameter is ignored.
+Y offset of the schematic base node layer relative to the 'place_on'
+node.
 Can be positive or negative. Default is 0.
 Effect is inverted for "all_ceilings" decorations.
 Ignored by 'y_min', 'y_max' and 'spawn_by' checks, which always refer
@@ -224,7 +238,8 @@ to the 'place_on' node.
 ]]
 ---@field place_offset_y int?
 --[[
-WIPDOC
+Flags for schematic decorations (e.g. `place_center_x`). Replaces the
+base `flags` field for this decoration type. See Schematic attributes.
 ]]
 ---@field flags core.DecorationDef.schematic.flags?
 
@@ -234,7 +249,8 @@ WIPDOC
 ---@class _.DecorationDef.lsystem.noise_params : _.DecorationDef.lsystem.__partial, _.DecorationDef.noise_params.__partial, _.DecorationDef.__base
 
 --[[
-WIPDOC
+`lsystem` decoration: generates an L-system tree at the position where the
+decoration is placed.
 ]]
 ---@alias core.DecorationDef.lsystem
 --- | _.DecorationDef.lsystem.fill_ratio
@@ -242,7 +258,7 @@ WIPDOC
 
 ---@class _.DecorationDef.lsystem.__partial
 --[[
-Type. "simple", "schematic" or "lsystem" supported
+Type. "simple", "schematic" or "lsystem" supported; this is an `lsystem` decoration.
 ]]
 ---@field deco_type "lsystem"
 --[[

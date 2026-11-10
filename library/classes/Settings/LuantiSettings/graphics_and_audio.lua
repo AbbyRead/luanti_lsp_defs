@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- builtin/settingtypes.txt
 -- minetest.conf.example
 
@@ -108,7 +108,7 @@
 -- ----------------- [Graphics and Audio] [*Graphics] [**3D] ---------------- --
 
 --[[
-WIPDOC
+Values of `3d_mode`: the 3D output method. `"none"` disables 3D output.
 ]]
 ---@alias core.LuantiSettings.enums.3d_mode
 --- | "none"
@@ -189,7 +189,7 @@ WIPDOC
 -- ------------ [Graphics and Audio] [*Graphics] [**Screenshots] ------------ --
 
 --[[
-WIPDOC
+Values of `screenshot_format`: the image format of screenshots.
 ]]
 ---@alias core.LuantiSettings.enums.screenshot_format
 --- | "png"
@@ -227,7 +227,8 @@ WIPDOC
 -- ---- [Graphics and Audio] [*Graphics] [**Node and Entity Highlighting] --- --
 
 --[[
-WIPDOC
+Values of `node_highlighting`: how the selected node or object is highlighted
+(`"box"` for a selection box, `"halo"` for a halo).
 ]]
 ---@alias core.LuantiSettings.enums.node_highlighting
 --- | "box"
@@ -353,7 +354,7 @@ WIPDOC
 ---@field anisotropic_filter boolean?
 
 --[[
-WIPDOC
+Values of `antialiasing`: the antialiasing method (`"none"` disables it).
 ]]
 ---@alias core.LuantiSettings.enums.antialiasing
 --- | "none"
@@ -388,7 +389,7 @@ WIPDOC
 ---@field antialiasing core.LuantiSettings.enums.antialiasing?
 
 --[[
-WIPDOC
+Values of `fsaa`: the size of the sampling grid, e.g. `"2"` takes 2x2 = 4 samples.
 ]]
 ---@alias core.LuantiSettings.enums.fsaa
 --- | "2"
@@ -408,20 +409,21 @@ WIPDOC
 -- --------- [Graphics and Audio] [*Graphics] [**Occlusion Culling] --------- --
 
 --[[
-WIPDOC
+Values of `occlusion_culler`: `"bfs"` is the newer breadth-first-search algorithm
+with side culling, `"loops"` is the legacy algorithm with nested loops.
 ]]
 ---@alias core.LuantiSettings.enums.occlusion_culler
 --- | "bfs"
 --- | "loops"
 
 --[[
-WIPDOC
+Occlusion culling settings.
 ]]
 ---@class _.LuantiSettings.graphics_and_audio.graphics.occlusion_culling
 --[[
 #    Type of occlusion_culler
 #
-#    "loops" is the legacy algorithm with nested loops and O(n³) complexity
+#    "loops" is the legacy algorithm with nested loops and O(n^3) complexity
 #    "bfs" is the new algorithm based on breadth-first-search and side culling
 #
 #    This setting should only be changed if you have performance problems.
@@ -441,7 +443,8 @@ WIPDOC
 -- --------------------- [Graphics and Audio] [*Effects] -------------------- --
 
 --[[
-WIPDOC
+Values of `leaves_style`: `"fancy"` shows all faces, `"simple"` only outer faces,
+`"opaque"` disables transparency.
 ]]
 ---@alias core.LuantiSettings.enums.leaves_style
 --- | "fancy"
@@ -449,7 +452,7 @@ WIPDOC
 --- | "opaque"
 
 --[[
-WIPDOC
+General visual effect settings.
 ]]
 ---@class _.LuantiSettings.graphics_and_audio.effects
 --[[
@@ -492,7 +495,7 @@ WIPDOC
 
 
 --[[
-WIPDOC
+Settings for waving nodes (leaves, plants and liquids).
 ]]
 ---@class _.LuantiSettings.graphics_and_audio.effects.waving_nodes
 --[[
@@ -545,7 +548,7 @@ WIPDOC
 -- ----------- [Graphics and Audio] [*Effects] [**Dynamic shadows] ---------- --
 
 --[[
-WIPDOC
+Dynamic shadow (shadow mapping) settings.
 ]]
 ---@class _.LuantiSettings.graphics_and_audio.effects.dynamic_shadows
 --[[
@@ -596,7 +599,7 @@ WIPDOC
 ---@field shadow_map_texture_32bit boolean?
 
 --[[
-WIPDOC
+Values of `shadow_filters`: the shadow filtering quality (soft shadow method).
 ]]
 ---@alias core.LuantiSettings.enums.shadow_filters
 --- | "0"
@@ -647,7 +650,7 @@ WIPDOC
 -- ----------- [Graphics and Audio] [*Effects] [**Post Processing] ---------- --
 
 --[[
-WIPDOC
+Post processing pipeline settings.
 ]]
 ---@class _.LuantiSettings.graphics_and_audio.effects.post_processing
 --[[
@@ -723,7 +726,7 @@ WIPDOC
 -- ------------ [Graphics and Audio] [*Effects] [**Other Effects] ----------- --
 
 --[[
-WIPDOC
+Miscellaneous visual effect settings.
 ]]
 ---@class _.LuantiSettings.graphics_and_audio.effects.other_effects
 --[[
@@ -746,7 +749,7 @@ WIPDOC
 -- ---------------------- [Graphics and Audio] [*Audio] --------------------- --
 
 --[[
-WIPDOC
+Audio settings.
 ]]
 ---@class _.LuantiSettings.graphics_and_audio.audio
 --[[
@@ -774,7 +777,7 @@ WIPDOC
 -- ----------------- [Graphics and Audio] [*User Interfaces] ---------------- --
 
 --[[
-WIPDOC
+Values of `language`: locale codes of supported translations.
 ]]
 ---@alias core.LuantiSettings.enums.language
 --- | "be"
@@ -824,7 +827,7 @@ WIPDOC
 --- | "zh_TW"
 
 --[[
-WIPDOC
+General user interface settings.
 ]]
 ---@class _.LuantiSettings.graphics_and_audio.user_interface
 --[[
@@ -838,7 +841,7 @@ WIPDOC
 -- ------------- [Graphics and Audio] [*User Interface] [**GUI] ------------- --
 
 --[[
-WIPDOC
+Settings for the graphical user interface.
 ]]
 ---@class _.LuantiSettings.graphics_and_audio.user_interface.gui
 --[[
@@ -912,7 +915,7 @@ WIPDOC
 -- ------------- [Graphics and Audio] [*User Interface] [**HUD] ------------- --
 
 --[[
-WIPDOC
+Settings for the HUD.
 ]]
 ---@class _.LuantiSettings.graphics_and_audio.user_interface.hud
 --[[
@@ -951,7 +954,7 @@ WIPDOC
 -- ------------- [Graphics and Audio] [*User Interface] [**Chat] ------------ --
 
 --[[
-WIPDOC
+Settings for the chat.
 ]]
 ---@class _.LuantiSettings.graphics_and_audio.user_interface.chat
 --[[
@@ -996,7 +999,7 @@ WIPDOC
 -- ------ [Graphics and Audio] [*User Interface] [**Content Repository] ----- --
 
 --[[
-WIPDOC
+Settings for the content repository (ContentDB).
 ]]
 ---@class _.LuantiSettings.graphics_and_audio.user_interfaces.content_repository
 --[[

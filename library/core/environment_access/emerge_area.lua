@@ -1,40 +1,40 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Environment access
 
 -- ------------------------------- EMERGE enum ------------------------------ --
 
 --[[
-WIPDOC
+Action reported to an `core.emerge_area` callback for each emerged block.
 ]]
 ---@alias core.EmergeAction int
 
 --[[
-WIPDOC
+The emerge of the block was cancelled.
 ]]
 ---@type core.EmergeAction
 core.EMERGE_CANCELLED = nil
 
 --[[
-WIPDOC
+The emerge of the block errored.
 ]]
 ---@type core.EmergeAction
 core.EMERGE_ERRORED = nil
 
 --[[
-WIPDOC
+The block was already in memory.
 ]]
 ---@type core.EmergeAction
 core.EMERGE_FROM_MEMORY = nil
 
 --[[
-WIPDOC
+The block was loaded from disk.
 ]]
 ---@type core.EmergeAction
 core.EMERGE_FROM_DISK = nil
 
 --[[
-WIPDOC
+The block did not exist and was generated.
 ]]
 ---@type core.EmergeAction
 core.EMERGE_GENERATED = nil
@@ -42,7 +42,13 @@ core.EMERGE_GENERATED = nil
 -- ---------------------------- core.* functions ---------------------------- --
 
 --[[
-WIPDOC
+Callback of `core.emerge_area`, called for each block emerged.
+
+* `blockpos` is the *block* coordinates of the block that had been emerged.
+* `action` is one of the `core.EMERGE_*` constants.
+* `calls_remaining` is the number of callbacks to be expected after this one.
+* `param` is the user-defined parameter passed to `emerge_area` (or nil if
+  the parameter was absent).
 ]]
 ---@alias core.fn.emerge_area fun(blockpos:ivec, action:core.EmergeAction , calls_remaining:int, param:any?)
 

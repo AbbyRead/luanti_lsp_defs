@@ -1,30 +1,42 @@
----@meta
--- DRAFT 1 DONE
+---@meta _
+
 -- luanti/doc/lua_api.md: Colors
 
 --[[
-WIPDOC
+Table form of a `ColorSpec`: each element ranges from 0..255.
+If `a` is absent, it defaults to 255.
+Example: `{a=255, r=0, g=255, b=0}`
 ]]
 ---@class core.ColorSpec.tablefmt
 --[[
-WIPDOC
+Alpha channel, 0..255. Defaults to 255 if absent.
 ]]
 ---@field a int?
 --[[
-WIPDOC
+Red channel, 0..255.
 ]]
 ---@field r int?
 --[[
-WIPDOC
+Green channel, 0..255.
 ]]
 ---@field g int?
 --[[
-WIPDOC
+Blue channel, 0..255.
 ]]
 ---@field b int?
 
 --[[
-WIPDOC
+Result of `core.colorspec_to_table`: all channels are always present.
+]]
+---@class core.ColorSpec.tablefmt.full: core.ColorSpec.tablefmt
+---@field r int
+---@field g int
+---@field b int
+---@field a int
+
+--[[
+Named colors, equivalent to
+[CSS Color Module Level 4](https://www.w3.org/TR/css-color-4/#named-color).
 ]]
 ---@alias core.ColorString.CSSColors
 --- | "aliceblue"
@@ -177,30 +189,33 @@ WIPDOC
 --- | "yellowgreen"
 
 --[[
-`#RGB` defines a color in hexadecimal format.
+`"#RGB"` defines a color in hexadecimal format, fully opaque.
 
-`#RGBA` defines a color in hexadecimal format and alpha channel.
+`"#RGBA"` defines a color in hexadecimal format, with an alpha channel.
 
-`#RRGGBB` defines a color in hexadecimal format.
+`"#RRGGBB"` defines a color in hexadecimal format, fully opaque.
 
-`#RRGGBBAA` defines a color in hexadecimal format and alpha channel.
+`"#RRGGBBAA"` defines a color in hexadecimal format, with an alpha channel.
 
 Named colors are also supported and are equivalent to
 [CSS Color Module Level 4](https://www.w3.org/TR/css-color-4/#named-color).
 To specify the value of the alpha channel, append `#A` or `#AA` to the end of
-the color name (e.g. `colorname#08`).
+the color name (e.g. `"darkgreen#08"`).
 ]]
 ---@alias core.ColorString
 --- | string
 --- | core.ColorString.CSSColors
 
 --[[
-WIPDOC
+Numerical form of a `ColorSpec`: the raw integer value of an ARGB8 quad.
+Example: `0xFF00FF00`
 ]]
 ---@alias core.ColorSpec.numberfmt int
 
 --[[
-WIPDOC
+A ColorSpec specifies a 32-bit color. It can be written in table form
+(`{a=255, r=0, g=255, b=0}`), numerical form (`0xFF00FF00`, raw ARGB8) or
+string form (a ColorString, e.g. `"green"`).
 ]]
 ---@alias core.ColorSpec
 --- | core.ColorSpec.tablefmt

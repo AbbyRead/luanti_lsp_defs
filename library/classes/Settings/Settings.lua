@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `Settings`
 -- builtin/settingtype.txt
 
@@ -22,7 +22,9 @@ NOTE: types in a .conf settings file
 -- ------------------------------- constructor ------------------------------ --
 
 --[[
-WIPDOC
+* `Settings(filename)`: returns a `Settings` object for the config file at
+  `filename`.
+  `core.settings` is the instance for the main config file (`minetest.conf`).
 ]]
 ---@nodiscard
 ---@param filename core.Path
@@ -32,6 +34,17 @@ function Settings(filename) end
 -- -------------------------------- Settings -------------------------------- --
 
 --[[
+An interface to read config files in the format of `minetest.conf`.
+
+`core.settings` is a `Settings` instance that can be used to access the
+main config file (`minetest.conf`). Instances for other config files can be
+created via `Settings(filename)`.
+
+Engine settings on the `core.settings` object have internal defaults that
+will be returned if a setting is unset.
+The engine does *not* (yet) read `settingtypes.txt` for this purpose. This
+means that no defaults will be returned for mod settings.
+
 ### Format
 
 The settings have the format `key = value`. Example:
@@ -157,9 +170,9 @@ function Settings:set_np_group(key, value) end
 function Settings:set_pos(key, value) end
 
 --[[
-* `remove(key)`: returns a boolean (`true` for success
+* `remove(key)`: returns a boolean (`true` for success)
 ]]
----@param key boolean
+---@param key string
 ---@return boolean
 function Settings:remove(key) end
 
@@ -184,7 +197,7 @@ function Settings:get_names() end
 function Settings:has(key) end
 
 --[[
-* `write()`: returns a boolean (`true` for success
+* `write()`: returns a boolean (`true` for success)
     * Writes changes to file.
 ]]
 ---@nodiscard

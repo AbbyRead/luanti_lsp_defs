@@ -1,9 +1,9 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Item handling
 
 --[[
-WIPDOC
+Returns a texture string for making an image of a cube (useful as an item image).
 ]]
 ---@nodiscard
 ---@param img1 core.Texture
@@ -52,7 +52,9 @@ function core.get_pointed_thing_position(pointed_thing, above) end
 function core.get_pointed_thing_position(pointed_thing, above) end
 
 --[[
-WIPDOC
+Converts a vector to a facedir value, used in `param2` for `paramtype2 = "facedir"`.
+
+* `is6d`: if truthy, the y component is taken into account.
 ]]
 ---@nodiscard
 ---@param dir vector
@@ -61,7 +63,7 @@ WIPDOC
 function core.dir_to_facedir(dir, is6d) end
 
 --[[
-WIPDOC
+Converts a facedir back into a vector aimed directly out the "back" of a node.
 ]]
 ---@nodiscard
 ---@param facedir core.Param2.facedir
@@ -69,7 +71,7 @@ WIPDOC
 function core.facedir_to_dir(facedir) end
 
 --[[
-WIPDOC
+Converts a vector to a 4dir value, used in `param2` for `paramtype2 = "4dir"`.
 ]]
 ---@nodiscard
 ---@param dir vector
@@ -77,7 +79,7 @@ WIPDOC
 function core.dir_to_fourdir(dir) end
 
 --[[
-WIPDOC
+Converts a 4dir back into a vector aimed directly out the "back" of a node.
 ]]
 ---@nodiscard
 ---@param fourdir core.Param2.4dir
@@ -85,7 +87,7 @@ WIPDOC
 function core.fourdir_to_dir(fourdir) end
 
 --[[
-WIPDOC
+Converts a vector to a wallmounted value, used for `paramtype2 = "wallmounted"`.
 ]]
 ---@nodiscard
 ---@param dir vector
@@ -93,7 +95,7 @@ WIPDOC
 function core.dir_to_wallmounted(dir) end
 
 --[[
-WIPDOC
+Converts a wallmounted value back into a vector aimed directly out the "back" of a node.
 ]]
 ---@nodiscard
 ---@param wallmounted core.Param2.wallmounted
@@ -101,7 +103,7 @@ WIPDOC
 function core.wallmounted_to_dir(wallmounted) end
 
 --[[
-WIPDOC
+Converts a vector into a yaw (angle, radians).
 ]]
 ---@nodiscard
 ---@param dir vector
@@ -109,7 +111,7 @@ WIPDOC
 function core.dir_to_yaw(dir) end
 
 --[[
-WIPDOC
+Converts a yaw (angle) to a vector.
 ]]
 ---@nodiscard
 ---@param yaw number
@@ -117,7 +119,8 @@ WIPDOC
 function core.yaw_to_dir(yaw) end
 
 --[[
-WIPDOC
+Removes everything but the color information from the given `param2` value.
+Returns `nil` if the given `paramtype2` does not contain color information.
 ]]
 ---@nodiscard
 ---@param param2 core.Param2
@@ -126,7 +129,8 @@ WIPDOC
 function core.strip_param2_color(param2, paramtype2) end
 
 --[[
-WIPDOC
+Removes everything but the color information from the given `param2` value.
+Returns `nil` if the given `paramtype2` does not contain color information.
 ]]
 ---@nodiscard
 ---@param param2 core.Param2
@@ -135,7 +139,16 @@ WIPDOC
 function core.strip_param2_color(param2, paramtype2) end
 
 --[[
-WIPDOC
+Returns the list of itemstrings dropped by `node` when dug with the item `toolname`
+(not limited to tools). The default implementation does not use `tool`, `digger` and
+`pos`, but `core.node_dig` provides them (since 5.12.0) for games/mods implementing
+custom drops.
+
+* `node`: node as table or node name
+* `toolname`: name of the item used to dig (can be `nil`)
+* `tool`: `ItemStack` used to dig (can be `nil`)
+* `digger`: the ObjectRef that digs the node (can be `nil`)
+* `pos`: position of the dug node (can be `nil`)
 ]]
 ---@nodiscard
 ---@param node core.Node.name|core.Node.set

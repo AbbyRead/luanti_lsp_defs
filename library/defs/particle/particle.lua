@@ -1,25 +1,28 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Definition tables > Particle definition
 -- luanti/doc/lua_api.md: Definition tables > `ParticleSpawner` definition
 
 -- --------------------------- ParticleDef.regular -------------------------- --
 
+--[[
+Particle definition used by `core.add_particle`.
+]]
 ---@class core.ParticleDef.regular
 --[[
-WIPDOC
+Spawn position.
 ]]
 ---@field  pos vector
 --[[
-WIPDOC
+Initial velocity.
 ]]
 ---@field  velocity vector?
 --[[
-WIPDOC
+Acceleration.
 ]]
 ---@field  acceleration vector?
 --[[
-WIPDOC
+Disappears after this many seconds.
 ]]
 ---@field  expirationtime number?
 --[[
@@ -58,7 +61,9 @@ Note: "texture.animation" is ignored here. Use "animation" below instead.
 ]]
 ---@field  texture core.ParticleTexture?
 --[[
-Optional, if specified spawns particle only on the player's client
+Optional, if specified spawns particle only on the player's client.
+`exclude_player` is not supported here; use a single-use particlespawner
+if needed.
 ]]
 ---@field  playername string?
 --[[
@@ -67,7 +72,7 @@ Optional, specifies how to animate the particle texture
 ---@field  animation core.TileAnimationDef?
 --[[
 Optional, specify particle self-luminescence in darkness.
-Values 0-14.
+Integer in range [0, 14].
 ]]
 ---@field  glow number?
 --[[
@@ -88,7 +93,8 @@ v5.6.0 and later: Optional bounce range, consult the following section
 -- ---------------------------- ParticleDef.node ---------------------------- --
 
 --[[
-WIPDOC
+Particle with the appearance of node dig particles. Inherits all fields of
+`core.ParticleDef.regular`.
 ]]
 ---@class core.ParticleDef.node : core.ParticleDef.regular
 --[[
@@ -99,7 +105,7 @@ node dig particles for the given node.
 ---@field  node core.Node.set?
 --[[
 Optional, only valid in combination with `node`
-If set to a valid number 1-6, specifies the tile from which the
+If set to a valid integer in range [1, 6], specifies the tile from which the
 particle texture is picked.
 Otherwise, the default behavior is used. (currently: any random tile)
 ]]
@@ -108,7 +114,8 @@ Otherwise, the default behavior is used. (currently: any random tile)
 -- ------------------------------- ParticleDef ------------------------------ --
 
 --[[
-WIPDOC
+Particle definition used by `core.add_particle`: either a regular particle or
+one that looks like node dig particles (`node` set).
 ]]
 ---@alias core.ParticleDef
 --- | core.ParticleDef.regular

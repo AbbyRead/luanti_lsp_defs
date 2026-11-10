@@ -1,11 +1,13 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `Settings`
 -- builtin/settingtypes.txt
 -- minetest.conf.example
 
 --[[
-WIPDOC
+The main settings object, holding the values of `minetest.conf` (user, game and
+mod settings). It is a `Settings` object; see the class description for
+contents and methods.
 ]]
 ---@type core.LuantiSettings
 core.settings = nil
@@ -27,19 +29,20 @@ NOTE: types in a .conf settings file
 ]]
 
 --[[
-WIPDOC
+A flag-set setting value: a comma-separated string of flags, where a flag
+prefixed with `"no"` is disabled. Use `get_flags()` to read it as a table.
 ]]
 ---@class core.LuantiSettings.flags : string
 
 --[[
-WIPDOC
+A file or directory path stored as a string.
 ]]
 ---@alias core.LuantiSettings.path string
 
 -- --------------------------- LuantiSettings.keys -------------------------- --
 
 --[[
-WIPDOC
+Names of settings that hold an integer. Unknown names are accepted as `string`.
 ]]
 ---@alias core.LuantiSettings.keys.integer
 --- | _.LuantiSettings.advanced.keys.integer
@@ -48,7 +51,7 @@ WIPDOC
 --- | string
 
 --[[
-WIPDOC
+Names of settings that hold a number. Unknown names are accepted as `string`.
 ]]
 ---@alias core.LuantiSettings.keys.number
 --- | _.LuantiSettings.advanced.keys.number
@@ -57,7 +60,7 @@ WIPDOC
 --- | string
 
 --[[
-WIPDOC
+Names of settings that hold a boolean. Unknown names are accepted as `string`.
 ]]
 ---@alias core.LuantiSettings.keys.boolean
 --- | _.LuantiSettings.advanced.keys.boolean
@@ -65,28 +68,28 @@ WIPDOC
 --- | string
 
 --[[
-WIPDOC
+Names of settings that hold 2D `NoiseParams`. Unknown names are accepted as `string`.
 ]]
 ---@alias core.LuantiSettings.keys.noise_params.2d
 --- | _.LuantiSettings.mapgen.keys.noise_params.2d
 --- | string
 
 --[[
-WIPDOC
+Names of settings that hold 3D `NoiseParams`. Unknown names are accepted as `string`.
 ]]
 ---@alias core.LuantiSettings.keys.noise_params.3d
 --- | _.LuantiSettings.mapgen.keys.noise_params.3d
 --- | string
 
 --[[
-WIPDOC
+Names of settings that hold a vector. Unknown names are accepted as `string`.
 ]]
 ---@alias core.LuantiSettings.keys.vector
 --- | _.LuantiSettings.mapgen.keys.vector
 --- | string
 
 --[[
-WIPDOC
+Names of all known settings. Unknown names are accepted as `string`.
 ]]
 ---@alias core.LuantiSettings.keys
 --- | _.LuantiSettings.advanced.keys
@@ -97,7 +100,8 @@ WIPDOC
 -- ------------------------- LuantiSettings.tablefmt ------------------------ --
 
 --[[
-WIPDOC
+Table returned by `Settings:to_table()`: maps each setting name to its value
+as a string. Known settings are listed as fields of the mixed-in classes.
 ]]
 ---@class core.LuantiSettings.tablefmt : _.LuantiSettings.advanced.tablefmt, _.LuantiSettings.client_and_server.tablefmt, _.LuantiSettings.mapgen.tablefmt
 

@@ -1,23 +1,29 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference
 -- luanti/doc/lua_api.md: 'core' namespace reference > Global objects
 
 --[[
-WIPDOC
+The `core` namespace, containing the engine's Lua API. Aliased by the
+deprecated global `minetest`.
 ]]
 ---@class corelib
 core = {}
 
 --[[
-WIPDOC
+* `core.env`: `EnvRef` of the server environment and world.
+    * Any function in the `core` namespace can be called using the syntax
+      `core.env:somefunction(somearguments)`
+      instead of `core.somefunction(somearguments)`
+    * Deprecated, but support is not to be dropped soon
 ]]
 ---@deprecated
 ---@type corelib
 core.env = core
 
 --[[
-WIPDOC
+* `minetest`: alias for the `core` namespace
+    * Deprecated, but support is not to be dropped soon
 ]]
 ---@deprecated
 ---@class minetest: corelib

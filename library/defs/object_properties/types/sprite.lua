@@ -1,20 +1,20 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Definition tables > Object properties
 
 -- ----------------- ObjectProperties.sprite.textures.strict ---------------- --
 
 --[[
-WIPDOC
+Textures of a `sprite` visual: a single texture.
 ]]
 ---@class core.ObjectProperties.sprite.textures.strict
 --[[
-WIPDOC
+The sprite texture (may be a spritesheet, see `spritediv`).
 ]]
----@field [1] number
+---@field [1] core.Texture
 
 --[[
-WIPDOC
+Textures of a `sprite` visual. Uses 1 texture.
 ]]
 ---@alias core.ObjectProperties.sprite.textures
 --- | core.ObjectProperties.sprite.textures.strict
@@ -22,7 +22,8 @@ WIPDOC
 
 -- ------------------------- ObjectProperties.sprite ------------------------ --
 --[[
-WIPDOC
+Object properties to set for the `sprite` visual
+(all fields optional; defaults are injected).
 ]]
 ---@alias core.ObjectProperties.sprite.set
 --- | core.ObjectProperties.sprite.get
@@ -31,38 +32,27 @@ WIPDOC
 ---@class _.ObjectProperties.sprite.set : _.ObjectProperties.sprite.set.__partial, _.ObjectProperties.__base.set
 
 --[[
-WIPDOC
+Object properties as returned by the engine for the `sprite`
+visual.
 ]]
 ---@class core.ObjectProperties.sprite.get : _.ObjectProperties.sprite.get.__partial, _.ObjectProperties.__base.get
 
 ---@class _.ObjectProperties.sprite.set.__partial : _.ObjectProperties.spritesheet.set.__partial, _.ObjectProperties.spritesheet.set.__partial
 --[[
-WIPDOC
+A flat texture that always faces the player.
 ]]
 ---@field visual "sprite"?
 --[[
-Number of required textures depends on visual:
-"cube" uses 6 textures just like a node, but all 6 must be defined.
-"sprite" uses 1 texture.
-"upright_sprite" uses 2 textures: {front, back}.
-"mesh" requires one texture for each mesh buffer/material (in order)
-Deprecated usage of "wielditem" expects 'textures = {itemname}' (see 'visual' above).
-Unofficial note: I *guessed* that it's string[] but i am not sure
+Textures of the sprite. Uses 1 texture.
 ]]
 ---@field textures core.ObjectProperties.sprite.textures?
 
 ---@class _.ObjectProperties.sprite.get.__partial : _.ObjectProperties.spritesheet.get.__partial, _.ObjectProperties.spritesheet.get.__partial
 --[[
-WIPDOC
+A flat texture that always faces the player.
 ]]
 ---@field visual "sprite"
 --[[
-Number of required textures depends on visual:
-"cube" uses 6 textures just like a node, but all 6 must be defined.
-"sprite" uses 1 texture.
-"upright_sprite" uses 2 textures: {front, back}.
-"mesh" requires one texture for each mesh buffer/material (in order)
-Deprecated usage of "wielditem" expects 'textures = {itemname}' (see 'visual' above).
-Unofficial note: I *guessed* that it's string[] but i am not sure
+Textures of the sprite. Uses 1 texture.
 ]]
 ---@field textures core.ObjectProperties.sprite.textures

@@ -1,40 +1,40 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Definition tables > Object properties
 
 -- ------------------ ObjectProperties.cube.textures.strict ----------------- --
 
 --[[
-WIPDOC
+Textures of a `cube` visual, one per face. Same layout as a node.
 ]]
 ---@class core.ObjectProperties.cube.textures.strict
 --[[
-WIPDOC
+Texture of the +Y face.
 ]]
 ---@field [1] core.Texture
 --[[
-WIPDOC
+Texture of the -Y face.
 ]]
 ---@field [2] core.Texture
 --[[
-WIPDOC
+Texture of the +X face.
 ]]
 ---@field [3] core.Texture
 --[[
-WIPDOC
+Texture of the -X face.
 ]]
 ---@field [4] core.Texture
 --[[
-WIPDOC
+Texture of the +Z face.
 ]]
 ---@field [5] core.Texture
 --[[
-WIPDOC
+Texture of the -Z face.
 ]]
 ---@field [6] core.Texture
 
 --[[
-WIPDOC
+Textures of a `cube` visual. All 6 must be defined, just like a node.
 ]]
 ---@alias core.ObjectProperties.cube.textures
 --- | core.ObjectProperties.cube.textures.strict
@@ -43,7 +43,8 @@ WIPDOC
 -- -------------------------- ObjectProperties.cube ------------------------- --
 
 --[[
-WIPDOC
+Object properties to set for the `cube` visual
+(all fields optional; defaults are injected).
 ]]
 ---@alias core.ObjectProperties.cube.set
 --- | core.ObjectProperties.cube.get
@@ -52,38 +53,29 @@ WIPDOC
 ---@class _.ObjectProperties.cube.set : _.ObjectProperties.cube.set.__partial, _.ObjectProperties.__base.set
 
 --[[
-WIPDOC
+Object properties as returned by the engine for the `cube`
+visual.
 ]]
 ---@class core.ObjectProperties.cube.get : _.ObjectProperties.cube.get.__partial, _.ObjectProperties.__base.get
 
 ---@class _.ObjectProperties.cube.set.__partial : _.ObjectProperties.backface_culling.set.__partial, _.ObjectProperties.shaded.set.__partial
 --[[
-WIPDOC
+A node-sized cube.
 ]]
 ---@field visual "cube"
 --[[
-Number of required textures depends on visual:
-"cube" uses 6 textures just like a node, but all 6 must be defined.
-"sprite" uses 1 texture.
-"upright_sprite" uses 2 textures: {front, back}.
-"mesh" requires one texture for each mesh buffer/material (in order)
-Deprecated usage of "wielditem" expects 'textures = {itemname}' (see 'visual' above).
-Unofficial note: I *guessed* that it's string[] but i am not sure
+Textures of the cube. Uses 6 textures just like a node, but all 6 must be
+defined.
 ]]
 ---@field textures core.ObjectProperties.cube.textures?
 
 ---@class _.ObjectProperties.cube.get.__partial : _.ObjectProperties.backface_culling.get.__partial, _.ObjectProperties.shaded.get.__partial
 --[[
-WIPDOC
+A node-sized cube.
 ]]
 ---@field visual "cube"
 --[[
-Number of required textures depends on visual:
-"cube" uses 6 textures just like a node, but all 6 must be defined.
-"sprite" uses 1 texture.
-"upright_sprite" uses 2 textures: {front, back}.
-"mesh" requires one texture for each mesh buffer/material (in order)
-Deprecated usage of "wielditem" expects 'textures = {itemname}' (see 'visual' above).
-Unofficial note: I *guessed* that it's string[] but i am not sure
+Textures of the cube. Uses 6 textures just like a node, but all 6 must be
+defined.
 ]]
 ---@field textures core.ObjectProperties.cube.textures

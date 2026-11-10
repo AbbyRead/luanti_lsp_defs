@@ -1,9 +1,9 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Logging
 
 --[[
-WIPDOC
+Log level. Default for `core.log` is `"none"`.
 ]]
 ---@alias core.LoggingLevel
 --- | "none"
@@ -22,14 +22,17 @@ Unofficial note: I made it deprecated because this should NOT be in any producti
 function core.debug(...) end
 
 --[[
-WIPDOC
+* `core.log([level,] text)`
+    * `level` is one of `"none"`, `"error"`, `"warning"`, `"action"`,
+      `"info"`, or `"verbose"`.
 ]]
 ---@param loglevel core.LoggingLevel
 ---@param text string
 function core.log(loglevel, text) end
 
 --[[
-WIPDOC
+* `core.log([level,] text)`
+    * Logs `text` with the default level `"none"`.
 ]]
 ---@param text string
 function core.log(text) end

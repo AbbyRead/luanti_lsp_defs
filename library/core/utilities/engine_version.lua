@@ -1,16 +1,18 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Utilities
 
 -- ------------------------------ EngineVersion ----------------------------- --
 
 --[[
+Components of the engine version.
+
 Use this for informational purposes only. The information in the returned
-  table does not represent the capabilities of the engine, nor is it
-  reliable or verifiable. Compatible forks will have a different name and
-  version entirely. To check for the presence of engine features, test
-  whether the functions exported by the wanted features exist. For example:
-  `if core.check_for_falling then ... end`.
+table does not represent the capabilities of the engine, nor is it
+reliable or verifiable. Compatible forks will have a different name and
+version entirely. To check for the presence of engine features, test
+whether the functions exported by the wanted features exist. For example:
+`if core.check_for_falling then ... end`.
 ]]
 ---@class core.EngineVersion
 --[[
@@ -32,7 +34,7 @@ The maximum supported protocol version
 --[[
 Full git version (only set if available), eg, "1.2.3-dev-01234567-dirty".
 ]]
----@field hash  string
+---@field hash  string?
 --[[
 Boolean value indicating whether it's a development build
 ]]
@@ -41,7 +43,8 @@ Boolean value indicating whether it's a development build
 -- ---------------------------- core.* functions ---------------------------- --
 
 --[[
-WIPDOC
+Returns a table containing components of the engine version.
+For informational purposes only; see `core.EngineVersion`.
 ]]
 ---@nodiscard
 ---@return core.EngineVersion

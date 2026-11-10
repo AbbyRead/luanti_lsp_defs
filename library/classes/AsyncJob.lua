@@ -1,15 +1,18 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `AsyncJob`
 
 --[[
-WIPDOC
+A reference to a job to be run in an async environment, as returned by
+`core.handle_async`.
 ]]
 ---@class core.AsyncJob
 local AsyncJob = {}
 
 --[[
-WIPDOC
+* `cancel()`: try to cancel the job
+    * Returns whether the job was cancelled.
+    * A job can only be cancelled if it has not started.
 ]]
 ---@nodiscard
 ---@return boolean

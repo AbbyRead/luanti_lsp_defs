@@ -1,46 +1,57 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Fractal Value Noise
 -- luanti/doc/lua_api.md: Flag Specifier Format
 
 -- ---------------------------- NoiseParams.flags --------------------------- --
 
 --[[
-WIPDOC
+Table form of the noise flags (Flag Specifier Format): flag names mapped to
+booleans. A field prefixed with `"no"` mapped to any boolean unsets the flag.
+Leave `flags` unset for no special handling.
 ]]
 ---@class core.NoiseParams.flags.tablefmt
 --[[
-WIPDOC
+Keep auto-selection of eased/not-eased while specifying some other flags.
 ]]
----@field defaults boolean
+---@field defaults boolean?
 --[[
-WIPDOC
+Explicitly clears `defaults`.
 ]]
----@field nodefaults boolean
+---@field nodefaults boolean?
 --[[
-WIPDOC
+Maps noise gradient values onto a quintic S-curve before performing
+interpolation, resulting in smooth, rolling noise. If no flags are specified
+(or `defaults` is), 2D noise is eased and 3D noise is not eased. Easing a 3D
+noise significantly increases the noise calculation load, so use with
+restraint.
 ]]
----@field eased boolean
+---@field eased boolean?
 --[[
-WIPDOC
+Disables easing for sharp-looking noise with a slightly gridded
+appearance.
 ]]
----@field noeased boolean
+---@field noeased boolean?
 --[[
-WIPDOC
+The absolute value of each octave's noise variation is used when combining
+the octaves:
+
+`noise = offset + scale * (abs(octave1) + abs(octave2) * persistence + abs(octave3) * persistence ^ 2 + ...)`
 ]]
----@field absvalue boolean
+---@field absvalue boolean?
 --[[
-WIPDOC
+Explicitly clears `absvalue`.
 ]]
----@field noabsvalue boolean
+---@field noabsvalue boolean?
 
 --[[
-WIPDOC
+String form of the noise flags: a comma-delimited set of flag names, e.g.
+`"defaults, absvalue"`. A flag prefixed with `"no"` explicitly clears it.
 ]]
 ---@alias core.NoiseParams.flags.stringfmt string
 
 --[[
-WIPDOC
+Noise flags in table or string form. Supported: `defaults`, `eased`, `absvalue`.
 ]]
 ---@alias core.NoiseParams.flags
 --- | core.NoiseParams.flags.tablefmt
@@ -108,7 +119,7 @@ Instead of `persistence`, the key `persist` may be used to the same effect.
 ]]
 ---@field persistence number?
 --[[
-WIPDOC
+Alias of `persistence`.
 ]]
 ---@field persist number?
 --[[
@@ -166,12 +177,15 @@ Values are positive numbers.
 ---@field spread ivector
 
 --[[
-WIPDOC
+Noise parameters for 2D noise. The Z component of `spread` is still defined
+but is ignored; a single noise parameter table can be used for 2D or 3D
+noise.
 ]]
 ---@alias core.NoiseParams.2d core.NoiseParams.3d
 
 --[[
-WIPDOC
+Parameters of fractal value noise (2D or 3D): see `core.NoiseParams.3d` and
+`core.NoiseParams.2d`.
 ]]
 ---@alias core.NoiseParams
 --- | core.NoiseParams.2d

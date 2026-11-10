@@ -1,9 +1,12 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Definition tables > `HTTPRequestResult` definition
 
 --[[
-WIPDOC
+`HTTPRequestResult` definition
+
+Passed to the `HTTPApiTable.fetch` callback. Returned by
+`HTTPApiTable.fetch_async_get`.
 ]]
 ---@class core.HTTPRequestResultDef
 --[[

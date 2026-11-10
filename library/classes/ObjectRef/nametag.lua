@@ -1,28 +1,30 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `ObjectRef`
 
 -- ---------------------------- NametagAttributes --------------------------- --
 
 --[[
-WIPDOC
+Nametag attributes as returned by `get_nametag_attributes()`.
+A nametag is a HUD text rendered above the object.
 ]]
 ---@class core.NametagAttributes.get
 --[[
-WIPDOC
+Text of the nametag.
 ]]
 ---@field text string
 --[[
-WIPDOC
+Text color.
 ]]
 ---@field color core.ColorSpec.tablefmt
 --[[
-WIPDOC
+Background color of the nametag.
 ]]
 ---@field bgcolor core.ColorSpec.tablefmt
 
 --[[
-WIPDOC
+Attributes accepted by `set_nametag_attributes()`. Omitted fields keep their
+current value.
 ]]
 ---@alias core.NametagAttributes.set
 --- | core.NametagAttributes.get
@@ -30,15 +32,16 @@ WIPDOC
 
 ---@class _.NametagAttributes.set
 --[[
-WIPDOC
+Text of the nametag.
 ]]
----@field text string
+---@field text string? Unset fields keep their current value
 --[[
-WIPDOC
+Text color.
 ]]
----@field color core.ColorSpec
+---@field color core.ColorSpec?
 --[[
-WIPDOC
+Background color of the nametag. `false` will cause the background to be set
+automatically based on user settings. Default: `false`.
 ]]
 ---@field bgcolor core.ColorSpec|false?
 

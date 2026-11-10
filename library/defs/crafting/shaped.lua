@@ -1,10 +1,12 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Groups > Groups in crafting recipes
 -- luanti/doc/lua_api.md: Definition tables > Crafting recipes
 
 --[[
-WIPDOC
+Input part of a shaped recipe (the default recipe type when no `type` is
+specified). In-crafting-grid items can be item names or groups
+(`"group:<name_1>,<name_2>,..."`, see "Groups in crafting recipes").
 ]]
 ---@class core.CraftingRecipeDef.shaped.input
 --[[

@@ -1,9 +1,10 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Sounds
 
 --[[
-WIPDOC
+Handle returned by `core.sound_play` (not returned for ephemeral sounds).
+Used by `core.sound_stop` and `core.sound_fade`.
 ]]
 ---@alias core.SoundID int
 

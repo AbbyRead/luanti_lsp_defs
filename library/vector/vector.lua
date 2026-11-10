@@ -91,11 +91,8 @@ Not recommended as it is accessed and modified through `__index` and
 ---@field [3] number
 
 --[[
-3D vector class instance. Passing floats are unspecified and may break.
-
-* @added 5.5.0
-* @see [luanti/doc/lua_api.md > Spatial Vectors](https://github.com/luanti-org/luanti/blob/5.14.0/doc/lua_api.md#spatial-vectors)
-* @see [luanti/builtin/common/vector.lua](https://github.com/luanti-org/luanti/blob/5.14.0/builtin/common/vector.lua)
+Alias for `vec`, used by convention for vectors whose components
+are expected to be integers, such as node positions on a world grid.
 ]]
 ---@alias ivec vec
 

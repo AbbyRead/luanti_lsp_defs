@@ -1,11 +1,13 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Definition tables > Object properties
 
 -- ------------------------- PlayerProperties.__base ------------------------ --
 
 --[[
-WIPDOC
+Player properties to set. Inherits the base object properties.
+Player properties are not persistent and need to be saved manually.
+Fields marked "players only" have no effect on other objects.
 ]]
 ---@class _.PlayerProperties.__base.set : _.ObjectProperties.__base.set
 --[[
@@ -40,7 +42,9 @@ If set to true the entity will show as a marker on the minimap.
 ---@field show_on_minimap boolean?
 
 --[[
-WIPDOC
+Player properties as returned by the engine. Inherits the base object
+properties.
+Player properties are not persistent and need to be saved manually.
 ]]
 ---@class _.PlayerProperties.__base.get : _.ObjectProperties.__base.get
 --[[
@@ -65,12 +69,12 @@ For players only. Camera height above feet position in nodes.
 The name to display on the head of the object. By default empty.
 If the object is a player, a nil or empty nametag is replaced by the player's name.
 For all other objects, a nil or empty string removes the nametag.
-To hide a nametag, get its color alpha to zero. That will disable it entirely.
+To hide a nametag, set its color alpha to zero. That will disable it entirely.
 ]]
 ---@field nametag string
 --[[
 Defaults to true for players, false for other entities.
-If get to true the entity will show as a marker on the minimap.
+If set to true the entity will show as a marker on the minimap.
 ]]
 ---@field show_on_minimap boolean
 

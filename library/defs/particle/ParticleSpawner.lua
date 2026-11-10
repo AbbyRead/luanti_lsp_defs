@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Definition tables > `ParticleSpawner` definition
 
 -- NOTE: only the modern ParticleSpawner definition is annotated. However,
@@ -7,18 +7,29 @@
 -- ParticleSpawner definition is welcome to submit a complete PR/patch
 
 --[[
-WIPDOC
+ID of a particle spawner, as returned by `core.add_particlespawner`.
 ]]
 ---@alias core.ParticleSpawnerID int
 
 -- ----------------------- ParticleSpawnerDef.regular ----------------------- --
 
 --[[
-WIPDOC
+Particle spawner definition used by `core.add_particlespawner`.
+
+Before v5.6.0 a different, more limited syntax was used. The legacy fields
+(`minpos`, `maxpos`, `minvel`, `maxvel`, `minacc`, `maxacc`, `minexptime`,
+`maxexptime`, `minsize`, `maxsize`) can be combined with the modern ones to
+support older servers: newer servers let the modern fields override them.
+
+Modern properties (v5.6.0+) can be set as an absolute number, a single
+vector, a `{min, max, bias?}` range, or animated with a `<name>_tween`
+table. If several forms are present, the highest-precedence one is used:
+legacy < number < vec3 < range < tween.
 ]]
 ---@class core.ParticleSpawnerDef.regular
 --[[
 Number of particles spawned over the time period `time`.
+Range: [u16]
 ]]
 ---@field  amount int
 --[[
@@ -58,14 +69,14 @@ v5.6.0 and later: also supports the table format described in the
 following section.
 ]]
 ---@field  texture core.ParticleTexture?
+-- TODO separate both fields
 --[[
-TODO separate both fields
 Optional, if specified spawns particles only for this player
 Can't be used together with `exclude_player`.
 ]]
 ---@field  playername string?
+-- TODO separate both fields
 --[[
-TODO separate both fields
 Optional, if specified spawns particles not for this player
 Added in v5.14.0. Can't be used together with `playername`.
 ]]
@@ -79,7 +90,7 @@ of the animation with the expiration time of individual particles.
 ---@field  animation core.TileAnimationDef?
 --[[
 Optional, specify particle self-luminescence in darkness.
-Values 0-14.
+Integer in range [0, 14].
 ]]
 ---@field  glow core.Light.source?
 
@@ -87,90 +98,103 @@ Values 0-14.
 
 ---@class core.ParticleSpawnerDef.regular
 --[[
-WIPDOC
+Position at which particles can appear.
 ]]
 ---@field  pos core.ParticleSpawner.vec3_range?
 --[[
-WIPDOC
+Animates `pos` over the spawner's lifespan.
 ]]
 ---@field  pos_tween core.ParticleSpawner.tween.vec3_range?
 --[[
-WIPDOC
+Initial velocity of the particle.
 ]]
 ---@field  vel core.ParticleSpawner.vec3_range?
 --[[
-WIPDOC
+Animates `vel` over the spawner's lifespan.
 ]]
 ---@field  vel_tween core.ParticleSpawner.tween.vec3_range?
 --[[
-WIPDOC
+Direction and speed with which the particle accelerates.
 ]]
 ---@field  acc core.ParticleSpawner.vec3_range?
 --[[
-WIPDOC
+Animates `acc` over the spawner's lifespan.
 ]]
----@field  acc_tween core.ParticleSpawner.vec3_range?
+---@field  acc_tween core.ParticleSpawner.tween.vec3_range?
 --[[
-WIPDOC
+Scales the visual size of the particle texture.
+If `node` is set, this can be set to 0 to spawn randomly-sized particles
+(just like actual node dig particles).
 ]]
 ---@field  size core.ParticleSpawner.float_range?
 --[[
-WIPDOC
+Animates `size` over the spawner's lifespan.
 ]]
 ---@field  size_tween core.ParticleSpawner.tween.float_range?
 --[[
-WIPDOC
+Offsets the velocity of each particle by a random amount within the range
+every frame. Used to create Brownian motion.
 ]]
 ---@field  jitter core.ParticleSpawner.vec3_range?
 --[[
-WIPDOC
+Animates `jitter` over the spawner's lifespan.
 ]]
 ---@field  jitter_tween core.ParticleSpawner.tween.vec3_range?
 --[[
-WIPDOC
+Amount by which absolute particle velocity along each axis decreases per
+second. `1.0` slows a particle to a stop over a second; `-1.0` doubles its
+speed every second. Use a vector like `vector.new(1,0,1)` to avoid
+interfering with gravity provided by `acc`.
 ]]
 ---@field  drag core.ParticleSpawner.vec3_range?
 --[[
-WIPDOC
+Animates `drag` over the spawner's lifespan.
 ]]
 ---@field  drag_tween core.ParticleSpawner.tween.vec3_range?
 --[[
-WIPDOC
+Bounciness when `collisiondetection` is on. Values <= 0 disable bouncing;
+`1` bounces without losing velocity; `2` doubles velocity with every bounce.
+Unbounded, but values much larger than `1.0` are probably not useful.
 ]]
 ---@field  bounce core.ParticleSpawner.float_range?
 --[[
-WIPDOC
+Animates `bounce` over the spawner's lifespan.
 ]]
 ---@field  bounce_tween core.ParticleSpawner.tween.float_range?
 --[[
-WIPDOC
+Number of seconds after which the particle disappears.
 ]]
 ---@field  exptime core.ParticleSpawner.float_range?
 --[[
-WIPDOC
+Animates `exptime` over the spawner's lifespan.
 ]]
 ---@field  exptime_tween core.ParticleSpawner.tween.float_range?
 --[[
-WIPDOC
+Sets the birth orientation of particles relative to a shape in world space.
 ]]
 ---@field  attract core.ParticleSpawner.attract?
 --[[
-WIPDOC
+If set, arranges particles in a sphere around `pos`. A constant creates a
+spherical shell, a vector an ovoid shell, and a range a volume, e.g.
+`{min = 0.5, max = 1, bias = 1}` appears 0.5-1 nodes from `pos`, clustered
+towards the center. Usually `pos` should be a single point.
 ]]
 ---@field  radius core.ParticleSpawner.vec3_range?
 --[[
-WIPDOC
+Animates `radius` over the spawner's lifespan.
 ]]
 ---@field  radius_tween core.ParticleSpawner.tween.vec3_range?
 --[[
-WIPDOC
+List of possible particle textures. One is picked at random for each spawned
+particle. A `texture` may also be given; it is ignored by v5.6.0+ clients
+and only sent to older clients that do not support texpools.
 ]]
----@field texpool core.ParticleTexture?
+---@field texpool core.ParticleTexture[]?
 
 -- ------------------------- ParticleSpawnerDef.node ------------------------ --
 
 --[[
-WIPDOC
+Particle spawner whose particles look like node dig particles.
 ]]
 ---@class core.ParticleSpawnerDef.node
 --[[
@@ -181,7 +205,7 @@ node dig particles for the given node.
 ---@field  node core.Node.set?
 --[[
 Optional, only valid in combination with `node`
-If set to a valid number 1-6, specifies the tile from which the
+If set to a valid integer in range [1, 6], specifies the tile from which the
 particle texture is picked.
 Otherwise, the default behavior is used. (currently: any random tile)
 ]]
@@ -190,7 +214,8 @@ Otherwise, the default behavior is used. (currently: any random tile)
 -- ----------------------------- ParticleSpawner ---------------------------- --
 
 --[[
-WIPDOC
+Particle spawner definition used by `core.add_particlespawner`: either a
+regular spawner or one that looks like node dig particles (`node` set).
 ]]
 ---@alias core.ParticleSpawnerDef
 --- | core.ParticleSpawnerDef.regular

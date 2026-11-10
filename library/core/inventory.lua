@@ -1,50 +1,50 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Inventory
 
 -- ---------------------------- InventoryLocation --------------------------- --
 
 --[[
-WIPDOC
+Location of a node inventory, e.g. `{type="node", pos={x=, y=, z=}}`.
 ]]
 ---@class core.InventoryLocation.node
 --[[
-WIPDOC
+Location type.
 ]]
 ---@field type "node"
 --[[
-WIPDOC
+Position of the node.
 ]]
 ---@field pos ivec
 
 --[[
-WIPDOC
+Location of a player inventory, e.g. `{type="player", name="celeron55"}`.
 ]]
 ---@class core.InventoryLocation.player
 --[[
-WIPDOC
+Location type.
 ]]
 ---@field type "player"
 --[[
-WIPDOC
+Player name.
 ]]
 ---@field name string
 
 --[[
-WIPDOC
+Location of a detached inventory, e.g. `{type="detached", name="creative"}`.
 ]]
 ---@class core.InventoryLocation.detached
 --[[
-WIPDOC
+Location type.
 ]]
 ---@field type "detached"
 --[[
-WIPDOC
+Name of the detached inventory.
 ]]
 ---@field name string
 
 --[[
-WIPDOC
+Location of an inventory, as accepted by `core.get_inventory`.
 ]]
 ---@alias core.InventoryLocation
 --- | core.InventoryLocation.node
@@ -52,11 +52,11 @@ WIPDOC
 --- | core.InventoryLocation.detached
 
 --[[
-WIPDOC
+Location of an inventory whose location is not defined.
 ]]
 ---@class core.InventoryLocation.undefined
 --[[
-WIPDOC
+Location type.
 ]]
 ---@field type "undefined"
 
@@ -75,7 +75,15 @@ WIPDOC
 function core.get_inventory(location) end
 
 --[[
-WIPDOC
+* `core.create_detached_inventory(name, callbacks, [player_name])`: returns
+  an `InvRef`.
+    * `callbacks`: See [Detached inventory callbacks](#detached-inventory-callbacks)
+    * `player_name`: Make detached inventory available to one player
+      exclusively, by default they will be sent to every player (even if not
+      used).
+      Note that this parameter is mostly just a workaround and will be removed
+      in future releases.
+    * Creates a detached inventory. If it already exists, it is cleared.
 ]]
 ---@nodiscard
 ---@param name string
@@ -85,7 +93,8 @@ WIPDOC
 function core.create_detached_inventory(name, callbacks, player_name) end
 
 --[[
-WIPDOC
+* `core.remove_detached_inventory(name)`
+    * Returns a `boolean` indicating whether the removal succeeded.
 ]]
 ---@param name string
 ---@return boolean

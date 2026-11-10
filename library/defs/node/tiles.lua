@@ -1,40 +1,42 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Definition tables > Node definition
 
 -- ------------------------------ NodeDef.tiles ----------------------------- --
 
 --[[
-WIPDOC
+Textures of a node, one per face in the order +Y, -Y, +X, -X, +Z, -Z.
+The list can be shortened to the needed length.
 ]]
 ---@class core.NodeDef.tiles.strict
 --[[
-WIPDOC
+Tile of the +Y face.
 ]]
 ---@field [1] core.TileDef?
 --[[
-WIPDOC
+Tile of the -Y face.
 ]]
 ---@field [2] core.TileDef?
 --[[
-WIPDOC
+Tile of the +X face.
 ]]
 ---@field [3] core.TileDef?
 --[[
-WIPDOC
+Tile of the -X face.
 ]]
 ---@field [4] core.TileDef?
 --[[
-WIPDOC
+Tile of the +Z face.
 ]]
 ---@field [5] core.TileDef?
 --[[
-WIPDOC
+Tile of the -Z face.
 ]]
 ---@field [6] core.TileDef?
 
 --[[
-WIPDOC
+Textures of a node (+Y, -Y, +X, -X, +Z, -Z).
+The list can be shortened to the needed length.
 ]]
 ---@alias core.NodeDef.tiles
 --- | core.NodeDef.tiles.strict
@@ -42,18 +44,23 @@ WIPDOC
 
 -- -------------------------- NodeDef.special_tiles ------------------------- --
 
+--[[
+Special textures of a node; used rarely. See `core.NodeDef.special_tiles`.
+]]
 ---@class core.NodeDef.special_tiles.strict
 --[[
-WIPDOC
+First special tile.
 ]]
 ---@field [1] core.TileDef?
 --[[
-WIPDOC
+Second special tile.
 ]]
 ---@field [2] core.TileDef?
 
 --[[
-WIPDOC
+Special textures of a node; used rarely (e.g. the liquid texture of
+`glasslikeliquidlevel` nodes).
+The list can be shortened to the needed length.
 ]]
 ---@alias core.NodeDef.special_tiles
 --- | core.NodeDef.special_tiles.strict

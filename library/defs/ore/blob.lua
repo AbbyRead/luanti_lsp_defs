@@ -1,14 +1,17 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Ores
 -- luanti/doc/lua_api.md: Definition tables > Ore Definition
 
 --[[
-WIPDOC
+Ore definition of type `"blob"`: creates a deformed sphere of ore according
+to 3D value noise described by `noise_params`.
+The maximum size of the blob is `clust_size`, and `clust_scarcity` has the same
+meaning as with the `scatter` type.
 ]]
 ---@class core.OreDef.blob : _.OreDef.__base
 --[[
-WIPDOC
+Always `"blob"`.
 ]]
 ---@field  ore_type "blob"
 --[[

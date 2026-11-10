@@ -1,15 +1,15 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Chat
 
 --[[
-WIPDOC
+* `core.chat_send_all(text)`: send chat message to all players
 ]]
 ---@param text string
 function core.chat_send_all(text) end
 
 --[[
-WIPDOC
+* `core.chat_send_player(name, text)`: send chat message to specific player
 ]]
 ---@param name string
 ---@param text string

@@ -1,54 +1,56 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Representations of simple things
 
 -- -------------------------- PointedThing.nothing -------------------------- --
 
 --[[
-WIPDOC
+`{type="nothing"}`: the player is not pointing at anything.
 ]]
 ---@class core.PointedThing.nothing
 --[[
-WIPDOC
+Type of pointed thing.
 ]]
 ---@field type "nothing"
 
 -- ---------------------------- PointedThing.node --------------------------- --
 
 --[[
-WIPDOC
+`{type="node", under=pos, above=pos}`: indicates a pointed node selection
+box.
 ]]
 ---@class core.PointedThing.node
 --[[
-WIPDOC
+Type of pointed thing.
 ]]
 ---@field type "node"
 --[[
-WIPDOC
+Node position behind the pointed face.
 ]]
 ---@field under ivec
 --[[
-WIPDOC
+Node position in front of the pointed face.
 ]]
 ---@field above ivec
 
 -- --------------------------- PointedThing.object -------------------------- --
 
 --[[
-WIPDOC
+`{type="object", ref=ObjectRef}`: a pointed object.
 ]]
 ---@class core.PointedThing.object
 --[[
-WIPDOC
+Type of pointed thing.
 ]]
 ---@field type "object"
 --[[
-WIPDOC
+The pointed object.
 ]]
 ---@field ref core.ObjectRef
 
 --[[
-WIPDOC
+A pointed thing, as passed to item callbacks: nothing, a node or an object.
+Exact pointing location fields exist only when it comes from a `Raycast`.
 ]]
 ---@alias core.PointedThing
 --- | core.PointedThing.nothing
@@ -82,17 +84,17 @@ Only raycast supports this
 ---@field intersection_normal vec
 
 --[[
-WIPDOC
+Pointed node from a `Raycast`, with exact pointing location.
 ]]
 ---@class core.PointedThing.raycast.node : core.PointedThing.node, _.PointedThing.raycast.__partial
 
 --[[
-WIPDOC
+Pointed object from a `Raycast`, with exact pointing location.
 ]]
 ---@class core.PointedThing.raycast.object : core.PointedThing.object, _.PointedThing.raycast.__partial
 
 --[[
-WIPDOC
+Pointed thing from a `Raycast`: a node or an object with exact pointing location.
 ]]
 ---@alias core.PointedThing.raycast.all
 --- | core.PointedThing.raycast.node

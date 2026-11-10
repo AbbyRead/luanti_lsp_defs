@@ -1,10 +1,12 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Groups > Groups in crafting recipes
 -- luanti/doc/lua_api.md: Definition tables > Crafting recipes
 
 --[[
-WIPDOC
+Input part of a cooking recipe. `output` is the same as for shaped recipes.
+The engine does not implement anything specific to cooking recipes, they can
+be retrieved with `core.get_craft_result`.
 ]]
 ---@class core.CraftingRecipeDef.cooking.input
 --[[
@@ -18,10 +20,11 @@ WIPDOC
 --[[
 * `cooktime`: (optional) Time it takes to cook this item, in seconds.
               A floating-point number. (default: 3.0)
-Note: Games and mods are free to re-interpret the cooktime in special
 
+Note: Games and mods are free to re-interpret the cooktime in special
+cases, e.g. for a super furnace that cooks items twice as fast.
 ]]
----@field cooktime number
+---@field cooktime number?
 --[[
 * `replacements`: (optional) Allows you to replace input items with some other items
       when something is crafted

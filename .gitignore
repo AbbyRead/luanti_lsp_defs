@@ -35,3 +35,6 @@ tramp
 *_flymake.*
 .projectile
 .dir-locals.el
+
+# macos
+.DS_Store

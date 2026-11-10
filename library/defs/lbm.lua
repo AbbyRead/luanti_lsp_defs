@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Definition tables > LBM (LoadingBlockModifier) definition
 
 -- ------------------------------ LBMDef.__base ----------------------------- --
@@ -63,7 +63,9 @@ If `true`: The LBM runs every time a mapblock is activated.
 -- --------------------------------- LBMDef --------------------------------- --
 
 --[[
-WIPDOC
+Function triggered for each qualifying node.
+`dtime_s` is the in-game time (in seconds) elapsed since the mapblock was last
+active (available since 5.7.0).
 ]]
 ---@alias core.LBMDef.action.fn fun(pos:ivec, node:core.Node.get, dtime_s:number)
 
@@ -77,7 +79,8 @@ was last active (available since 5.7.0).
 ---@field action core.LBMDef.action.fn
 
 --[[
-WIPDOC
+Function triggered with a list of all applicable node positions at once.
+Available since `core.features.bulk_lbms` (5.10.0).
 ]]
 ---@alias core.LBMDef.bulk_action.fn fun(pos_list:ivec[], dtime_s:number)
 

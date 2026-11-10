@@ -1,12 +1,13 @@
 ---@meta _
--- DRAFT 1 DONE
--- luanti/doc/lua_api.md: Class reference > `ObjectRef`
 
+-- luanti/doc/lua_api.md: Class reference > `ObjectRef`
 
 -- -------------------------- PlayerCloudParameters ------------------------- --
 
 --[[
-WIPDOC
+Cloud parameters accepted by `PlayerRef:set_clouds`. All fields are optional;
+omitted fields are left unchanged. Also accepts the table returned by
+`PlayerRef:get_clouds`.
 ]]
 ---@alias core.PlayerCloudParameters.set
 --- | core.PlayerCloudParameters.get
@@ -14,64 +15,67 @@ WIPDOC
 
 ---@class _.PlayerCloudParameters.set
 --[[
-WIPDOC
+Cloud density, from `0` (no clouds) to `1` (full clouds). Default `0.4`.
 ]]
 ---@field density number?
 --[[
-WIPDOC
+Basic cloud color with alpha channel. Default `#fff0f0e5`.
 ]]
 ---@field color core.ColorSpec?
 --[[
-WIPDOC
+Cloud color lower bound, use for a "glow at night" effect.
+Alpha is ignored. Default `#000000`.
 ]]
 ---@field ambient core.ColorSpec?
 --[[
-WIPDOC
+Cloud height, i.e. y of cloud base. Default per conf, usually `120`.
 ]]
 ---@field height int?
 --[[
-WIPDOC
+Cloud thickness in nodes. Default `16`.
+If set to zero the clouds are rendered flat.
 ]]
 ---@field thickness int?
 --[[
-WIPDOC
+2D cloud speed + direction in nodes per second. Default `{x=0, z=-2}`.
 ]]
 ---@field speed {x:number, z:number}?
 --[[
-WIPDOC
+Shadow color, applied to the base of the cloud. Default `#cccccc`.
 ]]
 ---@field shadow core.ColorSpec?
 
 --[[
-WIPDOC
+Current cloud parameters, as returned by `PlayerRef:get_clouds`.
+Same fields as the table accepted by `set_clouds`.
 ]]
 ---@class core.PlayerCloudParameters.get
 --[[
-WIPDOC
+Cloud density, from `0` (no clouds) to `1` (full clouds).
 ]]
 ---@field density number
 --[[
-WIPDOC
+Basic cloud color with alpha channel.
 ]]
 ---@field color core.ColorSpec
 --[[
-WIPDOC
+Cloud color lower bound ("glow at night" effect). Alpha is ignored.
 ]]
 ---@field ambient core.ColorSpec
 --[[
-WIPDOC
+Cloud height, i.e. y of cloud base.
 ]]
 ---@field height int
 --[[
-WIPDOC
+Cloud thickness in nodes. Zero means the clouds are rendered flat.
 ]]
 ---@field thickness int
 --[[
-WIPDOC
+2D cloud speed + direction in nodes per second.
 ]]
 ---@field speed {x:number, z:number}
 --[[
-WIPDOC
+Shadow color, applied to the base of the cloud.
 ]]
 ---@field shadow core.ColorSpec
 
@@ -99,7 +103,7 @@ local PlayerRef
         * `shadow`: shadow color, applied to the base of the cloud
           (default `#cccccc`).
 ]]
----@param cloud_parameters core.PlayerCloudParameters.set
+---@param cloud_parameters core.PlayerCloudParameters.set?
 function PlayerRef:set_clouds(cloud_parameters) end
 
 --[[

@@ -1,11 +1,13 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `SecureRandom`
 
 -- ------------------------------- constructor ------------------------------ --
 
 --[[
-WIPDOC
+* `SecureRandom()`: constructor
+    * Throws an error if a secure random device cannot be found on the
+      system.
 ]]
 ---@nodiscard
 ---@return core.SecureRandom
@@ -35,6 +37,6 @@ SecureRandom = {}
   random bytes, as a string.
 ]]
 ---@nodiscard
----@param count int
+---@param count int?
 ---@return string
 function SecureRandom:next_bytes(count) end

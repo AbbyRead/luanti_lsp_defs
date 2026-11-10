@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- builtin/settingtypes.txt
 -- minetest.conf.example
 
@@ -393,7 +393,7 @@
 -- -------------------------------- [Mapgen] -------------------------------- --
 
 --[[
-WIPDOC
+Values of `mg_name`: names of the available map generators.
 ]]
 ---@alias core.LuantiSettings.enums.mg_name
 --- | "v7"
@@ -444,55 +444,57 @@ WIPDOC
 ---@field mapgen_limit int?
 
 --[[
-WIPDOC
+Flags of the `mg_flags` setting. Set a flag to enable it, or use its `no`-prefixed
+counterpart to disable it.
+These are global map generation attributes.
 ]]
 ---@class core.LuantiSettings.flags.mg_flags
 --[[
-WIPDOC
+Generate caves.
 ]]
 ---@field caves boolean?
 --[[
-WIPDOC
+Disable "caves". Inverse of `caves`.
 ]]
 ---@field nocaves boolean?
 --[[
-WIPDOC
+Generate dungeons.
 ]]
 ---@field dungeons boolean?
 --[[
-WIPDOC
+Disable "dungeons". Inverse of `dungeons`.
 ]]
 ---@field nodungeons boolean?
 --[[
-WIPDOC
+Calculate lighting for generated map blocks.
 ]]
 ---@field light boolean?
 --[[
-WIPDOC
+Disable "light". Inverse of `light`.
 ]]
 ---@field nolight boolean?
 --[[
-WIPDOC
+Generate decorations. In mgv6 this excludes trees and jungle grass.
 ]]
 ---@field decorations boolean?
 --[[
-WIPDOC
+Disable "decorations". Inverse of `decorations`.
 ]]
 ---@field nodecorations boolean?
 --[[
-WIPDOC
+Generate biomes.
 ]]
 ---@field biomes boolean?
 --[[
-WIPDOC
+Disable "biomes". Inverse of `biomes`.
 ]]
 ---@field nobiomes boolean?
 --[[
-WIPDOC
+Generate ores.
 ]]
 ---@field ores boolean?
 --[[
-WIPDOC
+Disable "ores". Inverse of `ores`.
 ]]
 ---@field noores boolean?
 
@@ -537,15 +539,16 @@ WIPDOC
 -- -------------------------- [Mapgen] [*Mapgen V5] ------------------------- --
 
 --[[
-WIPDOC
+Flags of the `mgv5_spflags` setting. Set a flag to enable it, or use its `no`-prefixed
+counterpart to disable it.
 ]]
 ---@class core.LuantiSettings.flags.mgv5_spflags
 --[[
-WIPDOC
+Generate giant caves deep underground.
 ]]
 ---@field caverns boolean?
 --[[
-WIPDOC
+Disable "caverns". Inverse of `caverns`.
 ]]
 ---@field nocaverns boolean?
 
@@ -687,63 +690,64 @@ WIPDOC
 -- -------------------------- [Mapgen] [*Mapgen V6] ------------------------- --
 
 --[[
-WIPDOC
+Flags of the `mgv6_spflags` setting. Set a flag to enable it, or use its `no`-prefixed
+counterpart to disable it.
 ]]
 ---@class core.LuantiSettings.flags.mgv6_spflags
 --[[
-WIPDOC
+Generate jungles. Ignored if `snowbiomes` is enabled.
 ]]
 ---@field jungles boolean?
 --[[
-WIPDOC
+Disable "jungles". Inverse of `jungles`.
 ]]
 ---@field nojungles boolean?
 --[[
-WIPDOC
+Blend biomes at their borders.
 ]]
 ---@field biomeblend boolean?
 --[[
-WIPDOC
+Disable "biomeblend". Inverse of `biomeblend`.
 ]]
 ---@field nobiomeblend boolean?
 --[[
-WIPDOC
+Spread mud over steep terrain.
 ]]
 ---@field mudflow boolean?
 --[[
-WIPDOC
+Disable "mudflow". Inverse of `mudflow`.
 ]]
 ---@field nomudflow boolean?
 --[[
-WIPDOC
+Use the new 5 biome system. Jungles are then always enabled.
 ]]
 ---@field snowbiomes boolean?
 --[[
-WIPDOC
+Disable "snowbiomes". Inverse of `snowbiomes`.
 ]]
 ---@field nosnowbiomes boolean?
 --[[
-WIPDOC
+Generate flat terrain.
 ]]
 ---@field flat boolean?
 --[[
-WIPDOC
+Disable "flat". Inverse of `flat`.
 ]]
 ---@field noflat boolean?
 --[[
-WIPDOC
+Generate trees.
 ]]
 ---@field trees boolean?
 --[[
-WIPDOC
+Disable "trees". Inverse of `trees`.
 ]]
 ---@field notrees boolean?
 --[[
-WIPDOC
+Generate desert temples. If disabled, normal dungeons appear instead.
 ]]
 ---@field temples boolean?
 --[[
-WIPDOC
+Disable "temples". Inverse of `temples`.
 ]]
 ---@field notemples boolean?
 
@@ -857,39 +861,40 @@ WIPDOC
 -- -------------------------- [Mapgen] [*Mapgen V7] ------------------------- --
 
 --[[
-WIPDOC
+Flags of the `mgv7_spflags` setting. Set a flag to enable it, or use its `no`-prefixed
+counterpart to disable it.
 ]]
 ---@class core.LuantiSettings.flags.mgv7_spflags
 --[[
-WIPDOC
+Generate mountains.
 ]]
 ---@field mountains boolean?
 --[[
-WIPDOC
+Disable "mountains". Inverse of `mountains`.
 ]]
 ---@field nomountains boolean?
 --[[
-WIPDOC
+Generate rivers.
 ]]
 ---@field ridges boolean?
 --[[
-WIPDOC
+Disable "ridges". Inverse of `ridges`.
 ]]
 ---@field noridges boolean?
 --[[
-WIPDOC
+Generate floating land masses in the atmosphere.
 ]]
 ---@field floatlands boolean?
 --[[
-WIPDOC
+Disable "floatlands". Inverse of `floatlands`.
 ]]
 ---@field nofloatlands boolean?
 --[[
-WIPDOC
+Generate giant caves deep underground.
 ]]
 ---@field caverns boolean?
 --[[
-WIPDOC
+Disable "caverns". Inverse of `caverns`.
 ]]
 ---@field nocaverns boolean?
 
@@ -1137,23 +1142,24 @@ WIPDOC
 -- ---------------------- [Mapgen] [*Mapgen Carpathian] --------------------- --
 
 --[[
-WIPDOC
+Flags of the `mgcarpathian_spflags` setting. Set a flag to enable it, or use its `no`-prefixed
+counterpart to disable it.
 ]]
 ---@class core.LuantiSettings.flags.mgcarpathian_spflags
 --[[
-WIPDOC
+Generate giant caves deep underground.
 ]]
 ---@field caverns boolean?
 --[[
-WIPDOC
+Disable "caverns". Inverse of `caverns`.
 ]]
 ---@field nocaverns boolean?
 --[[
-WIPDOC
+Generate rivers.
 ]]
 ---@field rivers boolean?
 --[[
-WIPDOC
+Disable "rivers". Inverse of `rivers`.
 ]]
 ---@field norivers boolean?
 
@@ -1372,31 +1378,32 @@ WIPDOC
 -- ------------------------- [Mapgen] [*Mapgen Flat] ------------------------ --
 
 --[[
-WIPDOC
+Flags of the `mgflat_spflags` setting. Set a flag to enable it, or use its `no`-prefixed
+counterpart to disable it.
 ]]
 ---@class core.LuantiSettings.flags.mgflat_spflags
 --[[
-WIPDOC
+Add occasional lakes to the flat world.
 ]]
 ---@field lakes boolean?
 --[[
-WIPDOC
+Disable "lakes". Inverse of `lakes`.
 ]]
 ---@field nolakes boolean?
 --[[
-WIPDOC
+Add occasional hills to the flat world.
 ]]
 ---@field hills boolean?
 --[[
-WIPDOC
+Disable "hills". Inverse of `hills`.
 ]]
 ---@field nohills boolean?
 --[[
-WIPDOC
+Generate giant caves deep underground.
 ]]
 ---@field caverns boolean?
 --[[
-WIPDOC
+Disable "caverns". Inverse of `caverns`.
 ]]
 ---@field nocaverns boolean?
 
@@ -1560,15 +1567,16 @@ WIPDOC
 -- ----------------------- [Mapgen] [*Mapgen Fractal] ----------------------- --
 
 --[[
-WIPDOC
+Flags of the `mgfractal_spflags` setting. Set a flag to enable it, or use its `no`-prefixed
+counterpart to disable it.
 ]]
 ---@class core.LuantiSettings.flags.mgfractal_spflags
 --[[
-WIPDOC
+Generate non-fractal terrain: ocean, islands and underground.
 ]]
 ---@field terrain boolean?
 --[[
-WIPDOC
+Disable "terrain". Inverse of `terrain`.
 ]]
 ---@field noterrain boolean?
 
@@ -1780,39 +1788,40 @@ WIPDOC
 -- ----------------------- [Mapgen] [*Mapgen Valleys] ----------------------- --
 
 --[[
-WIPDOC
+Flags of the `mgvalleys_spflags` setting. Set a flag to enable it, or use its `no`-prefixed
+counterpart to disable it.
 ]]
 ---@class core.LuantiSettings.flags.mgvalleys_spflags
 --[[
-WIPDOC
+Reduce heat with altitude.
 ]]
 ---@field altitude_chill boolean?
 --[[
-WIPDOC
+Disable "altitude_chill". Inverse of `altitude_chill`.
 ]]
 ---@field noaltitude_chill boolean?
 --[[
-WIPDOC
+Increase humidity around rivers.
 ]]
 ---@field humid_rivers boolean?
 --[[
-WIPDOC
+Disable "humid_rivers". Inverse of `humid_rivers`.
 ]]
 ---@field nohumid_rivers boolean?
 --[[
-WIPDOC
+Make rivers shallower and occasionally dry when humidity is low and heat is high.
 ]]
 ---@field vary_river_depth boolean?
 --[[
-WIPDOC
+Disable "vary_river_depth". Inverse of `vary_river_depth`.
 ]]
 ---@field novary_river_depth boolean?
 --[[
-WIPDOC
+Reduce humidity with altitude.
 ]]
 ---@field altitude_dry boolean?
 --[[
-WIPDOC
+Disable "altitude_dry". Inverse of `altitude_dry`.
 ]]
 ---@field noaltitude_dry boolean?
 

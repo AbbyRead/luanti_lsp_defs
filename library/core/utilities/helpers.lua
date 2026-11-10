@@ -1,11 +1,17 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Helper functions
 
 -- NOTE: helpers not under core.* are in library/helpers.lua
 
 --[[
-WIPDOC
+Adds newlines to the string to keep it within the specified character limit.
+Returned lines may be longer than the limit since it only splits at word
+borders.
+
+* `limit`: maximum amount of characters in one line
+* `as_table`: if true, a table of lines is returned instead of a string.
+  Default: `false`
 ]]
 ---@nodiscard
 ---@param str string
@@ -15,7 +21,11 @@ WIPDOC
 function core.wrap_text(str, limit, as_table) end
 
 --[[
-WIPDOC
+Converts the position `pos` to a human-readable, printable string
+`"(X,Y,Z)"`.
+
+* `decimal_places`: if specified, the x, y and z values are rounded to the
+  given decimal place.
 ]]
 ---@nodiscard
 ---@param pos vector
@@ -24,11 +34,12 @@ WIPDOC
 function core.pos_to_string(pos, decimal_places) end
 
 --[[
-WIPDOC
+Reverse of `core.pos_to_string`. Returns nothing if the string can't be
+parsed to a position.
 ]]
 ---@nodiscard
 ---@param string string
----@return vec
+---@return vec?
 function core.string_to_pos(string) end
 
 --[[
@@ -47,7 +58,7 @@ Example: core.string_to_area("(1,2,3) (~5,~-5,~)", {x=10,y=10,z=10}) returns {x=
 function core.string_to_area(str, relative_to) end
 
 --[[
-escapes the characters "[", "]", "", "," and ";", which cannot be used in formspecs.
+escapes the characters "[", "]", "\", "," and ";", which cannot be used in formspecs.
 ]]
 ---@nodiscard
 ---@param string string
@@ -55,7 +66,7 @@ escapes the characters "[", "]", "", "," and ";", which cannot be used in formsp
 function core.formspec_escape(string) end
 
 --[[
-WIPDOC
+Returns true if passed 'y', 'yes', 'true' or a number that isn't zero.
 ]]
 ---@nodiscard
 ---@param arg string|number|boolean
@@ -63,7 +74,7 @@ WIPDOC
 function core.is_yes(arg) end
 
 --[[
-WIPDOC
+Returns true when the passed number represents NaN.
 ]]
 ---@nodiscard
 ---@param arg number
@@ -81,7 +92,7 @@ function core.get_us_time() end
 --[[ after table.* intermission ]]--
 
 --[[
-WIPDOC
+Returns the exact position on the surface of a pointed node.
 ]]
 ---@nodiscard
 ---@param placer core.ObjectRef
@@ -90,7 +101,12 @@ WIPDOC
 function core.pointed_thing_to_face_pos(placer, pointed_thing) end
 
 --[[
-WIPDOC
+Simulates a tool being used once and returns the added wear, such that, if
+only this function is used to calculate wear, the tool will break exactly
+after `uses` times of uses.
+
+* `uses`: amount of times the tool can be used
+* `initial_wear`: the initial wear the tool starts with. Default: 0
 ]]
 ---@param uses int
 ---@param initial_wear core.Tool.wear?

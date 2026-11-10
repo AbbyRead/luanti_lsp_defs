@@ -1,9 +1,9 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Timing
 
 --[[
-WIPDOC
+Job table returned by `core.after`.
 ]]
 ---@class core.Job
 --[[
@@ -28,4 +28,3 @@ WIPDOC
 ---@param ... any
 ---@return core.Job
 function core.after(time, f, ...) end
-

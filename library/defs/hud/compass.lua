@@ -1,28 +1,29 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: HUD
 -- luanti/doc/lua_api.md: Definition tables > HUD Definition
 
 --[[
-WIPDOC
+Rotating compass directions: 0 rotates as heading direction, 1 rotates in reverse direction.
 ]]
 ---@alias core.HUDDef.compass.regular.direction
 --- | 0
 --- | 1
 
 --[[
-WIPDOC
+Translating compass directions: 2 translates as landscape direction, 3 translates in reverse direction.
 ]]
 ---@alias core.HUDDef.compass.scalable.direction
 --- | 2
 --- | 3
 
 --[[
-WIPDOC
+Displays an image oriented or translated according to the current heading
+direction. This variant rotates the image (`direction` 0 or 1).
 ]]
 ---@class core.HUDDef.compass.regular : _.HUDDef.__base, _.HUDDef.position, _.HUDDef.alignment
 --[[
-WIPDOC
+Type of the HUD element.
 ]]
 ---@field  type "compass"
 --[[
@@ -36,29 +37,33 @@ If translation is chosen, texture is repeated horizontally to fill the whole ele
 ]]
 ---@field direction core.HUDDef.compass.regular.direction?
 --[[
-WIPDOC
+The name of the texture to use.
 ]]
 ---@field text string
 --[[
-WIPDOC
+The size of this element. Positive values represent pixels, negative values
+represent percentage of the screen; e.g. `x = -100` means 100% (width).
+Integers in range [s32].
 ]]
 ---@field size vec2
 
 --[[
-WIPDOC
+Compass variant that translates the image (`direction` 2 or 3). The texture
+is repeated horizontally to fill the whole element.
 ]]
 ---@class core.HUDDef.compass.scalable
 --[[
-WIPDOC
+Scale of the translated image. Used only for `direction = 2` or `direction = 3`.
 ]]
 ---@field scale vec2?
 --[[
-WIPDOC
+How the image is translated: 2 translates as landscape direction, 3
+translates in reverse direction.
 ]]
 ---@field direction core.HUDDef.compass.scalable.direction
 
 --[[
-WIPDOC
+Compass HUD element: either the rotating or the translating variant.
 ]]
 ---@alias core.HUDDef.compass
 --- | core.HUDDef.compass.regular

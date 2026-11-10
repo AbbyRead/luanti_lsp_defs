@@ -1,16 +1,17 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Translations
 
 --[[
-WIPDOC
+`S(str, ...)`, equivalent to `core.translate(textdomain, str, ...)`.
 ]]
----@alias core.fn.translate_singular fun(str:string, ...:string):string
+---@alias core.fn.translate_singular fun(str:string, ...:string|number):string
 
 --[[
-WIPDOC
+`PS(str, str_plural, n, ...)`, equivalent to
+`core.translate_n(textdomain, str, str_plural, n, ...)`.
 ]]
----@alias core.fn.translate_plural fun(str:string, str_plural:string, n:int, ...:string):string
+---@alias core.fn.translate_plural fun(str:string, str_plural:string, n:int, ...:string|number):string
 
 --[[
 `core.get_translator(textdomain)` is a simple wrapper around
@@ -30,7 +31,8 @@ As an extra commodity, if `textdomain` is nil, it is assumed to be "" instead.
 ]]
 ---@nodiscard
 ---@param textdomain string?
----@return core.fn.translate_singular S, core.fn.translate_plural PS
+---@return core.fn.translate_singular S
+---@return core.fn.translate_plural PS
 function core.get_translator(textdomain) end
 
 --[[
@@ -53,7 +55,13 @@ function core.get_translator(textdomain) end
 function core.translate(textdomain, str, ...) end
 
 --[[
-WIPDOC
+* `core.translate_n(textdomain, str, str_plural, n, ...)` translates the
+  string `str` with the given `textdomain` for disambiguation. The value of
+  `n`, which must be a nonnegative integer, is used to decide whether to use
+  the singular or the plural version of the string. Depending on the locale of
+  the client, the choice between singular and plural might be more complicated,
+  but the choice will be done automatically using the value of `n`.
+* Plurals are only handled in .po or .mo files, and not in .tr files.
 ]]
 ---@nodiscard
 ---@param textdomain string

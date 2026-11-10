@@ -1,26 +1,27 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Item handling
 
 --[[
-WIPDOC
+Result of a recipe lookup where no recipe was found (`core.get_craft_recipe`):
+`{ items = nil, width = 0 }`
 ]]
 ---@class core.CraftRecipe.unknown
 --[[
-WIPDOC
+Recipe method.
 ]]
 ---@field method "unknown"
 --[[
-WIPDOC
+Always `0` when no recipe was found.
 ]]
 ---@field width 0
 --[[
-WIPDOC
+`nil` when no recipe was found.
 ]]
 ---@field items nil
 
 --[[
-WIPDOC
+Input table for `core.get_craft_result` with method `"normal"`.
 ]]
 ---@alias core.CraftRecipe.normal.set
 --- | core.CraftRecipe.normal.get
@@ -28,63 +29,67 @@ WIPDOC
 
 ---@class _.CraftRecipe.normal.set
 --[[
-WIPDOC
+Craft method.
 ]]
 ---@field method "normal"
 --[[
-WIPDOC
+Width of the craft grid, for example `3`. If omitted, the grid width is derived by the engine.
 ]]
 ---@field width int?
 --[[
-WIPDOC
+Items in the craft grid, for example `{stack1, stack2, ..., stack9}`.
 ]]
 ---@field items SparseList<core.Item>
 
 --[[
-WIPDOC
+Normal (crafting grid) recipe as returned by the engine.
 ]]
 ---@class core.CraftRecipe.normal.get
 --[[
-WIPDOC
+Craft method.
 ]]
 ---@field method "normal"
 --[[
-WIPDOC
+Width of the craft grid or recipe, in range [0, N] (2 or 3 is used often).
+`0` means shapeless recipe.
 ]]
 ---@field width int
 --[[
-WIPDOC
+Recipe item names or grid stacks. Empty ingredients (itemstring `""`) are
+represented as `nil`, hence a sparse list.
 ]]
 ---@field items SparseList<core.Item>
 
 --[[
-WIPDOC
+Cooking recipe: a single input item, a single output item stack and a cooking
+time. The engine implements nothing specific to cooking; it is retrieved through
+`core.get_craft_result` for a consistent interface across games/mods.
 ]]
 ---@class core.CraftRecipe.cooking
 --[[
-WIPDOC
+Craft method.
 ]]
 ---@field method "cooking"
 --[[
-WIPDOC
+The single input item.
 ]]
 ---@field items SparseList<core.Item>
 
 --[[
-WIPDOC
+Fuel recipe: one input item and a burn time. Fuels have no output item.
 ]]
 ---@class core.CraftRecipe.fuel
 --[[
-WIPDOC
+Craft method.
 ]]
 ---@field method "fuel"
 --[[
-WIPDOC
+The single fuel item.
 ]]
 ---@field items SparseList<core.Item>
 
 --[[
-WIPDOC
+Any recipe form accepted as input by `core.get_craft_result`.
 ]]
 ---@alias core.CraftRecipe.set
 --- | core.CraftRecipe.get
@@ -93,7 +98,8 @@ WIPDOC
 --- | core.CraftRecipe.fuel
 
 --[[
-WIPDOC
+Any recipe form returned by `core.get_craft_recipe` for a found recipe, or by
+`core.get_craft_result` as `decremented_input`.
 ]]
 ---@alias core.CraftRecipe.get
 --- | core.CraftRecipe.normal.get
@@ -104,32 +110,32 @@ WIPDOC
 
 ---@class _.CraftRecipe.with_output
 --[[
-WIPDOC
+String with item name and quantity, e.g. `"default:gold_ingot 9"`.
 ]]
 ---@field output core.Item.stringfmt
 
 --[[
-WIPDOC
+Recipe with no result (`core.get_all_craft_recipes` entries).
 ]]
 ---@class core.CraftRecipe.with_output.unknown : core.CraftRecipe.unknown, _.CraftRecipe.with_output
 
 --[[
-WIPDOC
+Normal recipe with its output.
 ]]
 ---@class core.CraftRecipe.with_output.normal : core.CraftRecipe.normal.get, _.CraftRecipe.with_output
 
 --[[
-WIPDOC
+Cooking recipe with its output.
 ]]
 ---@class core.CraftRecipe.with_output.cooking : core.CraftRecipe.cooking, _.CraftRecipe.with_output
 
 --[[
-WIPDOC
+Fuel recipe with its output (empty item name).
 ]]
 ---@class core.CraftRecipe.with_output.fuel : core.CraftRecipe.fuel, _.CraftRecipe.with_output
 
 --[[
-WIPDOC
+Any recipe entry returned by `core.get_all_craft_recipes`.
 ]]
 ---@alias core.CraftRecipe.with_output
 --- | core.CraftRecipe.with_output.unknown
@@ -140,50 +146,55 @@ WIPDOC
 -- ------------------------------- CraftOutput ------------------------------ --
 
 --[[
-WIPDOC
+`output` of `core.get_craft_result` for `method = "normal"`.
 ]]
 ---@class core.CraftOutput.normal
 --[[
-WIPDOC
+`ItemStack`; if unsuccessful: empty `ItemStack`.
 ]]
 ---@field item core.ItemStack
 --[[
-WIPDOC
+List of replacement `ItemStack`s that couldn't be placed in
+`decremented_input.items`. Replacements can be placed in `decremented_input`
+if the stack of the replaced item has a count of 1.
 ]]
 ---@field replacements SparseList<core.ItemStack>
 
 --[[
-WIPDOC
+`output` of `core.get_craft_result` for `method = "cooking"`.
 ]]
 ---@class core.CraftOutput.cooking
 --[[
-WIPDOC
+`ItemStack`; if unsuccessful: empty `ItemStack`.
 ]]
 ---@field item core.ItemStack
 --[[
-WIPDOC
+List of replacement `ItemStack`s that couldn't be placed in
+`decremented_input.items`.
 ]]
 ---@field replacements SparseList<core.ItemStack>
 --[[
-WIPDOC
+Cooking time (`cooktime`). If unsuccessful: `0`.
 ]]
 ---@field time number
 
 --[[
-WIPDOC
+`output` of `core.get_craft_result` for `method = "fuel"`. There is no output
+item.
 ]]
 ---@class core.CraftOutput.fuel
 --[[
-WIPDOC
+List of replacement `ItemStack`s that couldn't be placed in
+`decremented_input.items`.
 ]]
 ---@field replacements SparseList<core.ItemStack>
 --[[
-WIPDOC
+Burn time (`burntime`). If unsuccessful: `0`.
 ]]
 ---@field time number
 
 --[[
-WIPDOC
+`output` of `core.get_craft_result`, depending on `input.method`.
 ]]
 ---@alias core.CraftOutput
 --- | core.CraftOutput.normal
@@ -247,14 +258,11 @@ function core.get_craft_result(input) end
 function core.get_craft_result(input) end
 
 --[[
-* `core.get_craft_recipe(output)`: returns input
-    * returns last registered recipe for output item (node)
-    * `output` is a node or item type such as `"default:torch"`
-    * `input.method` = `"normal"` or `"cooking"` or `"fuel"`
-    * `input.width` = for example `3`
-    * `input.items` = for example
-      `{stack1, stack2, stack3, stack4, stack 5, stack 6, stack 7, stack 8, stack 9}`
-        * `input.items` = `nil` if no recipe found
+* `core.get_craft_recipe(output)`: returns a table
+    * Returns the last registered recipe for the `output` item name
+    * Return value:
+        * No recipe found: `{ items = nil, width = 0 }`
+        * Recipe found: see `core.get_all_craft_recipes` table values.
 ]]
 ---@nodiscard
 ---@param output core.Item.name
@@ -262,24 +270,29 @@ function core.get_craft_result(input) end
 function core.get_craft_recipe(output) end
 
 --[[
-* `core.get_all_craft_recipes(query item)`: returns a table or `nil`
-    * returns indexed table with all registered recipes for query item (node)
-      or `nil` if no recipe was found.
-    * recipe entry table:
+* `core.get_all_craft_recipes(output)`: returns a table or `nil`
+    * Returns an indexed table of all registered recipes which have the result `output`.
+    * Returns `nil` if no recipe was found.
+    * `output`: an item name, such as `"default:torch"`.
+    * Returned table values:
         * `method`: 'normal' or 'cooking' or 'fuel'
-        * `width`: 0-3, 0 means shapeless recipe
-        * `items`: indexed [1-9] table with recipe items
+        * `width`: in range [0, N] (2 or 3 is used often). 0 means shapeless recipe.
+          Only valid for `method = "normal"`.
+        * `items`: list of recipe item names.
+          Empty ingredients (itemstring `""`) are represented as `nil`.
         * `output`: string with item name and quantity
+        * `time` (for 'cooking' or 'fuel'): is `cooktime` or `burntime` (since 5.17.0)
+        * `replacements`: see Crafting recipes (since 5.17.0)
     * Example result for `"default:gold_ingot"` with two recipes:
       ```lua
       {
           {
               method = "cooking", width = 3,
-              output = "default:gold_ingot", items = {"default:gold_lump"}
+              output = "default:gold_ingot", items = {"default:gold_lump"},
           },
           {
               method = "normal", width = 1,
-              output = "default:gold_ingot 9", items = {"default:goldblock"}
+              output = "default:gold_ingot 9", items = {"default:goldblock"},
           }
       }
       ```

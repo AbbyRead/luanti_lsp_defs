@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- builtin/settingtypes.txt
 -- minetest.conf.example
 
@@ -273,31 +273,32 @@
 -- ----------------- [Client and Server] [*Server Security] ----------------- --
 
 --[[
-WIPDOC
+Flags of the `anticheat_flags` setting. Flags are positive: set a flag to enable
+its anticheat module, or use its `no`-prefixed counterpart to disable it.
 ]]
 ---@class core.LuantiSettings.flags.anticheat_flags
 --[[
-WIPDOC
+Enable the digging anticheat module.
 ]]
 ---@field digging boolean?
 --[[
-WIPDOC
+Disable "digging". Inverse of `digging`.
 ]]
 ---@field nodigging boolean?
 --[[
-WIPDOC
+Enable the interaction anticheat module (e.g. interaction distance checks).
 ]]
 ---@field interaction boolean?
 --[[
-WIPDOC
+Disable "interaction". Inverse of `interaction`.
 ]]
 ---@field nointeraction boolean?
 --[[
-WIPDOC
+Enable the movement cheat detector. See `anticheat_movement_tolerance`.
 ]]
 ---@field movement boolean?
 --[[
-WIPDOC
+Disable "movement". Inverse of `movement`.
 ]]
 ---@field nomovement boolean?
 

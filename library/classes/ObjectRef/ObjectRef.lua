@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `ObjectRef`
 
 -- INTERPRETATION: EntityRef does not override ObjectRef, merely supplies
@@ -8,13 +8,54 @@
 -- ObjectRef methods assumes it's an entity and not a player.
 
 --[[
-WIPDOC
+`ObjectRef`
+-----------
+
+Moving things in the game are generally these.
+This is basically a reference to a C++ `ServerActiveObject`.
+
+### Advice on handling `ObjectRefs`
+
+When you receive an `ObjectRef` as a callback argument or from another API
+function, it is possible to store the reference somewhere and keep it around.
+It will keep functioning until the object is unloaded or removed.
+
+However, doing this is **NOT** recommended - `ObjectRefs` should be "let go"
+of as soon as control is returned from Lua back to the engine.
+
+Doing so is much less error-prone and you will never need to wonder if the
+object you are working with still exists.
+
+If this is not feasible, you can test whether an `ObjectRef` is still valid
+via `object:is_valid()`.
+
+Getters may be called for invalid objects and will return nothing then.
+All other methods should not be called on invalid objects.
+
+### Attachments
+
+It is possible to attach objects to other objects (`set_attach` method).
+
+When an object is attached, it is positioned relative to the parent's position
+and rotation. `get_pos` and `get_rotation` will always return the parent's
+values and changes via their setter counterparts are ignored.
+
+To change position or rotation call `set_attach` again with the new values.
+
+**Note**: Just like model dimensions, the relative position in `set_attach`
+must be multiplied by 10 compared to world positions.
+
+It is also possible to attach to a bone of the parent object. In that case the
+child will follow movement and rotation of that bone.
+
+Methods shared by players and entities are defined here. Entity-only methods
+are in `core.EntityRef`.
 ]]
 ---@class _.ObjectRef.__base
 local ObjectRefBase = {}
 
 --[[
-WIPDOC
+Any object: a player or a Lua entity.
 ]]
 ---@alias core.ObjectRef
 --- | core.PlayerRef
@@ -24,6 +65,7 @@ WIPDOC
 
 --[[
 * `is_valid()`: returns whether the object is valid.
+   * See "Advice on handling `ObjectRefs`" above.
 ]]
 ---@nodiscard
 ---@return boolean
@@ -99,14 +141,19 @@ function ObjectRefBase:move_to(pos, continuous) end
 --[[
 * `punch(puncher, time_from_last_punch, tool_capabilities, dir)`
     * punches the object, triggering all consequences a normal punch would have
-    * Other arguments: See `on_punch` for entities
+    * `puncher`: another `ObjectRef` which punched the object (can be `nil`)
+    * `time_from_last_punch`: Meant for disallowing spamming of clicks
+      (can be `nil`)
+    * `tool_capabilities`: capability table of used item
+    * `dir`: direction vector. Points from the puncher to the punched (can be
+      `nil`)
     * Arguments `time_from_last_punch`, `tool_capabilities`, and `dir`
       will be replaced with a default value when the caller sets them to `nil`.
 ]]
----@param puncher core.ObjectRef
----@param time_from_last_punch number
----@param tool_capabilities core.ToolCapabilities
----@param dir vector
+---@param puncher core.ObjectRef?
+---@param time_from_last_punch number?
+---@param tool_capabilities core.ToolCapabilities?
+---@param dir vector?
 ---@return core.Tool.wear wear
 function ObjectRefBase:punch(puncher, time_from_last_punch, tool_capabilities, dir) end
 
@@ -123,16 +170,16 @@ function ObjectRefBase:right_click(clicker) end
 -- --------------------------------- health --------------------------------- --
 
 --[[
-* `get_hp()`: returns number of health points
+* `get_hp()`: returns amount of health points (range: [u16])
 ]]
 ---@nodiscard
 ---@return int hp
 function ObjectRefBase:get_hp() end
 
 --[[
-* `set_hp(hp, reason)`: set number of health points
-    * See reason in register_on_player_hpchange
-    * Is limited to the range of 0 ... 65535 (2^16 - 1)
+* `set_hp(hp, reason)`: set amount of health points
+    * reason: A `PlayerHPChangeReason` table (optional)
+    * Range: [u16]
     * For players: HP are also limited by `hp_max` specified in object properties
 ]]
 ---@param hp int
@@ -171,10 +218,14 @@ function ObjectRefBase:get_wield_index() end
 function ObjectRefBase:get_wielded_item() end
 
 --[[
-* `set_wielded_item(item)`: replaces the wielded item, returns `true` if
-  successful.
+* `set_wielded_item(item, skip_anim)`: replaces the wielded item, returns
+  `true` if successful.
+    * if `skip_anim` is `true`, the change animation is skipped. Default is
+      `false`
 ]]
 ---@param item core.Item
+---@param skip_anim boolean?
+---@return boolean
 function ObjectRefBase:set_wielded_item(item) end
 
 -- ---------------------------------- armor --------------------------------- --
@@ -212,9 +263,13 @@ function ObjectRefBase:set_armor_groups(groups) end
        * If looped, the model should look identical at start and end
        * default: `{x=1.0, y=1.0}`
     * `frame_speed`: How fast the animation plays, in frames per second (number)
+       * **Important:** You normally need to use `1.0` for glTF models
        * default: `15.0`
-    * `frame_blend`: number, default: `0.0`
-    * `frame_loop`: If `true`, animation will loop. If false, it will play once
+    * `frame_blend`: How many seconds it takes to transition from
+       the previous animation to the new one, in seconds (number)
+       * default: `0.0`
+    * `frame_loop`: If `true`, animation will loop. If `false`, it will play
+      once
        * default: `true`
 ]]
 ---@param frame_range vec2?
@@ -228,7 +283,10 @@ function ObjectRefBase:set_animation(frame_range, frame_speed, frame_blend, fram
     * `frame_range`, `frame_speed`, `frame_blend`, `frame_loop`.
 ]]
 ---@nodiscard
----@return vec2 frame_range, number frame_speed, number frame_blend, boolean frame_loop
+---@return vec2 frame_range
+---@return number frame_speed
+---@return number frame_blend
+---@return boolean frame_loop
 function ObjectRefBase:get_animation() end
 
 --[[
@@ -247,7 +305,8 @@ function ObjectRefBase:set_animation_frame_speed(frame_speed) end
     * Attaches object to `parent`
     * See 'Attachments' section for details
     * `parent`: `ObjectRef` to attach to
-    * `bone`: Bone to attach to. Default is `""` (the root bone)
+    * `bone`: Bone to attach to. Default is `""` which attaches to the parent
+      object's origin.
     * `position`: relative position, default `{x=0, y=0, z=0}`
     * `rotation`: relative rotation in degrees, default `{x=0, y=0, z=0}`
     * `forced_visible`: Boolean to control whether the attached entity
@@ -330,18 +389,18 @@ function ObjectRefBase:set_observers(observers) end
     * returns a table with all observer names as keys and `true` values (a "set") otherwise
 ]]
 ---@nodiscard
----@return  table<string, boolean>? observers
+---@return table<string, boolean>? observers
 function ObjectRefBase:get_observers() end
 
 --[[
 * `get_effective_observers()`:
     * Like `get_observers()`, but returns the "effective" observers, taking into account attachments
     * Time complexity: O(nm)
-        * n: number of observers of the involved entities
+        * n: amount of observers of the involved entities
         * m: number of ancestors along the attachment chain
 ]]
 ---@nodiscard
----@return  table<string, boolean>
+---@return table<string, boolean>
 function ObjectRefBase:get_effective_observers() end
 
 -- --------------------------------- nametag -------------------------------- --

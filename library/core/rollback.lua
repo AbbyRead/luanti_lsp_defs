@@ -1,29 +1,30 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Rollback
 
 --[[
-WIPDOC
+Entry returned by `core.rollback_get_node_actions`, as an array
+`{actor, pos, time, oldnode, newnode}`.
 ]]
 ---@class core.RollbackNodeAction
 --[[
-WIPDOC
+`actor`: `"player:<name>"`, also `"liquid"`.
 ]]
 ---@field [1] string
 --[[
-WIPDOC
+Position of the node.
 ]]
 ---@field [2] ivec
 --[[
-WIPDOC
+Time of the action.
 ]]
 ---@field [3] number
 --[[
-WIPDOC
+Node before the action.
 ]]
 ---@field [4] core.Node.get
 --[[
-WIPDOC
+Node after the action.
 ]]
 ---@field [5] core.Node.get
 

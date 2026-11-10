@@ -1,11 +1,14 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `ObjectRef`
 
 -- --------------------------- PlayerSunParameters -------------------------- --
 
 --[[
-WIPDOC
+Sun parameters accepted by `PlayerRef:set_sun`. All fields are optional.
+Also accepts the table returned by `PlayerRef:get_sun`.
+Note: for legacy reasons, the sun is bigger than the moon by a factor of about
+`1.57` for equal `scale` values.
 ]]
 ---@alias core.PlayerSunParameters.set
 --- | core.PlayerSunParameters.get
@@ -13,56 +16,61 @@ WIPDOC
 
 ---@class _.PlayerSunParameters.set
 --[[
-WIPDOC
+Whether the sun is visible. Default `true`.
 ]]
 ---@field visible boolean?
 --[[
-WIPDOC
+A regular texture for the sun. Setting to `""` re-enables the mesh sun.
+Default `"sun.png"`, if it exists.
+The texture appears non-rotated at sunrise and rotated 180 degrees (upside
+down) at sunset.
 ]]
 ---@field texture core.Texture?
 --[[
-WIPDOC
+A 512x1 texture containing the tonemap for the sun.
+Default `"sun_tonemap.png"`.
 ]]
 ---@field tonemap core.Texture?
 --[[
-WIPDOC
+A regular texture for the sunrise texture. Default `"sunrisebg.png"`.
 ]]
 ---@field sunrise core.Texture?
 --[[
-WIPDOC
+Whether the sunrise texture is visible. Default `true`.
 ]]
 ---@field sunrise_visible boolean?
 --[[
-WIPDOC
+Overall size of the sun. Default `1`.
 ]]
 ---@field scale number?
 
 --[[
-WIPDOC
+Current sun parameters, as returned by `PlayerRef:get_sun`.
+Same fields as the table accepted by `set_sun`.
 ]]
 ---@class core.PlayerSunParameters.get
 --[[
-WIPDOC
+Whether the sun is visible.
 ]]
 ---@field visible boolean
 --[[
-WIPDOC
+Sun texture. `""` means the mesh sun is used.
 ]]
 ---@field texture core.Texture
 --[[
-WIPDOC
+A 512x1 texture containing the tonemap for the sun.
 ]]
 ---@field tonemap core.Texture
 --[[
-WIPDOC
+Sunrise texture.
 ]]
 ---@field sunrise core.Texture
 --[[
-WIPDOC
+Whether the sunrise texture is visible.
 ]]
 ---@field sunrise_visible boolean
 --[[
-WIPDOC
+Overall size of the sun.
 ]]
 ---@field scale number
 
@@ -72,9 +80,12 @@ WIPDOC
 local PlayerRef
 
 --[[
-WIPDOC
+* `set_sun(sun_parameters)`:
+    * Passing no arguments resets the sun to its default values.
+    * `sun_parameters` is a table with the following optional fields:
+      see `core.PlayerSunParameters.set`.
 ]]
----@param sun_parameters core.PlayerSunParameters.set
+---@param sun_parameters core.PlayerSunParameters.set?
 function PlayerRef:set_sun(sun_parameters) end
 
 --[[

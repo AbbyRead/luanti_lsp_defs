@@ -1,9 +1,12 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `ModChannel`
 
 --[[
-WIPDOC
+`ModChannel`
+------------
+
+An interface to use mod channels on client and server.
 ]]
 ---@class core.ModChannel
 local ModChannel = {}
@@ -14,7 +17,7 @@ local ModChannel = {}
     * No more incoming or outgoing messages can be sent to this channel from
       server mods.
     * This invalidate all future object usage.
-    * Ensure you set ModChannel to nil after that to free Lua resources.
+    * Ensure you set mod_channel to nil after that to free Lua resources.
 ]]
 function ModChannel:leave() end
 

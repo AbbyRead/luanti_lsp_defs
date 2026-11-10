@@ -1,24 +1,24 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Definition tables > Object properties
 
 -- ------------- ObjectProperties.upright_sprite.textures.strict ------------ --
 
 --[[
-WIPDOC
+Textures of an `upright_sprite` visual: `{front, back}`.
 ]]
 ---@class core.ObjectProperties.upright_sprite.textures.strict
 --[[
-WIPDOC
+Texture of the front side.
 ]]
----@field [1] number
+---@field [1] core.Texture
 --[[
-WIPDOC
+Texture of the back side.
 ]]
----@field [2] number
+---@field [2] core.Texture
 
 --[[
-WIPDOC
+Textures of an `upright_sprite` visual. Uses 2 textures: `{front, back}`.
 ]]
 ---@alias core.ObjectProperties.upright_sprite.textures
 --- | core.ObjectProperties.upright_sprite.textures.strict
@@ -27,7 +27,8 @@ WIPDOC
 -- ------------------- ObjectProperties.upright_sprite.set ------------------ --
 
 --[[
-WIPDOC
+Object properties to set for the `upright_sprite` visual
+(all fields optional; defaults are injected).
 ]]
 ---@alias core.ObjectProperties.upright_sprite.set
 --- | core.ObjectProperties.upright_sprite.get
@@ -36,38 +37,27 @@ WIPDOC
 ---@class _.ObjectProperties.upright_sprite.set : _.ObjectProperties.upright_sprite.set.__partial, _.ObjectProperties.__base.set
 
 --[[
-WIPDOC
+Object properties as returned by the engine for the `upright_sprite`
+visual.
 ]]
 ---@class core.ObjectProperties.upright_sprite.get : _.ObjectProperties.upright_sprite.get.__partial, _.ObjectProperties.__base.get
 
 ---@class _.ObjectProperties.upright_sprite.set.__partial : _.ObjectProperties.spritesheet.set.__partial, _.ObjectProperties.shaded.set.__partial
 --[[
-WIPDOC
+A vertical flat texture.
 ]]
 ---@field visual "upright_sprite"
 --[[
-Number of required textures depends on visual:
-"cube" uses 6 textures just like a node, but all 6 must be defined.
-"sprite" uses 1 texture.
-"upright_sprite" uses 2 textures: {front, back}.
-"mesh" requires one texture for each mesh buffer/material (in order)
-Deprecated usage of "wielditem" expects 'textures = {itemname}' (see 'visual' above).
-Unofficial note: I *guessed* that it's string[] but i am not sure
+Textures of the sprite. Uses 2 textures: `{front, back}`.
 ]]
 ---@field textures core.ObjectProperties.upright_sprite.textures?
 
 ---@class _.ObjectProperties.upright_sprite.get.__partial : _.ObjectProperties.spritesheet.get.__partial, _.ObjectProperties.shaded.get.__partial
 --[[
-WIPDOC
+A vertical flat texture.
 ]]
 ---@field visual "upright_sprite"
 --[[
-Number of required textures depends on visual:
-"cube" uses 6 textures just like a node, but all 6 must be defined.
-"sprite" uses 1 texture.
-"upright_sprite" uses 2 textures: {front, back}.
-"mesh" requires one texture for each mesh buffer/material (in order)
-Deprecated usage of "wielditem" expects 'textures = {itemname}' (see 'visual' above).
-Unofficial note: I *guessed* that it's string[] but i am not sure
+Textures of the sprite. Uses 2 textures: `{front, back}`.
 ]]
 ---@field textures core.ObjectProperties.upright_sprite.textures

@@ -1,12 +1,17 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Fractal Value Noise
 -- luanti/doc/lua_api.md: Class Reference > `ValueNoiseMap`
 
 -- ------------------------------ constructors ------------------------------ --
 
 --[[
-WIPDOC
+* `ValueNoiseMap(noiseparams, size)`: constructor
+    * Format of `size` is `{x=dimx, y=dimy, z=dimz}`. The `z` component is
+      omitted for 2D noise, and it must be larger than 1 for 3D noise
+      (otherwise `nil` is returned).
+    * **Important**: Requires the mapgen environment to be initalized, do not
+      use at load time.
 ]]
 ---@nodiscard
 ---@param noiseparams core.NoiseParams
@@ -15,7 +20,11 @@ WIPDOC
 function ValueNoiseMap(noiseparams, size) end
 
 --[[
-WIPDOC
+* `core.get_value_noise_map(noiseparams, size)`
+    * Same as `ValueNoiseMap`, but the actual seed used is the noiseparams seed
+      plus the world seed, to create world-specific noise.
+    * **Important**: Requires the mapgen environment to be initalized, do not
+      use at load time.
 ]]
 ---@nodiscard
 ---@param noiseparams core.NoiseParams
@@ -24,7 +33,8 @@ WIPDOC
 function core.get_value_noise_map(noiseparams, size) end
 
 --[[
-WIPDOC
+* `PerlinNoiseMap(noiseparams, size)`: old name of
+  `ValueNoiseMap(noiseparams, size)`, kept as an alias since 5.12.0.
 ]]
 ---@nodiscard
 ---@param noiseparams core.NoiseParams
@@ -33,7 +43,8 @@ WIPDOC
 function PerlinNoiseMap(noiseparams, size) end
 
 --[[
-WIPDOC
+* `core.get_perlin_map(noiseparams, size)`: old name of
+  `core.get_value_noise_map(noiseparams, size)`, kept as an alias since 5.12.0.
 ]]
 ---@nodiscard
 ---@param noiseparams core.NoiseParams
@@ -44,7 +55,30 @@ function core.get_perlin_map(noiseparams, size) end
 -- ------------------------------ ValueNoiseMap ----------------------------- --
 
 --[[
-WIPDOC
+`ValueNoiseMap`
+----------------
+
+A fast, bulk noise generator.
+
+It can be created via `ValueNoiseMap(noiseparams, size)` or
+`core.get_value_noise_map(noiseparams, size)`.
+For `core.get_value_noise_map()`, the actual seed used is the noiseparams seed
+plus the world seed, to create world-specific noise.
+
+These were previously called `PerlinNoiseMap()` and `core.get_perlin_map()`,
+but the implemented noise was not Perlin noise. They were renamed in 5.12.0.
+The old names still exist as aliases.
+
+Format of `size` is `{x=dimx, y=dimy, z=dimz}`. The `z` component is omitted
+for 2D noise, and it must be larger than 1 for 3D noise (otherwise
+`nil` is returned).
+
+For each of the functions with an optional `buffer` parameter: If `buffer` is
+not nil, this table will be used to store the result instead of creating a new
+table.
+
+**Important**: These require the mapgen environment to be initalized, do not
+use at load time.
 ]]
 ---@class core.ValueNoiseMap
 local ValueNoiseMap = {}
@@ -138,7 +172,7 @@ function ValueNoiseMap:calc_3d_map(pos) end
 ---@param slice_offset vector
 ---@param slice_size vector
 ---@return number[]
-function ValueNoiseMap:get_map_slice(slice_offset, slice_size, buffer) end
+function ValueNoiseMap:get_map_slice(slice_offset, slice_size) end
 
 --[[
 * `get_map_slice(slice_offset, slice_size, buffer)`: In the form of an array,

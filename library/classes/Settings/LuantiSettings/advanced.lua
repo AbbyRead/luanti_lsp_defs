@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- builtin/settingtypes.txt
 -- minetest.conf.example
 
@@ -229,7 +229,15 @@
 -- -------------- [Advanced] [*Developer Options] [**Debugging] ------------- --
 
 --[[
-WIPDOC
+Level of logging to be written to debug.txt. Default `"action"`.
+* `""` (nothing, no logging)
+* `"none"` (messages with no level)
+* `"error"`
+* `"warning"`
+* `"action"`
+* `"info"`
+* `"verbose"`
+* `"trace"`
 ]]
 ---@alias core.LuantiSettings.enums.debug_log_level
 --- | ""
@@ -242,7 +250,10 @@ WIPDOC
 --- | "trace"
 
 --[[
-WIPDOC
+Handling for deprecated Lua API calls. Default `"log"`.
+* `"none"`: do not log deprecated calls
+* `"log"`: mimic and log backtrace of deprecated call
+* `"error"`: abort on usage of deprecated call (suggested for mod developers)
 ]]
 ---@alias core.LuantiSettings.enums.deprecated_lua_api_handling
 --- | "none"
@@ -284,7 +295,15 @@ WIPDOC
 ---@field deprecated_lua_api_handling core.LuantiSettings.enums.deprecated_lua_api_handling?
 
 --[[
-WIPDOC
+Minimal level of logging to be written to chat. Default `"error"`.
+* `""` (nothing, no logging)
+* `"none"` (messages with no level)
+* `"error"`
+* `"warning"`
+* `"action"`
+* `"info"`
+* `"verbose"`
+* `"trace"`
 ]]
 ---@alias core.LuantiSettings.enums.chat_log_level
 --- | ""
@@ -328,7 +347,8 @@ WIPDOC
 -- ------------ [Advanced] [*Developer Options] [**Mod Profiler] ------------ --
 
 --[[
-WIPDOC
+Format in which profiles are saved when calling `/profiler save [format]`
+without a format. Default `"txt"`.
 ]]
 ---@alias core.LuantiSettings.enums.profiler.default_report_format
 --- | "txt"
@@ -427,7 +447,8 @@ WIPDOC
 -- ------------------- [Advanced] [*Advanced] [**Graphics] ------------------ --
 
 --[[
-WIPDOC
+The rendering back-end. A restart is required after changing it. An empty
+string selects the default: OpenGL on desktop, OGLES2 on Android.
 ]]
 ---@alias core.LuantiSettings.enums.video_driver
 --- | ""
@@ -510,7 +531,10 @@ WIPDOC
 ---@field minimap_double_scan_height boolean?
 
 --[[
-WIPDOC
+Whether textures on a node are aligned to the world instead of the node.
+World-aligned mode suits stairs and microblocks, node-aligned mode suits
+machines, furniture, etc. This option allows enforcing it for certain node
+types. EXPERIMENTAL and may not work properly. Default `"enable"`.
 ]]
 ---@alias core.LuantiSettings.enums.world_aligned_mode
 --- | "disable"
@@ -532,7 +556,9 @@ WIPDOC
 ---@field world_aligned_mode core.LuantiSettings.enums.world_aligned_mode?
 
 --[[
-WIPDOC
+Whether the client tries to determine the scale of world-aligned textures
+automatically from the texture size (see `texture_min_size`).
+EXPERIMENTAL. Default `"disable"`.
 ]]
 ---@alias core.LuantiSettings.enums.autoscale_mode
 --- | "disable"
@@ -575,7 +601,9 @@ WIPDOC
 ---@field client_mesh_chunk int?
 
 --[[
-WIPDOC
+Color depth in bits of the texture used for the post-processing pipeline.
+Reducing this can improve performance, but some effects (e.g. debanding)
+require more than 8 bits. Default `"16"`.
 ]]
 ---@alias core.LuantiSettings.enums.post_processing_texture_bits
 --- | "8"
@@ -1211,7 +1239,8 @@ WIPDOC
 ---@field display_density_factor number?
 
 --[[
-WIPDOC
+SQLite `synchronous` pragma, see https://www.sqlite.org/pragma.html#pragma_synchronous.
+Default `"2"`.
 ]]
 ---@alias core.LuantiSettings.enums.sqlite_synchronous
 --- | "0"
@@ -1275,7 +1304,7 @@ WIPDOC
 -- ------------------------- [Advanced] [*Gamepads] ------------------------- --
 
 --[[
-WIPDOC
+The type of joystick. Default `"auto"`.
 ]]
 ---@alias core.LuantiSettings.enums.joystick_type
 --- | "auto"

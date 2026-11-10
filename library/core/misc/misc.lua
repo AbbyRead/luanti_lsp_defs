@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Misc.
 
 -- --------------------------- Player and Entities -------------------------- --
@@ -67,8 +67,8 @@ function core.hud_replace_builtin(name, hud_definition) end
 ]]
 ---@nodiscard
 ---@param arg string
----@param relative_to vector
----@return vec?
+---@param relative_to number
+---@return number?
 function core.parse_relative_number(arg, relative_to) end
 
 --[[
@@ -89,7 +89,8 @@ function core.send_leave_message(player_name, timed_out) end
 -- ------------------------------ position hash ----------------------------- --
 
 --[[
-WIPDOC
+Numeric encoding of a node position (16+16+16 = 48 bit), see
+`core.hash_node_position`. Also used for mapblock position hashes.
 ]]
 ---@alias core.PosHash int
 
@@ -336,7 +337,7 @@ function core.encode_base64(string) end
     * Decodes a string encoded in base64.
 ]]
 ---@param string string
----@return string
+---@return string?
 function core.decode_base64(string) end
 
 -- ------------------------------- protection ------------------------------- --
@@ -411,32 +412,34 @@ function core.is_creative_enabled(name) end
 ---@param pos1 ivector
 ---@param pos2 ivector
 ---@param player_name string
----@param interval int
----@return boolean
+---@param interval int?
+---@return ivec|false
 function core.is_area_protected(pos1, pos2, player_name, interval) end
 
 --[[
-WIPDOC
+Extra tweaks to the placement code of `core.rotate_and_place`.
+The first four options are mutually exclusive; the last in the list takes
+precedence over the first.
 ]]
 ---@class core.RotateAndPlace.orient_flags
 --[[
-WIPDOC
+If true, place wall-orientation on the ground and ground-orientation on the wall.
 ]]
 ---@field invert_wall boolean?
 --[[
-WIPDOC
+If true, always place the node in wall orientation.
 ]]
 ---@field force_wall boolean?
 --[[
-WIPDOC
+If true, always place on the ceiling.
 ]]
 ---@field force_ceiling boolean?
 --[[
-WIPDOC
+If true, always place the node on the floor.
 ]]
 ---@field force_floor boolean?
 --[[
-WIPDOC
+If true, forcefully reset the facedir to north when placing on the floor or ceiling.
 ]]
 ---@field force_facedir boolean?
 
@@ -470,7 +473,6 @@ WIPDOC
 ---@return core.ItemStack
 function core.rotate_and_place(itemstack, placer, pointed_thing, infinitestacks, orient_flags, prevent_after_place) end
 
-
 --[[
 * `core.rotate_node(itemstack, placer, pointed_thing)`
     * calls `rotate_and_place()` with `infinitestacks` set according to the state
@@ -481,7 +483,6 @@ function core.rotate_and_place(itemstack, placer, pointed_thing, infinitestacks,
 ---@param placer core.ObjectRef
 ---@param pointed_thing core.PointedThing
 function core.rotate_node(itemstack, placer, pointed_thing) end
-
 
 --[[
 * `core.calculate_knockback(player, hitter, time_from_last_punch,

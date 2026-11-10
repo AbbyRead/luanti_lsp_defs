@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: L-system trees
 
 --[[
@@ -32,7 +32,8 @@
 ---@alias core.LsystemTreeDef.rules string
 
 --[[
-WIPDOC
+Type of trunk: `"single"` (1 node), `"double"` (2x2 nodes) or `"crossed"`
+(3x3 in cross shape).
 ]]
 ---@alias core.LSystemTreeDef.trunk_type
 --- | "single"
@@ -88,15 +89,17 @@ Chance (0-100) to replace leaves with leaves2 (default: 0)
 ]]
 ---@field leaves2_chance int?
 --[[
-Angle in deg (default: 0)
+Angle in degrees [s16] (default: 0)
 ]]
 ---@field angle int?
 --[[
-Max # of iterations, usually 2 -5 (default 0)
+Max. amount of iterations, range [2, 32767] but usually [2, 5] (default 0)
 ]]
 ---@field iterations int?
 --[[
-Factor to lower number of iterations, usually 0 - 3 (default: 0)
+Subtracts a random integer in range [0, random_level] from iterations, but
+iterations will never go below 2. Range [0, 32767], but usually [0, 3]
+(default: 0)
 ]]
 ---@field random_level int?
 --[[
@@ -121,6 +124,6 @@ Chance (0-100) to replace leaves with fruit node (default: 0)
 ]]
 ---@field fruit_chance int?
 --[[
-Random seed, if no seed is provided, the engine will create one.
+Random seed [s32]; if no seed is provided, the engine will create one.
 ]]
 ---@field seed int

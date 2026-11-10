@@ -1,11 +1,15 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Utilities
 
 -- ----------------------------- core.PlayerInfo ---------------------------- --
 
 --[[
-WIPDOC
+Information about a player, from `core.get_player_information`.
+
+The `*_rtt` and `*_jitter` fields can be missing if no stats have been collected yet.
+Debug-build-only fields (serialization version, major/minor/patch, state) are not
+included; DO NOT USE IN MODS.
 ]]
 ---@class core.PlayerInfo
 --[[
@@ -115,7 +119,7 @@ is always set to `false`.
 -- ---------------------------- core.* functions ---------------------------- --
 
 --[[
-WIPDOC
+Returns a table containing information about a player.
 ]]
 ---@nodiscard
 ---@param player_name string
@@ -123,7 +127,8 @@ WIPDOC
 function core.get_player_information(player_name) end
 
 --[[
-WIPDOC
+Returns window information about a player's client, or nil if the client did not
+send it (requires client 5.7+). See `core.PlayerWindowInfo`.
 ]]
 ---@nodiscard
 ---@param player_name string

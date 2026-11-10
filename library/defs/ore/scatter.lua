@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Ores
 
 
@@ -7,7 +7,7 @@
 
 ---@class _.OreDef.scatter.__partial
 --[[
-WIPDOC
+Always `"scatter"`.
 ]]
 ---@field  ore_type "scatter"
 --[[
@@ -31,12 +31,14 @@ nodes are coal ore.
 
 
 --[[
-WIPDOC
+Scatter ore with a uniform distribution: randomly chooses a location and
+generates a cluster of ore. Omit `noise_params`.
 ]]
 ---@class core.OreDef.scatter.uniform : _.OreDef.scatter.__partial, _.OreDef.__base
 
 --[[
-WIPDOC
+Scatter ore with a non-uniform distribution: the ore is placed if the 3D
+value noise at that point is greater than `noise_threshold`.
 ]]
 ---@class core.OreDef.scatter.nonuniform : _.OreDef.scatter.__partial, _.OreDef.__base
 --[[

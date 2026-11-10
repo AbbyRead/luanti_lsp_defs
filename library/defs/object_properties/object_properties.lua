@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Entity damage mechanism
 -- luanti/doc/lua_api.md: Definition tables > Object properties
 
@@ -10,12 +10,12 @@
 -- there were any entity exclusive fields, EntityProperties would exist
 
 --[[
-WIPDOC
+Default maximum HP of players (`hp_max` object property).
 ]]
 core.PLAYER_MAX_HP_DEFAULT = 20
 
 --[[
-WIPDOC
+Default maximum breath of players (`breath_max` object property).
 ]]
 core.PLAYER_MAX_BREATH_DEFAULT = 10
 
@@ -23,7 +23,7 @@ core.PLAYER_MAX_BREATH_DEFAULT = 10
 
 ---@class _.ObjectProperties.__base.set
 --[[
-Defines the maximum and default HP of the object.
+Defines the maximum and default HP of the object (integer [u16]).
 For Lua entities, the maximum is not enforced.
 For players, this defaults to `core.PLAYER_MAX_HP_DEFAULT` (20).
 For Lua entities, the default is 10.
@@ -32,7 +32,7 @@ For Lua entities, the default is 10.
 
 ---@class _.ObjectProperties.__base.get
 --[[
-Defines the maximum and default HP of the object.
+Defines the maximum and default HP of the object (integer [u16]).
 For Lua entities, the maximum is not enforced.
 For players, this defaults to `core.PLAYER_MAX_HP_DEFAULT` (20).
 For Lua entities, the default is 10.
@@ -207,8 +207,8 @@ Default: false
 ]]
 ---@field nametag_fontsize int|false?
 --[[
-Sets the font size of the nametag in pixels.
-`false` will cause the size to be set automatically based on user settings.
+If enabled, the nametag is scaled by Z in screen space, meaning it becomes
+smaller the further away the object is.
 Default: false
 ]]
 ---@field nametag_scale_z boolean?

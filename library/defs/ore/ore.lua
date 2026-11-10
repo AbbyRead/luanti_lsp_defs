@@ -1,10 +1,10 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Ores
 -- luanti/doc/lua_api.md: Definition tables > Ore Definition
 
 --[[
-WIPDOC
+Numeric ID of a registered ore, as returned by `core.register_ore`.
 ]]
 ---@alias core.OreID int
 
@@ -12,7 +12,7 @@ WIPDOC
 
 ---@class _.OreDef.__base
 --[[
-WIPDOC
+If set, `core.registered_ores[name]` returns this definition.
 ]]
 ---@field name string?
 --[[
@@ -28,11 +28,11 @@ Node to place ore in. Multiple are possible by passing a list.
 ]]
 ---@field  wherein OneOrMany<core.Node.name>
 --[[
-WIPDOC
+Lower limit for ore (inclusive). Integer [s16], default `-31000`.
 ]]
 ---@field y_min int?
 --[[
-WIPDOC
+Upper limit for ore (inclusive). Integer [s16], default `31000`.
 ]]
 ---@field y_max int?
 --[[
@@ -46,7 +46,10 @@ Can be a list of (or a single) biome names, IDs, or definitions.
 -- --------------------------------- OreDef --------------------------------- --
 
 --[[
-WIPDOC
+Ore definition, as passed to `core.register_ore`.
+The `ore_type` field selects the variant: `"scatter"`, `"sheet"`, `"puff"`,
+`"blob"`, `"vein"` or `"stratum"`. See the "Ores" section for the
+behavior of each type and which common parameters it ignores.
 ]]
 ---@alias core.OreDef
 --- | core.OreDef.scatter.uniform

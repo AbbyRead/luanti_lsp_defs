@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Fractal Value Noise
 -- luanti/doc/lua_api.md: 'core' namespace reference > Environment access
 -- luanti/doc/lua_api.md: Class Reference > `ValueNoise`
@@ -32,7 +32,8 @@ names still exist as aliases.
 function ValueNoise(noiseparams) end
 
 --[[
-WIPDOC
+* `PerlinNoise(noiseparams)`: old name of `ValueNoise(noiseparams)`, kept as
+  an alias since 5.12.0.
 ]]
 ---@nodiscard
 ---@param noiseparams core.NoiseParams
@@ -92,7 +93,9 @@ names still exist as aliases.
 function ValueNoise(seeddiff, octaves, persistence, spread) end
 
 --[[
-WIPDOC
+* `PerlinNoise(seed, octaves, persistence, spread)`: **deprecated** old name
+  of `ValueNoise(seed, octaves, persistence, spread)`, kept as an alias since
+  5.12.0.
 ]]
 ---@deprecated
 ---@nodiscard
@@ -159,7 +162,7 @@ local ValueNoise = {}
 ]]
 ---@nodiscard
 ---@param pos vec2
----@return vec2
+---@return number
 function ValueNoise:get_2d(pos) end
 
 --[[
@@ -167,5 +170,5 @@ function ValueNoise:get_2d(pos) end
 ]]
 ---@nodiscard
 ---@param pos vector
----@return vec
+---@return number
 function ValueNoise:get_3d(pos) end

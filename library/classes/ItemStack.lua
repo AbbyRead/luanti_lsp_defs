@@ -1,11 +1,16 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `ItemStack`
 
 -- ------------------------------- constructor ------------------------------ --
 
 --[[
-WIPDOC
+* `ItemStack([x])`: returns an `ItemStack`
+    * `x`: (optional) Is one of the following:
+        * nil value: Empty stack
+        * string value: an "itemstring".
+        * table value: ItemStack [Table format](#table-format).
+            * The `name` field is mandatory.
 ]]
 ---@nodiscard
 ---@param any core.Item?
@@ -15,7 +20,17 @@ function ItemStack(any) end
 -- -------------------------------- ItemStack ------------------------------- --
 
 --[[
-WIPDOC
+`ItemStack`
+-----------
+
+An `ItemStack` is a stack of items.
+
+`stack1 == stack2` returns whether the stacks are identical.
+
+* Note: `stack1:to_string() == stack2:to_string()` is not reliable, as stack
+  metadata can be serialized in arbitrary order.
+* Note: if `stack2` is an itemstring or table representation of an ItemStack,
+  this will always return false, even if it is "equivalent".
 ]]
 ---@class core.ItemStack
 local ItemStack = {}
@@ -43,37 +58,40 @@ function ItemStack:get_name() end
 function ItemStack:set_name(item_name) end
 
 --[[
-* `get_count()`: Returns number of items on the stack.
+* `get_count()`: Returns amount of items on the stack.
 ]]
 ---@nodiscard
 ---@return int count
 function ItemStack:get_count() end
 
 --[[
-* `set_count(count)`: returns a boolean indicating whether the item was cleared
-    * `count`: number, unsigned 16 bit integer
+* `set_count(count)`: Sets amount of items in the stack.
+    * returns a boolean indicating whether the item was cleared
+    * `count`: integer [u16]
 ]]
 ---@param count int
 ---@return boolean
 function ItemStack:set_count(count) end
 
 --[[
-* `get_wear()`: returns tool wear (`0`-`65535`), `0` for non-tools.
+* `get_wear()`: returns tool wear (integer in range [0, 65535]), `0` for
+  non-tools.
 ]]
 ---@nodiscard
 ---@return core.Tool.wear wear
 function ItemStack:get_wear() end
 
 --[[
-* `set_wear(wear)`: returns boolean indicating whether item was cleared
-    * `wear`: number, unsigned 16 bit integer
+* `set_wear(wear)`: set tool wear
+    * returns boolean indicating whether item was cleared
+    * `wear`: integer [u16]
 ]]
 ---@param wear core.Tool.wear
 ---@return boolean
 function ItemStack:set_wear(wear) end
 
 --[[
-`get_meta()`: returns ItemStackMetaRef. See section for more details
+* `get_meta()`: returns ItemStackMetaRef. See section for more details
 ]]
 ---@nodiscard
 ---@return core.ItemStackMetaRef
@@ -103,7 +121,7 @@ function ItemStack:set_metadata(metadata) end
 * `get_description()`: returns the description shown in inventory list tooltips.
     * The engine uses this when showing item descriptions in tooltips.
     * Fields for finding the description, in order:
-        * `description` in item metadata (See [Item Metadata].
+        * `description` in item metadata (See [Item Metadata](#item-metadata).)
         * `description` in item definition
         * item name
 ]]
@@ -112,16 +130,16 @@ function ItemStack:set_metadata(metadata) end
 function ItemStack:get_description() end
 
 --[[
-* `get_short_description()`: returns the short description or nil.
+* `get_short_description()`: returns the short description.
     * Unlike the description, this does not include new lines.
     * Fields for finding the short description, in order:
-        * `short_description` in item metadata (See [Item Metadata].
+        * `short_description` in item metadata (See [Item Metadata](#item-metadata).)
         * `short_description` in item definition
-        * first line of the description (From item meta or def, see `get_description()`.
-        * Returns nil if none of the above are set
+        * first line of the description (From item meta or def, see `get_description()`.)
+        * item name
 ]]
 ---@nodiscard
----@return string?
+---@return string
 function ItemStack:get_short_description() end
 
 --[[
@@ -190,17 +208,16 @@ function ItemStack:get_tool_capabilities() end
 --[[
 * `add_wear(amount)`
     * Increases wear by `amount` if the item is a tool, otherwise does nothing
-    * Valid `amount` range is [0,65536]
-    * `amount`: number, integer
+    * `amount` is an integer [u16]
 ]]
 ---@param amount core.Tool.wear
 function ItemStack:add_wear(amount) end
 
 --[[
 * `add_wear_by_uses(max_uses)`
-    * Increases wear in such a way that, if only this function itself called,
+    * Increases wear in such a way that, if only this function is called,
       the item breaks after `max_uses` times
-    * Valid `max_uses` range is [0,65536]
+    * `max_uses` is an integer [u16]
     * Does nothing if item is not a tool or if `max_uses` is 0
 ]]
 ---@param max_uses core.Tool.wear
@@ -219,6 +236,7 @@ function ItemStack:get_wear_bar_params() end
     * Put some item or stack onto this stack
 ]]
 ---@param item core.Item
+---@return core.ItemStack leftover
 function ItemStack:add_item(item) end
 
 --[[
@@ -233,7 +251,7 @@ function ItemStack:item_fits(item) end
 --[[
 * `take_item(n)`: returns taken `ItemStack`
     * Take (and remove) up to `n` items from this stack
-    * `n`: number, default: `1`
+    * `n`: integer [u16], default: `1`
 ]]
 ---@param n int?
 ---@return core.ItemStack
@@ -242,7 +260,7 @@ function ItemStack:take_item(n) end
 --[[
 * `peek_item(n)`: returns taken `ItemStack`
     * Copy (don't remove) up to `n` items from this stack
-    * `n`: number, default: `1`
+    * `n`: integer [u16], default: `1`
 ]]
 ---@nodiscard
 ---@param n int?

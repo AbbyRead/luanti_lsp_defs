@@ -1,9 +1,9 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Definition tables > `HTTPRequest` definition
 
 --[[
-WIPDOC
+HTTP method for a request. Defaults to `"GET"`.
 ]]
 ---@alias core.HTTPRequestDef.method
 --- | "GET"
@@ -14,11 +14,13 @@ WIPDOC
 --- | "DELETE"
 
 --[[
-WIPDOC
+`HTTPRequest` definition
+
+Used by `HTTPApiTable.fetch` and `HTTPApiTable.fetch_async`.
 ]]
 ---@class core.HTTPRequestDef
 --[[
-WIPDOC
+URL to request, e.g. `"https://example.org"`.
 ]]
 ---@field  url string?
 --[[
@@ -53,8 +55,12 @@ Not allowed for GET or HEAD method and `data` must be a table.
 ]]
 ---@field  multipart boolean?
 --[[
-Deprecated, use `data` instead. Forces `method = "POST"`.
-
-* @deprecated
+Optional, if true then error messages are suppressed on failure.
+Default is false.
 ]]
+---@field  quiet boolean?
+--[[
+Deprecated, use `data` instead. Forces `method = "POST"`.
+]]
+---@deprecated
 ---@field  post_data string|table<string,string>?

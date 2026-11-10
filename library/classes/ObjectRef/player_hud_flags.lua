@@ -1,11 +1,12 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `ObjectRef`
 
 -- ----------------------------- PlayerHudFlags ----------------------------- --
 
 --[[
-WIPDOC
+HUD flags accepted by `PlayerRef:hud_set_flags`. A flag equal to `nil` is not
+modified. Also accepts the table returned by `PlayerRef:hud_get_flags`.
 ]]
 ---@alias core.PlayerHudFlags.set
 --- | core.PlayerHudFlags.get
@@ -13,74 +14,88 @@ WIPDOC
 
 ---@class _.PlayerHudFlags.set
 --[[
-WIPDOC
+Show the hotbar.
 ]]
 ---@field hotbar boolean?
 --[[
-WIPDOC
+Show the health bar.
 ]]
 ---@field healthbar boolean?
 --[[
-WIPDOC
+Show the crosshair.
 ]]
 ---@field crosshair boolean?
 --[[
-WIPDOC
+Show the wielded item.
 ]]
 ---@field wielditem boolean?
 --[[
-WIPDOC
+Show the breath bar.
 ]]
 ---@field breathbar boolean?
 --[[
-WIPDOC
+Modifies the client's permission to view the minimap.
+The client may locally elect to not view the minimap.
 ]]
 ---@field minimap boolean?
 --[[
-WIPDOC
+Only usable when `minimap` is true.
 ]]
 ---@field minimap_radar boolean?
 --[[
-WIPDOC
+Allow showing basic debug info that might give a gameplay advantage.
+This includes map seed, player position, look direction, the pointed node and
+block bounds. Does not affect players with the `debug` privilege.
 ]]
 ---@field basic_debug boolean?
+--[[
+Modifies the client's permission to view chat on the HUD.
+The client may locally elect to not view chat. Does not affect the console.
+]]
+---@field chat boolean?
 
 --[[
-WIPDOC
+Current HUD flags, as returned by `PlayerRef:hud_get_flags`.
+See `core.PlayerHudFlags.set` for the meaning of each flag.
 ]]
 ---@class core.PlayerHudFlags.get
 --[[
-WIPDOC
+Show the hotbar.
 ]]
 ---@field hotbar boolean
 --[[
-WIPDOC
+Show the health bar.
 ]]
 ---@field healthbar boolean
 --[[
-WIPDOC
+Show the crosshair.
 ]]
 ---@field crosshair boolean
 --[[
-WIPDOC
+Show the wielded item.
 ]]
 ---@field wielditem boolean
 --[[
-WIPDOC
+Show the breath bar.
 ]]
 ---@field breathbar boolean
 --[[
-WIPDOC
+Client's permission to view the minimap.
 ]]
 ---@field minimap boolean
 --[[
-WIPDOC
+Radar minimap mode; only usable when `minimap` is true.
 ]]
 ---@field minimap_radar boolean
 --[[
-WIPDOC
+Allow showing basic debug info (map seed, player position, look direction,
+pointed node, block bounds). Does not affect players with the `debug` privilege.
 ]]
 ---@field basic_debug boolean
+--[[
+Client's permission to view chat on the HUD. Does not affect the console.
+]]
+---@field chat boolean
 
 
 -- ---------------------------- PlayerRef methods --------------------------- --
@@ -102,6 +117,8 @@ local PlayerRef
         * `basic_debug`: Allow showing basic debug info that might give a gameplay advantage.
           This includes map seed, player position, look direction, the pointed node and block bounds.
           Does not affect players with the `debug` privilege.
+        * `chat`: Modifies the client's permission to view chat on the HUD.
+          The client may locally elect to not view chat. Does not affect the console.
     * If a flag equals `nil`, the flag is not modified
 ]]
 ---@param flags core.PlayerHudFlags.set

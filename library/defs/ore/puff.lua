@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Flag Specifier Format
 -- luanti/doc/lua_api.md: Ores
 -- luanti/doc/lua_api.md: Definition tables > Ore Definition
@@ -7,32 +7,38 @@
 -- ---------------------------- OreDef.puff.flags --------------------------- --
 
 --[[
-WIPDOC
+Table form of the `puff` ore flags. A flag prefixed with `no` explicitly
+clears it (see "Flag Specifier Format").
 ]]
 ---@class core.OreDef.puff.flags.tablefmt
 --[[
-WIPDOC
+If set, puff ore generation will not taper down large differences in
+displacement when approaching the edge of a puff.
 ]]
 ---@field puff_cliffs boolean?
 --[[
-WIPDOC
+Clears `puff_cliffs`.
 ]]
 ---@field nopuff_cliffs boolean?
 --[[
-WIPDOC
+If set, a negative displacement from `np_puff_top` or `np_puff_bottom`
+generates the absolute difference in noise displacement values instead of
+leaving the sub-column ungenerated.
 ]]
 ---@field puff_additive_composition boolean?
 --[[
-WIPDOC
+Clears `puff_additive_composition`.
 ]]
 ---@field nopuff_additive_composition boolean?
 --[[
-WIPDOC
+String form of the `puff` ore flags: comma-delimited flag names, e.g.
+`"puff_cliffs,nopuff_additive_composition"`.
 ]]
 ---@alias core.OreDef.puff.flags.stringfmt string
 
 --[[
-WIPDOC
+Attributes for puff ore generation, as a table or comma-delimited string
+(see "Flag Specifier Format"). Both flags have no effect on other ore types.
 ]]
 ---@alias core.OreDef.puff.flags
 --- | core.OreDef.puff.flags.tablefmt
@@ -41,15 +47,19 @@ WIPDOC
 -- ------------------------------- OreDef.puff ------------------------------ --
 
 --[[
-WIPDOC
+Ore definition of type `"puff"`: creates a sheet of ore in a cloud-like puff
+shape.
+As with `sheet`, the size and shape of puffs are described by `noise_params`
+and `noise_threshold`, and puffs are placed at random vertical positions
+within the currently generated chunk.
 ]]
 ---@class core.OreDef.puff : _.OreDef.__base
 --[[
-WIPDOC
+Always `"puff"`.
 ]]
 ---@field  ore_type "puff"
 --[[
-WIPDOC
+Ore attributes: `puff_cliffs`, `puff_additive_composition`.
 ]]
 ---@field flags core.OreDef.puff.flags?
 --[[
@@ -80,13 +90,15 @@ Needed by "sheet", "puff", "blob" and "vein" ores.
 Omit from "scatter" ore for a uniform ore distribution.
 Omit from "stratum" ore for a simple horizontal strata from y_min to
 y_max.
+Noise is evaluated in 2D: the Z component of `spread` is ignored, but should
+still be defined.
 ]]
 ---@field noise_params core.NoiseParams.3d
 --[[
-"puff" type
+Noise parameters for the vertical top displacement of each puff.
 ]]
 ---@field np_puff_top core.NoiseParams.3d?
 --[[
-WIPDOC
+Noise parameters for the vertical bottom displacement of each puff.
 ]]
 ---@field np_puff_bottom core.NoiseParams.3d?

@@ -1,11 +1,12 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Groups > Groups in crafting recipes
 -- luanti/doc/lua_api.md: 'core' namespace reference > Registration functions > Gameplay
 -- luanti/doc/lua_api.md: Definition tables > Crafting recipes
 
 --[[
-WIPDOC
+Output part shared by all recipe types that produce an item (all except
+fuel).
 ]]
 ---@class core.CraftingRecipeDef.output
 --[[
@@ -14,7 +15,13 @@ WIPDOC
 ---@field output core.Item.stringfmt
 
 --[[
-WIPDOC
+Recipe table accepted by `core.clear_craft`. Erases existing crafts based
+either on output item or on input recipe. Specify either output or input only;
+if both are given, input is ignored. For output specify only the item, without
+a quantity.
+
+**Warning:** the `type` field is ignored if the recipe contains output;
+erasing is then done independently from the crafting method.
 ]]
 ---@alias core.CraftingRecipeDef.clear
 --- | core.CraftingRecipeDef.shaped.input

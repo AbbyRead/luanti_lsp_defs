@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Defaults for the `on_place` and `on_drop` item definition functions
 -- luanti/doc/lua_api.md: 'core' namespace reference > Defaults for the `on_punch` and `on_dig` node definition callbacks
 
@@ -110,7 +110,7 @@ function core.item_drop(itemstack, dropper, pos) end
 function core.item_drop(itemstack, dropper, pos) end
 
 --[[
-WIPDOC
+Function wrapper returned by `core.item_eat`; wraps `core.do_item_eat`.
 ]]
 ---@alias core.fn.item_eat fun(itemstack:core.ItemStack, user:core.ObjectRef, pointed_thing:core.PointedThing):core.ItemStack?
 
@@ -145,4 +145,5 @@ function core.node_punch(pos, node, puncher, pointed_thing) end
 ---@param pos ivector
 ---@param node core.Node.set
 ---@param digger core.ObjectRef
+---@return boolean dug False if the node is not diggable or `can_dig` refused.
 function core.node_dig(pos, node, digger) end

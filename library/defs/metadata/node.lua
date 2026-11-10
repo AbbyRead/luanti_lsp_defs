@@ -1,45 +1,45 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Metadata
 -- luanti/doc/lua_api.md: Class reference > `MetaDataRef`
 
 -- ------------------- MetadataTable.*.node special fields ------------------ --
 
 --[[
-WIPDOC
+Keys of the node metadata key-value store that are handled specially.
 ]]
 ---@alias core.MetadataTable.fields.node.keys.special
---- | "formpsec"
+--- | "formspec"
 --- | "infotext"
 
 --[[
-WIPDOC
+Any node metadata key: a special key or an arbitrary string.
 ]]
 ---@alias core.MetadataTable.fields.node.keys
 --- | core.MetadataTable.fields.node.keys.special
 --- | string
 
 --[[
-WIPDOC
+Special node metadata keys that hold integers. None are defined.
 ]]
 ---@alias core.MetadataTable.fields.node.keys.integer.special
 --- | string
 
 --[[
-WIPDOC
+Node metadata keys usable with integer accessors.
 ]]
 ---@alias core.MetadataTable.fields.node.keys.integer
 --- | core.MetadataTable.fields.node.keys.integer.special
 --- | string
 
 --[[
-WIPDOC
+Special node metadata keys that hold floats. None are defined.
 ]]
 ---@alias core.MetadataTable.fields.node.keys.number.special
 --- | string
 
 --[[
-WIPDOC
+Node metadata keys usable with float accessors.
 ]]
 ---@alias core.MetadataTable.fields.node.keys.number
 --- | core.MetadataTable.fields.node.keys.number.special
@@ -48,20 +48,23 @@ WIPDOC
 -- --------------------------- MetadataTable.node --------------------------- --
 
 --[[
-WIPDOC
+Key-value store of node metadata. All values are stored as strings.
+The fields below are handled specially.
 ]]
 ---@class core.MetadataTable.fields.node : {[string]:string?}
 --[[
-WIPDOC
+Defines an inventory menu that is opened with the 'place/use' key.
+Only works if no `on_rightclick` was defined for the node.
 ]]
 ---@field formspec core.Formspec?
 --[[
-WIPDOC
+Text shown on the screen when the node is pointed at.
+Line-breaks are applied automatically. Very long text is truncated.
 ]]
 ---@field infotext string?
 
 --[[
-WIPDOC
+Node metadata table accepted by `NodeMetaRef:from_table`.
 ]]
 ---@alias core.MetadataTable.node.set
 --- | core.MetadataTable.node.get
@@ -69,23 +72,25 @@ WIPDOC
 
 ---@class _.MetadataTable.node.set
 --[[
-WIPDOC
+Key-value storage of metadata fields. Numbers must be converted to strings.
 ]]
 ---@field fields core.MetadataTable.fields.node?
 --[[
-WIPDOC
+Node inventory in table form: keys are list names, values are item tables
+(slot IDs starting at 1 mapped to ItemStacks or itemstrings).
 ]]
 ---@field inventory core.InventoryTable?
 
 --[[
-WIPDOC
+Node metadata table returned by `NodeMetaRef:to_table`.
 ]]
 ---@class core.MetadataTable.node.get
 --[[
-WIPDOC
+Key-value storage of metadata fields. All values are strings.
 ]]
 ---@field fields core.MetadataTable.fields.node?
 --[[
-WIPDOC
+Node inventory in table form: keys are list names, values are item tables
+(slot IDs starting at 1 mapped to ItemStacks).
 ]]
----@field inventory core.InventoryTable.stringfmt?
+---@field inventory core.InventoryTable.ItemStack?

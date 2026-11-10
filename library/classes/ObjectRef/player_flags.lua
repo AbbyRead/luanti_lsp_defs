@@ -1,28 +1,29 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `ObjectRef`
 
 -- ------------------------------- PlayerFlags ------------------------------ --
 
 --[[
-WIPDOC
+Player flags, as returned by `PlayerRef:get_flags`.
 ]]
 ---@class core.PlayerFlags.get
 --[[
-WIPDOC
+Whether breathing (regaining air) is enabled. Default `true`.
 ]]
 ---@field breathing boolean
 --[[
-WIPDOC
+Whether drowning (losing air) is enabled. Default `true`.
 ]]
 ---@field drowning boolean
 --[[
-WIPDOC
+Whether the player takes damage from nodes. Default `true`.
 ]]
 ---@field node_damage boolean
 
 --[[
-WIPDOC
+Player flags accepted by `PlayerRef:set_flags`. Same format as returned by
+`get_flags`; absent fields are left unchanged.
 ]]
 ---@alias core.PlayerFlags.set
 --- | core.PlayerFlags.get
@@ -30,15 +31,15 @@ WIPDOC
 
 ---@class _.PlayerFlags.set
 --[[
-WIPDOC
+Whether breathing (regaining air) is enabled.
 ]]
 ---@field breathing boolean?
 --[[
-WIPDOC
+Whether drowning (losing air) is enabled.
 ]]
 ---@field drowning boolean?
 --[[
-WIPDOC
+Whether the player takes damage from nodes.
 ]]
 ---@field node_damage boolean?
 

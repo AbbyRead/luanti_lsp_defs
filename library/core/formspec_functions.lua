@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Formspec functions
 
 --[[
@@ -50,19 +50,21 @@ function core.close_formspec(playername, formname) end
 function core.hypertext_escape(string) end
 
 --[[
-WIPDOC
+Result of `core.explode_table_event`, e.g. `{type="CHG", row=1, column=2}`.
 ]]
 ---@class core.ExplodeEvent.table
 --[[
-WIPDOC
+* `"INV"`: no row selected
+* `"CHG"`: selected
+* `"DCL"`: double-click
 ]]
 ---@field type "INV"|"CHG"|"DCL"
 --[[
-WIPDOC
+Selected row.
 ]]
 ---@field row int
 --[[
-WIPDOC
+Selected column.
 ]]
 ---@field column int
 
@@ -80,15 +82,17 @@ WIPDOC
 function core.explode_table_event(string) end
 
 --[[
-WIPDOC
+Result of `core.explode_textlist_event`, e.g. `{type="CHG", index=1}`.
 ]]
 ---@class core.ExplodeEvent.textlist
 --[[
-WIPDOC
+* `"INV"`: no row selected
+* `"CHG"`: selected
+* `"DCL"`: double-click
 ]]
 ---@field type "INV"|"CHG"|"DCL"
 --[[
-WIPDOC
+Selected index.
 ]]
 ---@field index int
 
@@ -106,15 +110,17 @@ WIPDOC
 function core.explode_textlist_event(string) end
 
 --[[
-WIPDOC
+Result of `core.explode_scrollbar_event`, e.g. `{type="CHG", value=500}`.
 ]]
 ---@class core.ExplodeEvent.scrollbar
 --[[
-WIPDOC
+* `"INV"`: something failed
+* `"CHG"`: has been changed
+* `"VAL"`: not changed
 ]]
 ---@field type "INV"|"CHG"|"VAL"
 --[[
-WIPDOC
+Scrollbar value.
 ]]
 ---@field value int
 

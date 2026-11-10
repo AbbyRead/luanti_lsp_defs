@@ -1,9 +1,12 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `ObjectRef`
 
 --[[
-WIPDOC
+Lua entity only (no-op for other objects)
+
+Entity-only methods of `ObjectRef`; the shared methods are inherited from
+`ObjectRef`.
 ]]
 ---@class core.EntityRef : _.ObjectRef.__base
 local EntityRef = {}
@@ -57,7 +60,7 @@ function EntityRef:get_acceleration() end
 --[[
 * `set_rotation(rot)`
     * Sets the rotation
-    * `rot` is a vector (radians). X is pitch (elevation), Y is yaw (heading
+    * `rot` is a vector (radians). X is pitch (elevation), Y is yaw (heading),
       and Z is roll (bank).
     * Does not reset rotation incurred through `automatic_rotate`.
       Remove & re-add your objects to force a certain rotation.
@@ -104,42 +107,6 @@ function EntityRef:set_texture_mod(mod) end
 function EntityRef:get_texture_mod() end
 
 --[[
-WIPDOC
-]]
----@class core.EntityRef.select_x_by_camera.strict
---[[
-WIPDOC
-]]
----@field [1] int
---[[
-WIPDOC
-]]
----@field [2] int
---[[
-WIPDOC
-]]
----@field [3] int
---[[
-WIPDOC
-]]
----@field [4] int
---[[
-WIPDOC
-]]
----@field [5] int
---[[
-WIPDOC
-]]
----@field [6] int
-
---[[
-WIPDOC
-]]
----@alias core.EntityRef.select_x_by_camera
---- | core.EntityRef.select_x_by_camera.strict
---- | string[]
-
---[[
 * `set_sprite(start_frame, num_frames, framelength, select_x_by_camera)`
     * Specifies and starts a sprite animation
     * Only used by `sprite` and `upright_sprite` visuals
@@ -160,7 +127,7 @@ WIPDOC
 ---@param start_frame vec2?
 ---@param num_frames int?
 ---@param framelength number?
----@param select_x_by_camera core.EntityRef.select_x_by_camera|boolean?
+---@param select_x_by_camera boolean?
 function EntityRef:set_sprite(start_frame, num_frames, framelength, select_x_by_camera) end
 
 -- ------------------------------- entity misc ------------------------------ --
@@ -168,7 +135,7 @@ function EntityRef:set_sprite(start_frame, num_frames, framelength, select_x_by_
 --[[
 * `get_luaentity()`:
     * Returns the object's associated luaentity table, if there is one
-    * Otherwise returns `nil` (e.g. for players
+    * Otherwise returns `nil` (e.g. for players)
 ]]
 ---@nodiscard
 ---@return core.Entity

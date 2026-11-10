@@ -1,5 +1,5 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Nodes
 -- luanti/doc/lua_api.md: Definition tables > Node definition
 
@@ -7,7 +7,7 @@
 -- are too many states resulting in too many permutations.
 
 --[[
-WIPDOC
+Keys of a node definition, including those inherited from `core.ItemDef`.
 ]]
 ---@alias core.NodeDef.keys
 --- | core.ItemDef.keys
@@ -85,11 +85,15 @@ WIPDOC
 --[[ NodeDef.drawtype split off into ./drawtype.lua ]]--
 
 --[[
-WIPDOC
+Node definition, as passed to `core.register_node` and found in
+`core.registered_nodes[name]`.
+Inherits all item definition fields. Fields for the drawtype, tiles,
+paramtypes, sounds and drop are documented in their own files.
 ]]
 ---@class core.NodeDef: core.ItemDef
 --[[
-WIPDOC
+Groups the node belongs to, see "Node and item groups" and "Node-only
+groups".
 ]]
 ---@field groups core.Groups.node?
 --[[
@@ -116,7 +120,11 @@ on the node.
 -- ------------------------- color and transparency ------------------------- --
 
 --[[
-WIPDOC
+How the texture's alpha channel is used for rendering:
+* `"opaque"`: rendered opaque regardless of alpha channel
+* `"clip"`: each pixel is either fully see-through or opaque (alpha below or
+  above 50%)
+* `"blend"`: alpha specifies transparency; costs performance
 ]]
 ---@alias core.NodeDef.use_texture_alpha
 --- | "opaque"
@@ -199,7 +207,8 @@ Otherwise, the rotation is always the same on vertical placement.
 -- -------------------------------------------------------------------------- --
 
 --[[
-WIPDOC
+Slows down movement of players through the node (max. 7).
+`0` means no slowdown, `7` is the strongest.
 ]]
 ---@alias core.NodeDef.move_resistance
 --- | 0
@@ -272,7 +281,11 @@ Warning: making a liquid node 'floodable' will cause problems.
 -- ---------------------------- liquid properties --------------------------- --
 
 --[[
-WIPDOC
+Liquid flowing physics:
+* `"none"`: no liquid flowing physics
+* `"source"`: spawns flowing liquid nodes at all 4 sides and below
+* `"flowing"`: spawned from a source, spreads until `liquid_range` is reached
+  and drains out without a source
 ]]
 ---@alias core.NodeDef.liquidtype
 --- | "none"
@@ -280,7 +293,8 @@ WIPDOC
 --- | "flowing"
 
 --[[
-WIPDOC
+Speed at which the liquid spreads/flows (max. 7).
+`0` is fastest, `7` is slowest.
 ]]
 ---@alias core.NodeDef.liquid_viscosity
 --- | 0
@@ -374,7 +388,7 @@ liquid_move_physics = nil, -- specifies movement physics if inside node
 air_equivalent = nil,
 unclear meaning, the engine sets this to true for 'air' and 'ignore'
 deprecated.
-Unofficial note: But what else are you supposed to do? i guess make an is_air function lmao
+Documented as deprecated since 5.8.0; do not rely on it.
 
 * @deprecated 5.X
 ]]
@@ -402,7 +416,8 @@ Values above 124 might causes collision detection issues.
 -- -------------------------------------------------------------------------- --
 
 --[[
-WIPDOC
+Maximum distance flowing liquid nodes can spread around a source on flat
+land (max. 8). `0` disables liquid flow.
 ]]
 ---@alias core.NodeDef.liquid_range
 --- | 0
@@ -437,7 +452,7 @@ If player is inside node, this damage is caused
 -- -------------------------- node shape properties ------------------------- --
 
 --[[
-WIPDOC
+A side of a node, used for `connect_sides`.
 ]]
 ---@alias core.NodeDef.connect_side
 --- | "top"
@@ -499,7 +514,11 @@ definition is used for the collision box.
 -- -------------------------------------------------------------------------- --
 
 --[[
-WIPDOC
+Wave animation:
+* `0`: none
+* `1`: like plants (top moves side-to-side, bottom is fixed)
+* `2`: like leaves (whole node moves side-to-side)
+* `3`: like liquids (whole node moves up and down)
 ]]
 ---@alias core.NodeDef.waving
 --- | 0
@@ -548,104 +567,132 @@ nodename will show "othermodname", but mod_origin will say "modname"
 -- -------------------------------- callbacks ------------------------------- --
 
 --[[
-WIPDOC
+Node constructor; called after adding the node.
+`pos`: node position.
 ]]
 ---@alias core.NodeDef.on_construct fun(pos:ivec)
 
 --[[
-WIPDOC
+Node destructor; called before removing the node.
+`pos`: node position.
 ]]
 ---@alias core.NodeDef.on_destruct fun(pos:ivec?)
 
 --[[
-WIPDOC
+Node destructor; called after removing the node.
+`oldnode`: the node table of the removed node.
 ]]
 ---@alias core.NodeDef.after_destruct fun(pos:ivec, oldnode:core.Node.get)
 
 --[[
-WIPDOC
+Called when a liquid (`newnode`) is about to flood `oldnode`.
+Returning `true` prevents the flooding.
 ]]
 ---@alias core.NodeDef.on_flood fun(pos:ivec, oldnode:core.Node.get, newnode:core.Node.get):boolean?
 
 --[[
-WIPDOC
+Called when `oldnode` is about to be converted to an item, before the node is
+deleted from the world or the drops are added.
+`drops` (4th argument, a table of `ItemStack`s) can carry preserved metadata;
+see `ItemStackMetaRef`.
 ]]
----@alias core.NodeDef.preserve_metadata fun(pos:ivec, oldnode:core.Node.get, oldmeta:core.MetadataTable.node.get)
+---@alias core.NodeDef.preserve_metadata fun(pos:ivec, oldnode:core.Node.get, oldmeta:core.MetadataTable.node.get, drops:core.ItemStack[])
 
 --[[
-WIPDOC
+Returning `true` prevents the placed item from being taken from the stack.
 ]]
----@alias core.NodeDef.after_place_node fun(pos:ivec, placer:core.ObjectRef?, itemstack:core.ItemStack, pointed_thing:core.PointedThing)
+---@alias core.NodeDef.after_place_node fun(pos:ivec, placer:core.ObjectRef?, itemstack:core.ItemStack, pointed_thing:core.PointedThing):boolean?
 
 --[[
-WIPDOC
+Called after destructing the node when it was dug using `core.node_dig` /
+`core.dig_node`.
 ]]
 ---@alias core.NodeDef.after_dig_node fun(pos:ivec, oldnode:core.Node.get, oldmetadata:core.MetadataTable.node.get, digger:core.ObjectRef?)
 
 --[[
-WIPDOC
+Return `true` if the node can be dug, `false` if not.
 ]]
 ---@alias core.NodeDef.can_dig fun(pos:ivec, player:core.ObjectRef?):boolean
 
 --[[
-WIPDOC
+Called when `puncher` punches the node at `pos`.
+By default calls `core.register_on_punchnode` callbacks.
 ]]
 ---@alias core.NodeDef.on_punch fun(pos:ivec, node:core.Node.get, puncher:core.ObjectRef?, pointed_thing:core.PointedThing)
 
 --[[
-WIPDOC
+Called when `clicker` used the 'place/build' key (not necessarily an actual
+rightclick) while pointing at the node. `itemstack` holds the wielded item.
+Returns the leftover itemstack.
+`pointed_thing` can be `nil` if a mod calls this function.
 ]]
 ---@alias core.NodeDef.on_rightclick fun(pos:ivec, node:core.Node.get, clicker:core.ObjectRef?, itemstack:core.ItemStack, pointed_thing:core.PointedThing?):core.ItemStack?
 
 --[[
-WIPDOC
+Called to dig the node. Default is `core.node_dig`, which checks privileges,
+wears out the item (if tool) and removes the node.
+Return `true` if the node was dug successfully, `false` otherwise.
 
 * @deprecated 5.X returning `nil` is the same are `true`
 ]]
 ---@alias core.NodeDef.on_dig fun(pos:ivec, node:core.Node.get, digger:core.ObjectRef?):boolean
 
 --[[
-WIPDOC
+Called by NodeTimers, see `core.get_node_timer` and `NodeTimerRef`.
+`elapsed` is the total time passed since the timer was started.
+`node` and `timeout` (timeout of the just ended timer) are passed since 5.14.
+Return `true` to run the timer for another cycle with the same timeout.
 ]]
 ---@alias core.NodeDef.on_timer fun(pos:ivec, elapsed:number, node:core.Node.get, timeout:number):boolean?
 
 --[[
-WIPDOC
+Called when a node metadata formspec is present and data is returned.
+`formname` should be the empty string; it **must not** be used.
 ]]
 ---@alias core.NodeDef.on_receive_fields fun(pos:ivec, formname:"", fields: core.FormspecFields, sender:core.ObjectRef)
 
 --[[
-WIPDOC
+Called when a player wants to move items inside the inventory.
+Returns the number of items allowed to move.
 ]]
 ---@alias core.NodeDef.allow_metadata_inventory_move fun(pos:ivec, from_list:core.InventoryList, from_index:int, to_list:core.InventoryList, to_index:int, count:int, player:core.ObjectRef):int
 
 --[[
-WIPDOC
+Called when a player wants to put something into the inventory.
+Returns the number of items allowed to put, or `-1` to allow and not modify
+the item count in the inventory.
 ]]
 ---@alias core.NodeDef.allow_metadata_inventory_put fun(pos:ivec, listname:core.InventoryList, index:int, stack:core.ItemStack, player:core.ObjectRef):int
 
 --[[
-WIPDOC
+Called when a player wants to take something out of the inventory.
+Returns the number of items allowed to take, or `-1` to allow and not modify
+the item count in the inventory.
 ]]
 ---@alias core.NodeDef.allow_metadata_inventory_take fun(pos:ivec, listname:core.InventoryList, index:int, stack:core.ItemStack, player:core.ObjectRef):int
 
 --[[
-WIPDOC
+Called after the move happened, according to what was allowed.
+No return value.
 ]]
 ---@alias core.NodeDef.on_metadata_inventory_move fun(pos:ivec, from_list:core.InventoryList, from_index:int, to_list:core.InventoryList, to_index:int, count:int, player:core.ObjectRef):nil
 
 --[[
-WIPDOC
+Called after the put happened, according to what was allowed.
+No return value.
 ]]
 ---@alias core.NodeDef.on_metadata_inventory_put fun(pos:ivec, listname:core.InventoryList, index:int, stack:core.ItemStack, player:core.ObjectRef):nil
 
 --[[
-WIPDOC
+Called after the take happened, according to what was allowed.
+No return value.
 ]]
 ---@alias core.NodeDef.on_metadata_inventory_take fun(pos:ivec, listname:core.InventoryList, index:int, stack:core.ItemStack, player:core.ObjectRef):nil
 
 --[[
-WIPDOC
+Called when an explosion touches the node, instead of removing it.
+`intensity`: 1.0 = mid range of regular TNT.
+A convention followed by explosion mods; the engine never calls it.
 ]]
 ---@alias core.NodeDef.on_blast fun(pos:ivec, intensity:number?)
 
@@ -820,6 +867,10 @@ on_blast = function(pos, intensity),
 intensity: 1.0 = mid range of regular TNT.
 If defined, called when an explosion touches the node, instead of
 removing the node.
-Unofficial note: this is a custom field, just documented in lua_api.md i assume because TNT mods usually don't handle indestructible nodes/whatever very well
+Not called by the engine: this is a convention that explosion mods follow
+(e.g. the `tnt` mod of Minetest Game), which is why it has no engine-defined
+intensity formula. Mods causing explosions should try calling it before their
+own handling, so nodes that are immune to explosions are respected.
+The `tnt` mod also accepts an optional list of drops as return value.
 ]]
 ---@field on_blast core.NodeDef.on_blast?

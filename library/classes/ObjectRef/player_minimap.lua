@@ -1,11 +1,16 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Class reference > `ObjectRef`
 
--- ---------------------------- PlayreMinimapMode --------------------------- --
+-- --------------------------- PlayerMinimapMode --------------------------- --
 
 --[[
-WIPDOC
+Minimap mode type:
+* `off`: Minimap off
+* `surface`: Minimap in surface mode
+* `radar`: Minimap in radar mode
+* `texture`: Texture to be displayed instead of terrain map (centered around
+  0,0 and can be scaled). Texture size is limited to 512 x 512 pixels.
 ]]
 ---@alias core.PlayerMinimapMode.type
 --- | "off"
@@ -14,27 +19,30 @@ WIPDOC
 --- | "texture"
 
 --[[
-WIPDOC
+A single minimap mode, as passed to `PlayerRef:set_minimap_modes`.
 ]]
 ---@class core.PlayerMinimapMode
 --[[
-WIPDOC
+Mode type.
 ]]
 ---@field type core.PlayerMinimapMode.type
 --[[
-WIPDOC
+Optional label to display on minimap mode toggle.
+The translation must be handled within the mod.
 ]]
 ---@field label string?
 --[[
-WIPDOC
+Side length or diameter, in number of nodes, of the terrain displayed in the
+minimap.
 ]]
 ---@field size int
 --[[
-WIPDOC
+Only for `"texture"` type: name of the texture to display.
 ]]
 ---@field texture core.Texture?
 --[[
-WIPDOC
+Only for `"texture"` type: scale of the texture map in nodes per pixel (e.g. a
+`scale` of 2 means each pixel represents a 2x2 nodes square).
 ]]
 ---@field scale int?
 

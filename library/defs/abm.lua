@@ -1,9 +1,12 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: Definition tables > ABM (ActiveBlockModifier) definition
 
 --[[
-WIPDOC
+Function triggered for each qualifying node.
+`active_object_count` is the number of active objects in the node's mapblock.
+`active_object_count_wider` is the number of active objects in the node's
+mapblock plus all 26 neighboring mapblocks (estimated for unloaded ones).
 ]]
 ---@alias core.ABMDef.action fun(pos:ivec, node:core.Node.get, active_object_count:int, active_object_count_wider:int)
 
@@ -46,15 +49,20 @@ Operation interval in seconds
 ]]
 ---@field  interval number?
 --[[
-Probability of triggering `action` per-node per-interval is 1.0 / chance (integers only)
+Probability of triggering `action` per-node per-interval is 1.0 / chance.
+Integer [u32]; a value of 0 is treated as 1.
 ]]
 ---@field  chance int?
 --[[
-WIPDOC
+Minimum height level (inclusive) where the ABM will be processed.
+Integer [s16]. Can be used to reduce CPU usage.
+Requires the `abm_min_max_y` feature (5.5.0).
 ]]
 ---@field min_y int?
 --[[
-WIPDOC
+Maximum height level (inclusive) where the ABM will be processed.
+Integer [s16]. Can be used to reduce CPU usage.
+Requires the `abm_min_max_y` feature (5.5.0).
 ]]
 ---@field max_y int?
 --[[
@@ -66,9 +74,9 @@ be reduced to 1.
 ---@field catch_up boolean?
 --[[
 Function triggered for each qualifying node.
-`active_object_count` is number of active objects in the node's
+`active_object_count` is the number of active objects in the node's
 mapblock.
-`active_object_count_wider` is number of active objects in the node's
+`active_object_count_wider` is the number of active objects in the node's
 mapblock plus all 26 neighboring mapblocks. If any neighboring
 mapblocks are unloaded an estimate is calculated for them based on
 loaded mapblocks.

@@ -1,21 +1,21 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Environment access
 
 --[[
-WIPDOC
+Result of `core.get_biome_data`.
 ]]
 ---@class core.BiomeData
 --[[
-WIPDOC
+The biome id of the biome at that position.
 ]]
 ---@field biome core.BiomeID
 --[[
-WIPDOC
+The heat at the position.
 ]]
 ---@field heat number
 --[[
-WIPDOC
+The humidity at the position.
 ]]
 ---@field humidity number
 

@@ -1,36 +1,46 @@
 ---@meta _
--- DRAFT 1 DONE
+
 -- luanti/doc/lua_api.md: 'core' namespace reference > Environment access
 
 -- ------------------------------ MapgenParams ------------------------------ --
 
 --[[
-WIPDOC
+Table used by the deprecated `core.get_mapgen_params` / `core.set_mapgen_params`.
+Fields left unset in `set_mapgen_params` leave that parameter unchanged.
 ]]
 ---@class core.MapgenSettings.mapgen_param
 --[[
-WIPDOC
+Name of the mapgen (`mg_name` in `core.get_mapgen_setting`).
 ]]
 ---@field mgname core.LuantiSettings.enums.mg_name
 --[[
-WIPDOC
+Integer [-2^64, 2^64].
+
+**WARNING**: `seed` is broken. If the returned `seed` is outside the range of
+`[0, 2^53-1]`, it is probably incorrect. The actual seed internally stored by
+Luanti is in the [u64] range. When setting, only values in the [ulua] range are
+accepted, which is a part of the full [u64] range. Prefer
+`core.get_mapgen_setting("seed")`.
 ]]
----@field seed string
+---@field seed int
 --[[
-WIPDOC
+Integer [1, 32767].
 ]]
----@field chunksize string
+---@field chunksize int
 --[[
-WIPDOC
+Integer [s16].
 ]]
----@field water_level string
+---@field water_level int
 --[[
-WIPDOC
+Comma-delimited string of flags (`mg_flags` in `core.get_mapgen_setting`).
+When setting, a `"no"` prefix on a flag clears it instead. Same format and
+options as `mg_flags` in `minetest.conf`.
 ]]
 ---@field flags core.LuantiSettings.flags
 
 --[[
-WIPDOC
+Mapgen setting names whose value is an integer. Note: use `"seed"`, not
+`"fixed_map_seed"`.
 ]]
 ---@alias core.MapgenSetting.keys.integer
 --- | _.LuantiSettings.mapgen.keys.integer
@@ -38,25 +48,25 @@ WIPDOC
 --- | "chunksize"
 
 --[[
-WIPDOC
+Mapgen setting names whose value is a number.
 ]]
 ---@alias core.MapgenSetting.keys.number
 --- | _.LuantiSettings.mapgen.keys.number
 
 --[[
-WIPDOC
+Mapgen setting names whose value is a 3D NoiseParams table.
 ]]
 ---@alias core.MapgenSetting.keys.noise_params.3d
 --- | _.LuantiSettings.mapgen.keys.noise_params.3d
 
 --[[
-WIPDOC
+Mapgen setting names whose value is a 2D NoiseParams table.
 ]]
 ---@alias core.MapgenSetting.keys.noise_params.2d
 --- | _.LuantiSettings.mapgen.keys.noise_params.2d
 
 --[[
-WIPDOC
+Any mapgen setting name.
 ]]
 ---@alias core.MapgenSetting.keys
 --- | _.LuantiSettings.mapgen.keys
@@ -109,6 +119,11 @@ function core.set_mapgen_params(MapgenParams) end
         2) Settings set by mods without a metafile override
         3) Settings explicitly set in the user config file, minetest.conf
         4) Settings set as the user config default
+    * Note: to get the seed, use `"seed"`, not `"fixed_map_seed"`.
+    * Note: The seed is returned as a string, converted from the [u64] integer
+      that Luanti internally uses. Do *not* convert this string to a
+      number, you'd risk losing precision because [u64] reaches beyond the
+      safe integer range
 ]]
 ---@nodiscard
 ---@param name core.MapgenSetting.keys.integer
@@ -124,6 +139,11 @@ function core.get_mapgen_setting(name) end
         2) Settings set by mods without a metafile override
         3) Settings explicitly set in the user config file, minetest.conf
         4) Settings set as the user config default
+    * Note: to get the seed, use `"seed"`, not `"fixed_map_seed"`.
+    * Note: The seed is returned as a string, converted from the [u64] integer
+      that Luanti internally uses. Do *not* convert this string to a
+      number, you'd risk losing precision because [u64] reaches beyond the
+      safe integer range
 ]]
 ---@nodiscard
 ---@param name core.MapgenSetting.keys.number
@@ -139,6 +159,11 @@ function core.get_mapgen_setting(name) end
         2) Settings set by mods without a metafile override
         3) Settings explicitly set in the user config file, minetest.conf
         4) Settings set as the user config default
+    * Note: to get the seed, use `"seed"`, not `"fixed_map_seed"`.
+    * Note: The seed is returned as a string, converted from the [u64] integer
+      that Luanti internally uses. Do *not* convert this string to a
+      number, you'd risk losing precision because [u64] reaches beyond the
+      safe integer range
 ]]
 ---@nodiscard
 ---@param name core.MapgenSetting.keys
@@ -172,7 +197,9 @@ function core.get_mapgen_setting_noiseparams(name) end
     * `override_meta` is an optional boolean (default: `false`). If this is set
       to true, the setting will become the active setting regardless of the map
       metafile contents.
-    * Note: to set the seed, use `"seed"`, not `"fixed_map_seed"`.
+    * Note: to set the seed, use `"seed"`, not `"fixed_map_seed"`;
+      the seed value *must* be provided as a string that *represents*
+      an integer in the [u64] range
 ]]
 ---@deprecated
 ---@param name core.MapgenSetting.keys.integer
@@ -187,7 +214,9 @@ function core.set_mapgen_setting(name, value, override_meta) end
     * `override_meta` is an optional boolean (default: `false`). If this is set
       to true, the setting will become the active setting regardless of the map
       metafile contents.
-    * Note: to set the seed, use `"seed"`, not `"fixed_map_seed"`.
+    * Note: to set the seed, use `"seed"`, not `"fixed_map_seed"`;
+      the seed value *must* be provided as a string that *represents*
+      an integer in the [u64] range
 ]]
 ---@deprecated
 ---@param name core.MapgenSetting.keys.number
@@ -202,7 +231,9 @@ function core.set_mapgen_setting(name, value, override_meta) end
     * `override_meta` is an optional boolean (default: `false`). If this is set
       to true, the setting will become the active setting regardless of the map
       metafile contents.
-    * Note: to set the seed, use `"seed"`, not `"fixed_map_seed"`.
+    * Note: to set the seed, use `"seed"`, not `"fixed_map_seed"`;
+      the seed value *must* be provided as a string that *represents*
+      an integer in the [u64] range
 ]]
 ---@param name core.MapgenSetting.keys
 ---@param value string
