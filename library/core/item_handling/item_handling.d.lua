@@ -4,11 +4,12 @@
 
 --[[
 Returns a texture string for making an image of a cube (useful as an item image).
+img1 is used for img2 and img3 if either is unspecified.
 ]]
 ---@nodiscard
 ---@param img1 core.Texture
----@param img2 core.Texture
----@param img3 core.Texture
+---@param img2 core.Texture?
+---@param img3 core.Texture?
 ---@return core.Texture
 function core.inventorycube(img1, img2, img3) end
 
