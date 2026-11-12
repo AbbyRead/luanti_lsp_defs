@@ -53,7 +53,7 @@ sound.
 Sound parameter table: specifies how a sound is played. Only one of `pos` /
 `object` and only one of `to_player` / `exclude_player` can be used.
 ]]
----@class core.SoundParamter
+---@class core.SoundParameter
 --[[
 Scales the gain specified in the `SimpleSoundSpec`.
 ]]

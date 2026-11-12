@@ -19,7 +19,7 @@ Unofficial note: i made ephemeral NOT be optional because it's a good idea to ex
       player actions (e.g. door closing).
 ]]
 ---@param spec core.SimpleSoundSpec
----@param parameters core.SoundParamter
+---@param parameters core.SoundParameter
 ---@return core.SoundID
 function core.sound_play(spec, parameters) end
 
@@ -34,7 +34,7 @@ Unofficial note: i made ephemeral NOT be optional because it's a good idea to ex
       player actions (e.g. door closing).
 ]]
 ---@param spec core.SimpleSoundSpec
----@param parameters core.SoundParamter
+---@param parameters core.SoundParameter
 ---@param ephemeral true
 ---@return nil
 function core.sound_play(spec, parameters, ephemeral) end
